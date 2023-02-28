@@ -14,13 +14,14 @@
         {% endblock %}
     </head>
     <body>
-        <div>
+        <nav>
+            <a href="{{ path('app_public') }}">public</a>
             {% if not app.user %}
             <a href="{{ path('security_login') }}">Connexion</a>
             {% else %}
             <a href="{{ path('security_logout') }}">Déconnexion</a>
             {% endif %}
-        </div>
+        </nav>
         {% block body %}{% endblock %}
     </body>
 </html>
