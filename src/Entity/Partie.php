@@ -18,6 +18,12 @@ class Partie
     #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'parties')]
     private Collection $user;
 
+    #[ORM\Column(length: 255)]
+    private ?string $statut = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $resultat = null;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -49,6 +55,30 @@ class Partie
     public function removeUser(user $user): self
     {
         $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getResultat(): ?string
+    {
+        return $this->resultat;
+    }
+
+    public function setResultat(string $resultat): self
+    {
+        $this->resultat = $resultat;
 
         return $this;
     }
