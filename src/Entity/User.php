@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,7 +44,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $defaite = null;
 
     #[ORM\Column]
-    private ?int $trophee = null;
+    private ?int $trophee = 0;
+
+    #[ORM\ManyToMany(targetEntity: Partie::class, mappedBy: 'user')]
+    private Collection $parties;
+
+    public function __construct()
+    {
+        $this->parties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +144,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTrophee(int $trophee): self
     {
         $this->trophee = $trophee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Partie>
+     */
+    public function getParties(): Collection
+    {
+        return $this->parties;
+    }
+
+    public function addParty(Partie $party): self
+    {
+        if (!$this->parties->contains($party)) {
+            $this->parties->add($party);
+            $party->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParty(Partie $party): self
+    {
+        if ($this->parties->removeElement($party)) {
+            $party->removeUser($this);
+        }
 
         return $this;
     }

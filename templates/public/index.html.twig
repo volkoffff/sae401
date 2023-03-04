@@ -8,12 +8,16 @@
     <p>trophées : {{ user.trophee }}</p>
     <p>win : {{ user.victoire }}</p>
     <p>loose : {{ user.defaite }}</p>
-
     <hr>
+
     <h2>leader board</h2>
     {% for leader in leaders %}
         {{ leader.pseudo }}
         {{ leader.trophee }}
         <br>
     {% endfor %}
+    <hr>
+    <h2>historique de parties</h2>
+
+
 {% endblock %}
