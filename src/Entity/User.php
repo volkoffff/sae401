@@ -38,20 +38,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public $confirm_password;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $victoire = null;
+    private ?int $victoire = 0;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $defaite = null;
+    private ?int $defaite = 0;
 
     #[ORM\Column]
     private ?int $trophee = 0;
 
-    #[ORM\ManyToMany(targetEntity: Partie::class, mappedBy: 'user')]
-    private Collection $parties;
+    #[ORM\ManyToMany(targetEntity: partie::class, inversedBy: 'users')]
+    private Collection $partie;
 
     public function __construct()
     {
-        $this->parties = new ArrayCollection();
+        $this->partie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,29 +149,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Partie>
+     * @return Collection<int, partie>
      */
-    public function getParties(): Collection
+    public function getPartie(): Collection
     {
-        return $this->parties;
+        return $this->partie;
     }
 
-    public function addParty(Partie $party): self
+    public function addPartie(partie $partie): self
     {
-        if (!$this->parties->contains($party)) {
-            $this->parties->add($party);
-            $party->addUser($this);
+        if (!$this->partie->contains($partie)) {
+            $this->partie->add($partie);
         }
 
         return $this;
     }
 
-    public function removeParty(Partie $party): self
+    public function removePartie(partie $partie): self
     {
-        if ($this->parties->removeElement($party)) {
-            $party->removeUser($this);
-        }
+        $this->partie->removeElement($partie);
 
         return $this;
     }
+
 }

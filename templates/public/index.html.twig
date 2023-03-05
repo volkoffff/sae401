@@ -17,7 +17,52 @@
         <br>
     {% endfor %}
     <hr>
-    <h2>historique de parties</h2>
+    <h2>historique de tt les parties</h2>
+    <button id="toggleButton">Afficher uniquement les parties en cours</button>
 
+    {% for partie in parties %}
+        {% if partie.statut == 'terminé' %}
+            <div id="terminer">
+            {{ partie.id }}
+            {{ partie.statut }}
+{#            {{ partie.resultat }}#}
+            </div>
+        {% else %}
+            <div id="enCours">
+                {{ partie.id }}
+                {{ partie.statut }}
+{#                {{ partie.resultat }}#}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <hr>
+    <h2>historique des partie du user</h2>
+    {% for partie in partiesDuUser %}
+        <li>
+            {{ partie.id }} - {{ partie.statut }}
+        </li>
+    {% endfor %}
+
+    <script>
+
+        function toggleElements() {
+            var elements = document.querySelectorAll("#terminer");
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].style.display === "none") {
+                    elements[i].style.display = "block";
+                    button.innerHTML = "Afficher uniquement les parties en cours"
+                } else {
+                    elements[i].style.display = "none";
+                    button.innerHTML = "Afficher toutes les parties"
+                }
+            }
+        }
+
+        var button = document.querySelector("#toggleButton");
+        button.addEventListener("click", toggleElements);
+
+
+
+    </script>
 
 {% endblock %}
