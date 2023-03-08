@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\partie;
+use App\Entity\Partie;
 use App\Entity\User;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;

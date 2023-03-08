@@ -13,11 +13,6 @@ class Friends
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
-
-    #[ORM\Column]
-    private ?int $friend_id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
@@ -26,31 +21,7 @@ class Friends
     {
         return $this->id;
     }
-
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
-    public function getFriendId(): ?int
-    {
-        return $this->friend_id;
-    }
-
-    public function setFriendId(?int $friend_id): self
-    {
-        $this->friend_id = $friend_id;
-
-        return $this;
-    }
-
+    
     public function getStatus(): ?string
     {
         return $this->status;
@@ -65,6 +36,24 @@ class Friends
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "friend_id", referencedColumnName: "id" )]
+    private $friend;
+
+    // ...
+
+    public function getFriend(): ?User
+    {
+        return $this->friend;
+    }
+
+    public function setFriend(?User $friend): self
+    {
+        $this->friend = $friend;
+
+        return $this;
+    }
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id" )]
     private $user;
 
     // ...

@@ -15,18 +15,24 @@ use Doctrine\ORM\EntityManagerInterface;
 class FriendController extends AbstractController
 {
     #[Route('/friend/send/{friendId}', name: 'send_friend_request')]
-    public function sendFriendRequest($friendId, EntityManagerInterface $entityManager): Response
+    public function sendFriendRequest(User $friendId, EntityManagerInterface $entityManager): Response
     {
 
-        $friend = new Friends();
-        $friend->setUserId($this->getUser()->getId());
-        $friend->setFriendId($friendId);
-        $friend->setStatus('pending');
+        if ($friendId) {
+            $friend = new Friends();
+            $friend->setUser($this->getUser());
+            $friend->setFriend($friendId);
+            $friend->setStatus('pending');
 
-        $entityManager->persist($friend);
-        $entityManager->flush();
+//            dump($friend);
+//            die();
+
+            $entityManager->persist($friend);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('list_friends');
+
     }
 //    #[Route('/friend/accept/{friendId}', name: 'accept_friend_request')]
 //    public function acceptFriendRequest($friendId, EntityManagerInterface $entityManager): Response
@@ -77,7 +83,7 @@ class FriendController extends AbstractController
 //        ]);
 
         $friends = $entityManager->getRepository(Friends::class)->createQueryBuilder('f')
-            ->where('f.user_id = :userId')
+            ->where('f.user = :userId')
             ->andWhere('f.status = :status')
             ->setParameter('userId', $this->getUser()->getId())
             ->setParameter('status', 'accepted')
@@ -93,7 +99,7 @@ class FriendController extends AbstractController
         return $this->render('friend/list.html.twig', [
             'friends' => $friends,
             'users' => $users,
-            'controller_name' => 'list d\'ami',
+            'controller_name' => 'list d ami',
         ]);
     }
 
