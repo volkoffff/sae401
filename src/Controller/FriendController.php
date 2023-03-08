@@ -18,69 +18,74 @@ class FriendController extends AbstractController
     public function sendFriendRequest(User $friendId, EntityManagerInterface $entityManager): Response
     {
 
-        if ($friendId) {
+        $friendship = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $this->getUser()->getId(),
+            'friend' => $friendId,
+        ]);
+
+        if (!$friendship) {
             $friend = new Friends();
             $friend->setUser($this->getUser());
             $friend->setFriend($friendId);
             $friend->setStatus('pending');
-
 //            dump($friend);
 //            die();
-
             $entityManager->persist($friend);
             $entityManager->flush();
+        return $this->redirectToRoute('list_friends');
         }
 
         return $this->redirectToRoute('list_friends');
 
+
     }
-//    #[Route('/friend/accept/{friendId}', name: 'accept_friend_request')]
-//    public function acceptFriendRequest($friendId, EntityManagerInterface $entityManager): Response
-//    {
-//        $friend = $entityManager->getRepository(Friends::class)->findOneBy([
-//            'user_id' => $friendId,
-//            'friend_id' => $this->getUser()->getId(),
-//            'status' => 'pending'
-//        ]);
-//
-//        if (!$friend) {
-//            throw $this->createNotFoundException('Friend request not found');
-//        }
-//
-//        $friend->setStatus('accepted');
-//        $entityManager->persist($friend);
-//        $entityManager->flush();
-//
-//        return $this->redirectToRoute('list_friends');
-//    }
-//
-//    #[Route('friend/decline/{friendId}', name: 'decline_friend_request')]
-//    public function declineFriendRequest($friendId, EntityManagerInterface $entityManager): Response
-//    {
-//        $friend = $entityManager->getRepository(Friends::class)->findOneBy([
-//            'user_id' => $friendId,
-//            'friend_id' => $this->getUser()->getId(),
-//            'status' => 'pending'
-//        ]);
-//
-//        if (!$friend) {
-//            throw $this->createNotFoundException('Friend request not found');
-//        }
-//
-//        $entityManager->remove($friend);
-//        $entityManager->flush();
-//
-//        return $this->redirectToRoute('list_friends');
-//    }
+    #[Route('/friend/accept/{friendId}', name: 'accept_friend_request')]
+    public function acceptFriendRequest($friendId, EntityManagerInterface $entityManager): Response
+    {
+        $friend = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $friendId,
+            'friend' => $this->getUser()->getId(),
+            'status' => 'pending'
+        ]);
+
+        if (!$friend) {
+            throw $this->createNotFoundException('Friend request not found');
+        }
+
+        $friend->setStatus('accepted');
+        $entityManager->persist($friend);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('list_friends');
+    }
+
+    #[Route('friend/decline/{friendId}', name: 'decline_friend_request')]
+    public function declineFriendRequest($friendId, EntityManagerInterface $entityManager): Response
+    {
+        $friend = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $friendId,
+            'friend' => $this->getUser()->getId(),
+            'status' => 'pending'
+        ]);
+
+        if (!$friend) {
+            throw $this->createNotFoundException('Friend request not found');
+        }
+
+        $entityManager->remove($friend);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('list_friends');
+    }
 
     #[Route('/list', name: 'list_friends')]
     public function listFriends(EntityManagerInterface $entityManager): Response
     {
 
-//        $friends = $entityManager->getRepository(Friends::class)->findBy([
-//            'user_id' => $this->getUser()->getId(),
-//            'status' => 'accepted'
-//        ]);
+        $friendsR = $entityManager->getRepository(Friends::class)->findBy([
+            'friend' => $this->getUser()->getId(),
+            'status' => 'pending'
+        ]);
 
         $friends = $entityManager->getRepository(Friends::class)->createQueryBuilder('f')
             ->where('f.user = :userId')
@@ -91,6 +96,11 @@ class FriendController extends AbstractController
             ->addSelect('u')
             ->getQuery()
             ->getResult();
+        $friends2 = $entityManager->getRepository(Friends::class)->findBy([
+            'friend' => $this->getUser()->getId(),
+            'status' => 'accepted'
+        ]);
+
 
 
         $users = $entityManager->getRepository(User::class)->findAll();
@@ -98,6 +108,8 @@ class FriendController extends AbstractController
 
         return $this->render('friend/list.html.twig', [
             'friends' => $friends,
+            'friends2' => $friends2,
+            'friendsR' => $friendsR,
             'users' => $users,
             'controller_name' => 'list d ami',
         ]);
