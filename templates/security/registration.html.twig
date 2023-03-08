@@ -1,13 +1,74 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <h2>inscription sur le site</h2>
+<div class="flex justify-center items-center h-full w-full">
+
+
+<div class="w-96 shadow-lg p-6 margin-auto">
+    <div class="flex">
+        <a href="{{ path('security_login') }}" class="flex-1 py-4 ">
+            <h1 class="text text-center">Connexion</h1>
+        </a>
+        <a href="{{ path('security_registration') }}" class="flex-1 py-4 bg-gray-100 border-b-2 border-purple-600">
+            <h1 class="text text-center text-purple-600">Inscription</h1>
+        </a>
+
+    </div>
     {{ form_start(form) }}
-    {{ form_row(form.email, {'labbel': 'Email' , 'attr': {'placeholder': 'jhon-doe@sfr.fr' }}) }}
-    {{ form_row(form.pseudo, {'labbel': 'Nom d\'utilisateur' , 'attr': {'placeholder': 'Jhon13' }}) }}
-    {{ form_row(form.password, {'labbel': 'Mot de passe' , 'attr': {'placeholder': 'Mot de passe' }}) }}
-    {{ form_row(form.confirm_password, {'labbel': 'Confirmation du mot de passe' , 'attr': {'placeholder': 'Répétez votre mot de passe' }}) }}
-    <button type="submit" >inscription</button>
+    {% if form_errors(form.confirm_password) %}
+        <div class="relative mt-5">
+            {{ form_widget(form.email, {'type':'text', 'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
+        </div>
+        <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
+            Rensseignez une email valide
+        </p>
+    {% else %}
+        <div class="relative mt-5">
+            {{ form_widget(form.email, {'type':'text', 'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
+        </div>
+    {% endif %}
+
+    <div class="relative mt-5">
+        {{ form_widget(form.pseudo, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Pseudo</label>
+    </div>
+    {% if form_errors(form.confirm_password) %}
+        <div class="relative mt-5">
+            {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
+        </div>
+        <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
+            Votre mot de passe doit faire au moins 10 charactères
+        </p>
+    {% else %}
+        <div class="relative mt-5">
+            {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
+        </div>
+    {% endif %}
+    {% if form_errors(form.confirm_password) %}
+        <div class="relative mt-5">
+            {{ form_widget(form.confirm_password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
+        </div>
+        <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
+            Les mots de passe doivents être les mêmes
+        </p>
+    {% else %}
+    <div class="relative mt-5">
+        {{ form_widget(form.confirm_password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
+    </div>
+    {% endif %}
+
+
+
+    <button type="submit" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Inscription</button>
     {{ form_end(form) }}
+</div>
+</div>
+
+
 {% endblock %}

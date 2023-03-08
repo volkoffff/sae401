@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PublicController extends AbstractController
 {
-    #[Route('/public', name: 'app_public')]
+    #[Route('/', name: 'app_public')]
     public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager,PartieRepository $PartieRepository,): Response
     {
         $user = $this->getUser();

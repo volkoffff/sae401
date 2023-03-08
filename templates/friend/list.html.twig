@@ -6,11 +6,11 @@
 
     <h2>vos amis</h2>
     {% for friend in friends %}
-        {{ friend.user.pseudo }}
+        {{ friend.friend.pseudo }}
         {{ friend.status }}
     {% endfor %}
     {% for friend in friends2 %}
-        {{ friend.friend.pseudo }}
+        {{ friend.user.pseudo }}
         {{ friend.status }}
     {% endfor %}
 

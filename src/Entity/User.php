@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min: 8, minMessage: "Votre mot de passe doit faire au moins 8 charactères")]
+    #[Assert\Length(min: 10, minMessage: "Votre mot de passe doit faire au moins 10 charactères")]
 
     private ?string $password = null;
 

@@ -3,21 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link href="./public/css/output.css" rel="stylesheet">
-        <link
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
-                rel="stylesheet" />
-        <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
-        <script src="https://cdn.tailwindcss.com/3.2.4"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+
         {% block stylesheets %}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css"  rel="stylesheet" />
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
         {% endblock %}
 
     </head>
@@ -32,8 +29,6 @@
             {% endif %}
         </nav>
         {% block body %}{% endblock %}
-        <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-        <script src="./node_modules/tw-elements/dist/js/index.min.js"></script>
 
     </body>
 </html>
