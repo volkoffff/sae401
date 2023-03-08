@@ -6,26 +6,22 @@
 
     <h2>vos amis</h2>
     {% for friend in friends %}
-        {{ friend.friend.pseudo }}
-        {{ friend.status }}
-    {% endfor %}
-    {% for friend in friends2 %}
         {{ friend.user.pseudo }}
         {{ friend.status }}
     {% endfor %}
-
 
     <h2>liste des joueurs</h2>
     {% for user in users %}
         {{ user.pseudo }}
         <form action="{{ path('send_friend_request', {'friendId': user.id}) }}" method="post" style="display: inline;">
             <button type="submit">Ajouter</button>
+            {{ csrf_token('add_friend_' ~ user.id) }}
         </form>
         <br>
     {% endfor %}
     <hr>
     <h2>liste de demande d'ami</h2>
-    {% for friend in friendsR %}
+    {% for friend in friends %}
         {{ friend.user.pseudo }}
         {% if friend.status == 'pending' %}
             <form action="{{ path('accept_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">
