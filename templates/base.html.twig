@@ -7,26 +7,76 @@
 
 
         {% block stylesheets %}
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css"  rel="stylesheet" />
             {{ encore_entry_link_tags('app') }}
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css"  rel="stylesheet" />
+            <link rel="preload" href="{{ asset('monstyle.css') }}" as="style" />
+            <link rel="stylesheet" media="screen" href="{{ asset('monstyle.css') }}">
+
+
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+            <script src="https://cdn.tailwindcss.com"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+            <script src="https://kit.fontawesome.com/b24ca366d4.js" crossorigin="anonymous"></script>
+            <script defer src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
 
     </head>
 
     <body>
         <nav>
+
+            <nav class="main-black border-gray-200 sm:pl-6 white:bg-gray-900 fixed w-full z-50">
+                <div class=" flex flex-wrap items-center justify-between mx-auto">
+                    <a href="https://flowbite.com/" class="flex items-center">
+                        <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo" />
+                        <span class="self-center text-xl font-semibold whitespace-nowrap white:text-white">Flowbite</span>
+                    </a>
+
+                    <button data-collapse-toggle="navbar-default" type="button"
+                            class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 white:text-gray-400 white:hover:bg-gray-700 white:focus:ring-gray-600"
+                            aria-controls="navbar-default" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div class="flex items-center gap-6">
+                        <div class="flex gap-4">
+                            <a href="" class="bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg text-2xl text-zinc-500 "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M257 120.471c7.083 0 23.911 4.479 23.911 4.479 45.589 10.447 77.678 52.439 77.678 99.85V352.412l9.321 9.364 7.788 7.823H136.302l7.788-7.823 9.321-9.364V224.8c0-47.41 32.089-89.403 77.678-99.85 0 0 18.043-4.479 23.911-4.479M256 48c-17.602 0-31.059 13.518-31.059 31.2v14.559c-59.015 13.523-103.53 67.601-103.53 131.041v114.4L80 380.8v20.8h352v-20.8l-41.411-41.6V224.8c0-63.44-44.516-117.518-103.53-131.041V79.2c0-17.682-13.457-31.2-31.059-31.2zm41.411 374.4h-82.823c0 22.881 18.633 41.6 41.412 41.6s41.411-18.719 41.411-41.6z"></path></svg></a>
+                            <a href="" class="bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg text-2xl text-zinc-500"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"></path></svg></a>
+                        </div>
+                        <a href="#" class="second-black flex items-center rounded-l-xl bg-gray-200 px-3 py-3 justify-between w-80 pr-6">
+                            <div class="flex items-center">
+                                <div class="mr-3 sm:h-14 w-14 h-14 rounded-xl bg-cover bg-center shadow-lg shadow-orange-600/10 "
+                                     style="background-image: url(https://www.01net.com/app/uploads/2022/06/nft-marche-effondre-adoption-continue-1024x682.jpg);">
+                                </div>
+                                <div>
+                                    <p class="self-center text-xl font-semibold whitespace-nowrap leading-none">{{ user.pseudo }}</p>
+                                    <p class=" leading-none mt-1 text-zinc-500">nouvelle recrue</p>
+                                </div>
+                            </div>
+                            <p class="text-3xl font-semibold flex items-center gap-2 text-gray-500 main-gradient-text leading-none">
+                                {{ user.trophee }}
+                                <i class="fa-sharp fa-solid fa-trophy fa-xs"></i>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
             <a href="{{ path('app_public') }}">public</a>
             {% if not app.user %}
             <a href="{{ path('security_login') }}">Connexion</a>
             {% else %}
             <a href="{{ path('security_logout') }}">Déconnexion</a>
             {% endif %}
+
         </nav>
         {% block body %}{% endblock %}
 

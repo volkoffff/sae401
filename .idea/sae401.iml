@@ -137,5 +137,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="tw-elements" level="application" />
     <orderEntry type="library" name="flowbite" level="application" />
+    <orderEntry type="library" name="b24ca366d4" level="application" />
   </component>
 </module>

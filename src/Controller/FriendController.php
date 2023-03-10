@@ -86,7 +86,6 @@ class FriendController extends AbstractController
             'friend' => $this->getUser()->getId(),
             'status' => 'pending'
         ]);
-
         $friends = $entityManager->getRepository(Friends::class)->createQueryBuilder('f')
             ->where('f.user = :userId')
             ->andWhere('f.status = :status')
@@ -100,9 +99,6 @@ class FriendController extends AbstractController
             'friend' => $this->getUser()->getId(),
             'status' => 'accepted'
         ]);
-
-
-
         $users = $entityManager->getRepository(User::class)->findAll();
 
 

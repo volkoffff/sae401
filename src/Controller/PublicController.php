@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Friends;
 use App\Entity\Partie;
 use App\Entity\User;
 use App\Repository\PartieRepository;
@@ -32,13 +33,105 @@ class PublicController extends AbstractController
 
 
 
+//parti ami
+        $friendsR = $entityManager->getRepository(Friends::class)->findBy([
+            'friend' => $this->getUser()->getId(),
+            'status' => 'pending'
+        ]);
+        $friends = $entityManager->getRepository(Friends::class)->createQueryBuilder('f')
+            ->where('f.user = :userId')
+            ->andWhere('f.status = :status')
+            ->setParameter('userId', $this->getUser()->getId())
+            ->setParameter('status', 'accepted')
+            ->join('f.user', 'u')
+            ->addSelect('u')
+            ->getQuery()
+            ->getResult();
+        $friends2 = $entityManager->getRepository(Friends::class)->findBy([
+            'friend' => $this->getUser()->getId(),
+            'status' => 'accepted'
+        ]);
+        $users = $entityManager->getRepository(User::class)->findAll();
+
+
+
         return $this->render('public/index.html.twig', [
             'controller_name' => 'PublicController',
             'user' => $user,
             'parties' => $parties,
             'leaders' => $leaders,
-            'partiesDuUser' => $partiesDuUser
+            'partiesDuUser' => $partiesDuUser,
+
+// partie amis
+            'friends' => $friends,
+            'friends2' => $friends2,
+            'friendsR' => $friendsR,
+            'users' => $users,
+
         ]);
     }
+
+    #[Route('/friend/send/{friendId}', name: 'send_friend_request')]
+    public function sendFriendRequest(User $friendId, EntityManagerInterface $entityManager): Response
+    {
+
+        $friendship = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $this->getUser()->getId(),
+            'friend' => $friendId,
+        ]);
+
+        if (!$friendship) {
+            $friend = new Friends();
+            $friend->setUser($this->getUser());
+            $friend->setFriend($friendId);
+            $friend->setStatus('pending');
+            $entityManager->persist($friend);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_public');
+        }
+
+        return $this->redirectToRoute('app_public');
+
+
+    }
+    #[Route('/friend/accept/{friendId}', name: 'accept_friend_request')]
+    public function acceptFriendRequest($friendId, EntityManagerInterface $entityManager): Response
+    {
+        $friend = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $friendId,
+            'friend' => $this->getUser()->getId(),
+            'status' => 'pending'
+        ]);
+
+        if (!$friend) {
+            throw $this->createNotFoundException('Friend request not found');
+        }
+
+        $friend->setStatus('accepted');
+        $entityManager->persist($friend);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_public');
+    }
+
+    #[Route('friend/decline/{friendId}', name: 'decline_friend_request')]
+    public function declineFriendRequest($friendId, EntityManagerInterface $entityManager): Response
+    {
+        $friend = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $friendId,
+            'friend' => $this->getUser()->getId(),
+            'status' => 'pending'
+        ]);
+
+        if (!$friend) {
+            throw $this->createNotFoundException('Friend request not found');
+        }
+
+        $entityManager->remove($friend);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_public');
+    }
+
 }
 
