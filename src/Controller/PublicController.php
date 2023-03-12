@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Friends;
-use App\Entity\Partie;
+use App\Entity\partie;
 use App\Entity\User;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
@@ -29,6 +29,44 @@ class PublicController extends AbstractController
         // Récupérer les entités liées à l'utilisateur
         $partiesDuUser = [];
         $partiesDuUser = $user->getPartie();
+
+
+
+        $friendsP = $entityManager->getRepository(Friends::class)->findBy([
+            'friend' => $this->getUser()->getId(),
+            'status' => 'accepted'
+        ]);
+        // Récupérer les parties associées aux amis de l'utilisateur actuel
+
+        $friends = $entityManager->getRepository(Friends::class)
+            ->createQueryBuilder('f')
+            ->where('f.status = :status')
+            ->andWhere('f.user = :user OR f.friend = :user')
+            ->setParameter('status', 'accepted')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
+        $friendIds = array();
+        foreach($friends as $friendship) {
+            if($friendship->getUser() == $user) {
+                $friendIds[] = $friendship->getFriend();
+            } else {
+                $friendIds[] = $friendship->getUser();
+            }
+        }
+
+        $partiesF = $entityManager->getRepository(Partie::class)
+            ->createQueryBuilder('p')
+            ->innerJoin('p.users', 'u')
+            ->andWhere('u.id IN (:friendIds)')
+            ->setParameter('friendIds', $friendIds)
+            ->getQuery()
+            ->getResult();
+
+
+
+
 
 
 
@@ -59,6 +97,7 @@ class PublicController extends AbstractController
             'controller_name' => 'PublicController',
             'user' => $user,
             'parties' => $parties,
+            'partiesF' => $partiesF,
             'leaders' => $leaders,
             'partiesDuUser' => $partiesDuUser,
 

@@ -28,7 +28,7 @@
                     </form>
                 </div>
                 <div class=" overflow-y-scroll h-full invisible_scroll pb-16">
-                    <button class="accordion text-zinc-500">Amis</button>
+                    <button class="accordion text-zinc-400">Amis</button>
                     <div class="panel ">
                         {% for friend in friends %}
                             <a href="#"
@@ -67,7 +67,7 @@
                             </a>
                         {% endfor %}
                     </div>
-                    <button class="accordion  text-zinc-500 flex gap-2">Demandes en attente
+                    <button class="accordion  text-zinc-400 flex gap-2">Demandes en attente
                         <p id="afficheur_compteur_ami" class="rounded w-5 h-5 flex items-center justify-center main-orange mt-0.5 text-zinc-300 text-sm">
                         </p>
                     </button>
@@ -111,7 +111,7 @@
                         </div>
                     {% endfor %}
                     </div>
-                    <button class="accordion  text-zinc-500">Joueurs</button>
+                    <button class="accordion  text-zinc-400">Joueurs</button>
                     <div class="panel">
                         {% for user in users %}
                             <div class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
@@ -247,6 +247,7 @@
 
 
     <hr>
+    <br>
     <hr>
     <h2>vos amis</h2>
     {% for friend in friends %}
@@ -285,8 +286,12 @@
     {% endfor %}
 
 
-
-
+    <hr>
+    <br>
+    <hr>
+    {% for partieF in partiesF %}
+        {{ partieF.id }} - {{ partieF.statut }}
+    {% endfor %}
 
 
 
