@@ -18,13 +18,10 @@ class Partie
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'partie')]
+    #[ORM\ManyToMany(targetEntity: User::class)]
     private Collection $users;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -43,30 +40,39 @@ class Partie
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user1", referencedColumnName: "id" )]
+    private $user1;
+
+
+    public function getUser1(): ?User
     {
-        return $this->users;
+        return $this->user1;
     }
 
-    public function addUser(User $user): self
+    public function setUser1(?User $user1): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addPartie($this);
-        }
+        $this->user1 = $user1;
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user2", referencedColumnName: "id" )]
+    private $user2;
+
+
+    public function getUser2(): ?User
     {
-        if ($this->users->removeElement($user)) {
-            $user->removePartie($this);
-        }
+        return $this->user2;
+    }
+
+    public function setUser2(?User $user2): self
+    {
+        $this->user2 = $user2;
 
         return $this;
     }
+
 }

@@ -31,6 +31,7 @@
                     <button class="accordion text-zinc-400">Amis</button>
                     <div class="panel ">
                         {% for friend in friends %}
+                            {% if friend.user.id == user.id %}
                             <a href="#"
                                class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
                                 <div class="flex items-center">
@@ -47,8 +48,7 @@
                                 <p class="text-xl flex items-center gap-1 text-zinc-500">{{ friend.friend.trophee }}<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M868 160h-92v-40c0-4.4-3.6-8-8-8H256c-4.4 0-8 3.6-8 8v40h-92a44 44 0 0 0-44 44v148c0 81.7 60 149.6 138.2 162C265.7 630.2 359 721.7 476 734.5v105.2H280c-17.7 0-32 14.3-32 32V904c0 4.4 3.6 8 8 8h512c4.4 0 8-3.6 8-8v-32.3c0-17.7-14.3-32-32-32H548V734.5C665 721.7 758.3 630.2 773.8 514 852 501.6 912 433.7 912 352V204a44 44 0 0 0-44-44zM184 352V232h64v207.6a91.99 91.99 0 0 1-64-87.6zm520 128c0 49.1-19.1 95.4-53.9 130.1-34.8 34.8-81 53.9-130.1 53.9h-16c-49.1 0-95.4-19.1-130.1-53.9-34.8-34.8-53.9-81-53.9-130.1V184h384v296zm136-128c0 41-26.9 75.8-64 87.6V232h64v120z"></path></svg>
                                 </p>
                             </a>
-                        {% endfor %}
-                        {% for friend in friends2 %}
+                        {% else %}
                             <a href="#"
                                class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
                                 <div class="flex items-center">
@@ -65,6 +65,7 @@
                                 <p class="text-xl flex items-center gap-1 text-zinc-500">{{ friend.user.trophee }}<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M868 160h-92v-40c0-4.4-3.6-8-8-8H256c-4.4 0-8 3.6-8 8v40h-92a44 44 0 0 0-44 44v148c0 81.7 60 149.6 138.2 162C265.7 630.2 359 721.7 476 734.5v105.2H280c-17.7 0-32 14.3-32 32V904c0 4.4 3.6 8 8 8h512c4.4 0 8-3.6 8-8v-32.3c0-17.7-14.3-32-32-32H548V734.5C665 721.7 758.3 630.2 773.8 514 852 501.6 912 433.7 912 352V204a44 44 0 0 0-44-44zM184 352V232h64v207.6a91.99 91.99 0 0 1-64-87.6zm520 128c0 49.1-19.1 95.4-53.9 130.1-34.8 34.8-81 53.9-130.1 53.9h-16c-49.1 0-95.4-19.1-130.1-53.9-34.8-34.8-53.9-81-53.9-130.1V184h384v296zm136-128c0 41-26.9 75.8-64 87.6V232h64v120z"></path></svg>
                                 </p>
                             </a>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <button class="accordion  text-zinc-400 flex gap-2">Demandes en attente
@@ -182,121 +183,158 @@
     <p>loose : {{ user.defaite }}</p>
     <hr>
 
-    <h2>leader board</h2>
+    <p class="text-xl font-bold">Leaderboard</p>
     {% for leader in leaders %}
         {{ leader.pseudo }}
         {{ leader.trophee }}
         <br>
     {% endfor %}
     <hr>
-    <h2>historique de tt les parties</h2>
-    <button id="toggleButton">Afficher uniquement les parties en cours</button>
-    {% for partie in parties %}
-        {% if partie.statut == 'terminé' %}
+{#    <h2>historique de tt les parties</h2>#}
+{#    <button id="toggleButton">Afficher uniquement les parties en cours</button>#}
+{#    {% for partie in parties %}#}
+{#        {% if partie.statut == 'terminé' %}#}
 {#            <div id="terminer">#}
 {#            {{ partie.id }}#}
 {#            {{ partie.statut }}#}
 {#            {{ partie.resultat }}#}
 {#            </div>#}
+{#        {% else %}#}
+{#            <div id="enCours">#}
+{#                {{ partie.id }}#}
+{#                {{ partie.statut }}#}
+{#                {{ partie.resultat }}#}
+{#            </div>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#    <hr>#}
+{#    <h2>historique des partie du user</h2>#}
+{#    {% for partie in partiesDuUser %}#}
+{#        <li>#}
+{#            {{ partie.id }} - {{ partie.statut }}#}
+{#        </li>#}
+{#    {% endfor %}#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#    <hr>#}
+{#    <br>#}
+{#    <hr>#}
+{#    <h2>vos amis</h2>#}
+{#    {% for friend in friends %}#}
+{#        {{ friend.friend.pseudo }}#}
+{#        {{ friend.status }}#}
+{#    {% endfor %}#}
+{#    {% for friend in friends2 %}#}
+{#        {{ friend.user.pseudo }}#}
+{#        {{ friend.status }}#}
+{#    {% endfor %}#}
+
+{#    <h2>liste des joueurs</h2>#}
+{#    {% for user in users %}#}
+{#        {{ user.pseudo }}#}
+{#        <form action="{{ path('send_friend_request', {'friendId': user.id}) }}" method="post" style="display: inline;">#}
+{#            <button type="submit">Ajouter</button>#}
+{#        </form>#}
+{#        <br>#}
+{#    {% endfor %}#}
+{#    <hr>#}
+{#    <h2>liste de demande d'ami</h2>#}
+{#    {% for friend in friendsR %}#}
+{#        {{ friend.user.pseudo }}#}
+{#        {% if friend.status == 'pending' %}#}
+{#            <form action="{{ path('accept_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">#}
+{#                <button type="submit">Accepter</button>#}
+{#                <input type="hidden" name="_method" value="PUT">#}
+{#                <input type="hidden" name="_token" value="{{ csrf_token('accept' ~ friend.user.id) }}">#}
+{#            </form>#}
+{#            <form action="{{ path('decline_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">#}
+{#                <button type="submit">Refuser</button>#}
+{#                <input type="hidden" name="_method" value="DELETE">#}
+{#                <input type="hidden" name="_token" value="{{ csrf_token('decline' ~ friend.user.id) }}">#}
+{#            </form>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+
+
+    <hr>
+    <br>
+    <hr>
+
+    <p class="text-2xl">Partie 2eme version</p>
+    <p class="text-xl font-bold">toute les parties</p>
+    {% for partie in parties %}
+        {% if partie.statut == 'terminé' %}
+            <div id="terminer">
+                {{ partie.id }}
+                {{ partie.statut }}
+            </div>
         {% else %}
             <div id="enCours">
                 {{ partie.id }}
                 {{ partie.statut }}
-{#                {{ partie.resultat }}#}
             </div>
         {% endif %}
     {% endfor %}
-    <hr>
-    <h2>historique des partie du user</h2>
-    {% for partie in partiesDuUser %}
-        <li>
-            {{ partie.id }} - {{ partie.statut }}
-        </li>
-    {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <hr>
-    <br>
-    <hr>
-    <h2>vos amis</h2>
-    {% for friend in friends %}
-        {{ friend.friend.pseudo }}
-        {{ friend.status }}
-    {% endfor %}
-    {% for friend in friends2 %}
-        {{ friend.user.pseudo }}
-        {{ friend.status }}
-    {% endfor %}
-
-    <h2>liste des joueurs</h2>
-    {% for user in users %}
-        {{ user.pseudo }}
-        <form action="{{ path('send_friend_request', {'friendId': user.id}) }}" method="post" style="display: inline;">
-            <button type="submit">Ajouter</button>
-        </form>
-        <br>
-    {% endfor %}
-    <hr>
-    <h2>liste de demande d'ami</h2>
-    {% for friend in friendsR %}
-        {{ friend.user.pseudo }}
-        {% if friend.status == 'pending' %}
-            <form action="{{ path('accept_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">
-                <button type="submit">Accepter</button>
-                <input type="hidden" name="_method" value="PUT">
-                <input type="hidden" name="_token" value="{{ csrf_token('accept' ~ friend.user.id) }}">
-            </form>
-            <form action="{{ path('decline_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">
-                <button type="submit">Refuser</button>
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token('decline' ~ friend.user.id) }}">
-            </form>
+    <p class="text-xl font-bold">toute les parties en attente d'un joeur</p>
+    {% for partie in parties %}
+        {% if partie.statut == 'en attente' %}
+            <div id="enAttente">
+                {{ partie.id }}
+                {{ partie.statut }}
+            </div>
         {% endif %}
     {% endfor %}
-
-
-    <hr>
-    <br>
-    <hr>
-    {% for partieF in partiesF %}
-        {{ partieF.id }} - {{ partieF.statut }}
+    <p class="text-xl font-bold">partie dans lequel est le joueur</p>
+    {% for partiesDuUserr in partiesDuUser %}
+        {{ partiesDuUserr.id }}
+    {% if partiesDuUserr.user1.id == user.id %}
+        {{ partiesDuUserr.user2.pseudo }}
+    {% else %}
+        {{ partiesDuUserr.user1.pseudo }}
+    {% endif %}
+        {{ partiesDuUserr.statut }}
+        <br>
     {% endfor %}
 
 
-
-
-
+    <p class="text-xl font-bold">partie des amis en attente d'un joueur</p>
+    {% if partiesAmis|length > 0 %}
+        {% for partiesAmi in partiesAmis %}
+            {{ partiesAmi.id }} - {{ partiesAmi.user1.pseudo }} - {{ partiesAmi.statut }}
+            <br>
+        {% endfor %}
+    {% endif %}
 
 
 

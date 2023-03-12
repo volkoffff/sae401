@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Friends;
-use App\Entity\partie;
+use App\Entity\Partie;
 use App\Entity\User;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
@@ -20,92 +20,76 @@ class PublicController extends AbstractController
     #[Route('/', name: 'app_public')]
     public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager,PartieRepository $PartieRepository,): Response
     {
+// section des profils
         $user = $this->getUser();
-        $leaders = $UserRepository->findBy([], ['victoire' => 'DESC']);
-        $parties = $PartieRepository->findAll();
-
-
         $users = $entityManager->getRepository(User::class)->findAll();
-        // Récupérer les entités liées à l'utilisateur
-        $partiesDuUser = [];
-        $partiesDuUser = $user->getPartie();
+        $leaders = $UserRepository->findBy([], ['victoire' => 'DESC']);
 
 
 
-        $friendsP = $entityManager->getRepository(Friends::class)->findBy([
-            'friend' => $this->getUser()->getId(),
-            'status' => 'accepted'
-        ]);
-        // Récupérer les parties associées aux amis de l'utilisateur actuel
-
-        $friends = $entityManager->getRepository(Friends::class)
-            ->createQueryBuilder('f')
-            ->where('f.status = :status')
-            ->andWhere('f.user = :user OR f.friend = :user')
-            ->setParameter('status', 'accepted')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
-
-        $friendIds = array();
-        foreach($friends as $friendship) {
-            if($friendship->getUser() == $user) {
-                $friendIds[] = $friendship->getFriend();
-            } else {
-                $friendIds[] = $friendship->getUser();
-            }
-        }
-
-        $partiesF = $entityManager->getRepository(Partie::class)
-            ->createQueryBuilder('p')
-            ->innerJoin('p.users', 'u')
-            ->andWhere('u.id IN (:friendIds)')
-            ->setParameter('friendIds', $friendIds)
+// section des parties
+        $parties = $PartieRepository->findAll();
+        $partiesDuUser = $entityManager->getRepository(Partie::class)->createQueryBuilder('p')
+            ->where('p.statut = :statut')
+            ->andWhere('(p.user1 = :user_id OR p.user2 = :user_id)')
+            ->setParameters([
+                'statut' => 'en cours',
+                'user_id' => $this->getUser()->getId(),
+            ])
             ->getQuery()
             ->getResult();
 
 
 
 
-
-
-
-
-//parti ami
+//section ami
         $friendsR = $entityManager->getRepository(Friends::class)->findBy([
             'friend' => $this->getUser()->getId(),
             'status' => 'pending'
         ]);
         $friends = $entityManager->getRepository(Friends::class)->createQueryBuilder('f')
-            ->where('f.user = :userId')
-            ->andWhere('f.status = :status')
+            ->where('f.user = :userId OR f.friend = :userId')
+            ->andWhere('f.status = :status ')
             ->setParameter('userId', $this->getUser()->getId())
             ->setParameter('status', 'accepted')
-            ->join('f.user', 'u')
-            ->addSelect('u')
             ->getQuery()
             ->getResult();
-        $friends2 = $entityManager->getRepository(Friends::class)->findBy([
-            'friend' => $this->getUser()->getId(),
-            'status' => 'accepted'
-        ]);
-        $users = $entityManager->getRepository(User::class)->findAll();
+
+        // section des parties
+        foreach ($friends as $friendship) {
+            $friendsIds[] = $friendship->getUser() === $user ? $friendship->getFriend() : $friendship->getUser();
+        }
+        $partiesAmis = $PartieRepository->createQueryBuilder('p')
+            ->where('p.statut = :statut')
+            ->andWhere('p.user1 IN (:friendsIds) OR p.user2 IN (:friendsIds)')
+            ->setParameters([
+                'statut' => 'en attente',
+                'friendsIds' => $friendsIds,
+            ])
+            ->getQuery()
+            ->getResult();
+
+
 
 
 
         return $this->render('public/index.html.twig', [
             'controller_name' => 'PublicController',
+
+// section des profils
             'user' => $user,
-            'parties' => $parties,
-            'partiesF' => $partiesF,
+            'users' => $users,
             'leaders' => $leaders,
+
+// section des parties
+            'parties' => $parties,
             'partiesDuUser' => $partiesDuUser,
 
-// partie amis
+
+// section amis
             'friends' => $friends,
-            'friends2' => $friends2,
             'friendsR' => $friendsR,
-            'users' => $users,
+            'partiesAmis' => $partiesAmis
 
         ]);
     }

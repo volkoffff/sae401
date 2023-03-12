@@ -47,8 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $trophee = 0;
 
-    #[ORM\ManyToMany(targetEntity: partie::class, inversedBy: 'users')]
-    private Collection $partie;
 
     public function __construct()
     {
@@ -148,30 +146,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, partie>
-     */
-    public function getPartie(): Collection
-    {
-        return $this->partie;
-    }
-
-    public function addPartie(partie $partie): self
-    {
-        if (!$this->partie->contains($partie)) {
-            $this->partie->add($partie);
-        }
-
-        return $this;
-    }
-
-    public function removePartie(partie $partie): self
-    {
-        $this->partie->removeElement($partie);
-
-        return $this;
-    }
-
 
 }
