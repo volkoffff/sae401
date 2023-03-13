@@ -29,6 +29,8 @@ class PublicController extends AbstractController
 
 // section des parties
         $parties = $PartieRepository->findAll();
+        $partiesDuUser = 0;
+        if (!empty($parties)) {
         $partiesDuUser = $entityManager->getRepository(Partie::class)->createQueryBuilder('p')
             ->where('p.statut = :statut')
             ->andWhere('(p.user1 = :user_id OR p.user2 = :user_id)')
@@ -38,6 +40,7 @@ class PublicController extends AbstractController
             ])
             ->getQuery()
             ->getResult();
+        }
 
 
 
