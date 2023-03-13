@@ -47,6 +47,7 @@ class PublicController extends AbstractController
             'friend' => $this->getUser()->getId(),
             'status' => 'pending'
         ]);
+        $friends = 0;
         $friends = $entityManager->getRepository(Friends::class)->createQueryBuilder('f')
             ->where('f.user = :userId OR f.friend = :userId')
             ->andWhere('f.status = :status ')
@@ -56,18 +57,21 @@ class PublicController extends AbstractController
             ->getResult();
 
         // section des parties
-        foreach ($friends as $friendship) {
-            $friendsIds[] = $friendship->getUser() === $user ? $friendship->getFriend() : $friendship->getUser();
+        $partiesAmis = 0;
+        if (!empty($friends)) {
+            foreach ($friends as $friendship) {
+                $friendsIds[] = $friendship->getUser() === $user ? $friendship->getFriend() : $friendship->getUser();
+            }
+            $partiesAmis = $PartieRepository->createQueryBuilder('p')
+                ->where('p.statut = :statut')
+                ->andWhere('p.user1 IN (:friendsIds) OR p.user2 IN (:friendsIds)')
+                ->setParameters([
+                    'statut' => 'en attente',
+                    'friendsIds' => $friendsIds,
+                ])
+                ->getQuery()
+                ->getResult();
         }
-        $partiesAmis = $PartieRepository->createQueryBuilder('p')
-            ->where('p.statut = :statut')
-            ->andWhere('p.user1 IN (:friendsIds) OR p.user2 IN (:friendsIds)')
-            ->setParameters([
-                'statut' => 'en attente',
-                'friendsIds' => $friendsIds,
-            ])
-            ->getQuery()
-            ->getResult();
 
 
 
