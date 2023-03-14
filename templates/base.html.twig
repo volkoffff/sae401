@@ -58,11 +58,11 @@
                         <a href="#" class="second-black flex items-center rounded-l-xl bg-gray-200 px-3 py-3 justify-between w-80 pr-6">
                             <div class="flex items-center">
                                 <div class="mr-3 sm:h-14 w-14 h-14 rounded-xl bg-cover bg-center shadow-lg shadow-orange-600/10 "
-                                     style="background-image: url(https://www.01net.com/app/uploads/2022/06/nft-marche-effondre-adoption-continue-1024x682.jpg);">
+                                     style="background-image: url({{ asset('uploads/' ~ user.avatar) }});">
                                 </div>
                                 <div>
                                     <p class="self-center text-xl font-semibold whitespace-nowrap leading-none">{{ user.pseudo }}</p>
-                                    <p class=" leading-none mt-1 text-zinc-500">nouvelle recrue</p>
+                                    <p class=" leading-none mt-1 text-zinc-500">{{ user.biographie }}</p>
                                 </div>
                             </div>
                             <p class="text-3xl font-semibold flex items-center gap-2 text-gray-500 main-gradient-text leading-none">

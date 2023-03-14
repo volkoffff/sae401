@@ -190,6 +190,11 @@
 
 
 
+    {{ form_start(biographie_form) }}
+    {{ form_widget(biographie_form) }}
+    <button type="submit">Save</button>
+    {{ form_end(biographie_form) }}
+
 
     <h1>Mon profil</h1>
     <p>Nom d'utilisateur : {{ user.pseudo }}</p>
@@ -230,18 +235,6 @@
 {#            {{ partie.id }} - {{ partie.statut }}#}
 {#        </li>#}
 {#    {% endfor %}#}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

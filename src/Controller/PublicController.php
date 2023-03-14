@@ -8,9 +8,11 @@ use App\Entity\User;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\BiographieType;
 
 /**
  * @method getDoctrine()
@@ -18,8 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicController extends AbstractController
 {
     #[Route('/', name: 'app_public')]
-    public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager,PartieRepository $PartieRepository,): Response
+    public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
+
 // section des profils
         $user = $this->getUser();
         $userConnecter = $this->getUser();
@@ -77,10 +80,18 @@ class PublicController extends AbstractController
                 ->getQuery()
                 ->getResult();
         }
+        $biographieForm = $this->createForm(BiographieType::class, $user);
+        $biographieForm->handleRequest($request);
+
+        if ($biographieForm->isSubmitted() && $biographieForm->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
 
 
         return $this->render('public/index.html.twig', [
             'controller_name' => 'PublicController',
+            'biographie_form' => $biographieForm->createView(),
 
 // section des profils
             'user' => $user,
@@ -171,8 +182,6 @@ class PublicController extends AbstractController
 
         return $this->redirectToRoute('app_public');
     }
-
-
 
 
 

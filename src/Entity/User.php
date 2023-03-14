@@ -47,6 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $trophee = 0;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Avatar = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $biographie = null;
+
 
     public function __construct()
     {
@@ -143,6 +149,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTrophee(int $trophee): self
     {
         $this->trophee = $trophee;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->Avatar;
+    }
+
+    public function setAvatar(?string $Avatar): self
+    {
+        $this->Avatar = $Avatar;
+
+        return $this;
+    }
+
+    public function getbiographie(): ?string
+    {
+        return $this->biographie;
+    }
+
+    public function setBiographie(?string $biographie): self
+    {
+        $this->biographie = $biographie;
 
         return $this;
     }

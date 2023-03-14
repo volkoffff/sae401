@@ -62,6 +62,14 @@
         <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
     </div>
     {% endif %}
+    <div class="stp_containner">
+    {% for avatar in form.avatar %}
+        <div class="stp" >
+            {{ form_widget(avatar, {'attr': {'class': 'radioavatar'}}) }}
+
+        </div>
+    {% endfor %}
+    </div>
 
 
 
@@ -69,6 +77,44 @@
     {{ form_end(form) }}
 </div>
 </div>
+<style>
+
+    input#registration_avatar_0 {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+    input#registration_avatar_1 {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+    input#registration_avatar_2 {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+    .stp {
+        height: 60px;
+        width: 60px;
+        background-size: cover;
+    }
+    .stp_containner .stp:nth-child(1) {
+        background-image: url("{{ asset('uploads/avatar1.jpg') }}")!important;
+    }
+    .stp_containner .stp:nth-child(2) {
+        background-image: url("{{ asset('uploads/avatar2.jpg') }}")!important;
+    }
+    .stp_containner .stp:nth-child(3) {
+        background-image: url("{{ asset('uploads/avatar3.jpg') }}")!important;
+    }
+    .stp_containner {
+        display: flex;
+        gap: 5%;
+        margin-top: 1rem;
+    }
 
 
+
+</style>
 {% endblock %}
