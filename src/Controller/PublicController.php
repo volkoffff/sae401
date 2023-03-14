@@ -22,6 +22,7 @@ class PublicController extends AbstractController
     {
 // section des profils
         $user = $this->getUser();
+        $userConnecter = $this->getUser();
         $users = $entityManager->getRepository(User::class)->findAll();
         $leaders = $UserRepository->findBy([], ['victoire' => 'DESC']);
 
@@ -46,6 +47,7 @@ class PublicController extends AbstractController
 
 
 //section ami
+
         $friendsR = $entityManager->getRepository(Friends::class)->findBy([
             'friend' => $this->getUser()->getId(),
             'status' => 'pending'
@@ -77,14 +79,12 @@ class PublicController extends AbstractController
         }
 
 
-
-
-
         return $this->render('public/index.html.twig', [
             'controller_name' => 'PublicController',
 
 // section des profils
             'user' => $user,
+            'userConnecter' => $userConnecter,
             'users' => $users,
             'leaders' => $leaders,
 
@@ -109,8 +109,12 @@ class PublicController extends AbstractController
             'user' => $this->getUser()->getId(),
             'friend' => $friendId,
         ]);
+        $friendship2 = $entityManager->getRepository(Friends::class)->findOneBy([
+            'user' => $friendId,
+            'friend' =>  $this->getUser()->getId(),
+        ]);
 
-        if (!$friendship) {
+        if (!$friendship and !$friendship2) {
             $friend = new Friends();
             $friend->setUser($this->getUser());
             $friend->setFriend($friendId);
@@ -119,7 +123,8 @@ class PublicController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('app_public');
         }
-
+        $this->addFlash('danger', 'Vous êtes déjà ami avec ce joueur');
+        // Rediriger l'utilisateur vers la page d'accueil
         return $this->redirectToRoute('app_public');
 
 
@@ -133,6 +138,7 @@ class PublicController extends AbstractController
             'status' => 'pending'
         ]);
 
+
         if (!$friend) {
             throw $this->createNotFoundException('Friend request not found');
         }
@@ -142,6 +148,9 @@ class PublicController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_public');
+
+
+
     }
 
     #[Route('friend/decline/{friendId}', name: 'decline_friend_request')]
@@ -163,5 +172,49 @@ class PublicController extends AbstractController
         return $this->redirectToRoute('app_public');
     }
 
+
+
+
+
+    #[Route('/partie/join/{partieId}', name: 'join_partie')]
+    public function joinPartie( $partieId, EntityManagerInterface $entityManager): Response
+    {
+
+        $partie = $entityManager->getRepository(Partie::class)->findOneBy([
+            'id' => $partieId
+        ]);
+
+        if (!$partie) {
+            throw $this->createNotFoundException('aucune partie a rejoindre');
+        };
+        if ($partie->getUser1() === $this->getUser()) {
+            $this->addFlash('danger', 'Vous êtes déjà dans cette partie');
+            // Rediriger l'utilisateur vers la page d'accueil
+            return $this->redirectToRoute('app_public');
+        }
+
+        $partie->setUser2($this->getUser());
+        $partie->setStatut('en cours');
+        $entityManager->persist($partie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_public');
+
+    }
+    #[Route('/partie/create/', name: 'create_partie')]
+    public function createPartie(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $nom = $request->request->get('nom');
+
+        $partie = new Partie();
+        $partie->setStatut('en attente');
+        $partie->setUser1($this->getUser());
+
+        $entityManager->persist($partie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_public');
+
+    }
 }
 
