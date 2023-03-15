@@ -1,99 +1,178 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="flex justify-center items-center h-full w-full">
+<div class="flex justify-center items-center h-full w-full" style="background-image: url({{ asset("uploads/fond_1.svg") }});">
 
 
-<div class="w-96 shadow-lg p-6 margin-auto">
-    <div class="flex">
-        <a href="{{ path('security_login') }}" class="flex-1 py-4 ">
-            <h1 class="text text-center">Connexion</h1>
-        </a>
-        <a href="{{ path('security_registration') }}" class="flex-1 py-4 bg-gray-100 border-b-2 border-purple-600">
-            <h1 class="text text-center text-purple-600">Inscription</h1>
-        </a>
+    <div class="w-96 shadow-lg margin-auto overflow-hidden transition-all second-black rounded-2xl">
+        <div class="flex">
+            <a href="{{ path('security_login') }}" class="flex-1 py-4 ">
+                <h1 class="text text-center">Connexion</h1>
+            </a>
+            <a href="{{ path('security_registration') }}" class="flex-1 py-4 bg-gray-100 border-b-2 border-purple-600">
+                <h1 class="text text-center text-purple-600">Inscription</h1>
+            </a>
+
+        </div>
+        <div id="userinscription" class="transition-all">
+            <div id="userimportant" class="w-96 p-6">
+                {{ form_start(form) }}
+                {% if form_errors(form.confirm_password) %}
+                    <div class="relative mt-5">
+                        {{ form_widget(form.email, {'type':'text', 'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
+                    </div>
+                    <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
+                        Renseignez une email valide
+                    </p>
+                {% else %}
+                    <div class="relative mt-5">
+                        {{ form_widget(form.email, {'type':'text', 'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
+                    </div>
+                {% endif %}
+                <div class="relative mt-5">
+                    {{ form_widget(form.pseudo, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                    <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Pseudo</label>
+                </div>
+                {% if form_errors(form.confirm_password) %}
+                    <div class="relative mt-5">
+                        {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
+                    </div>
+                    <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
+                        Votre mot de passe doit faire au moins 10 charactères
+                    </p>
+                {% else %}
+                    <div class="relative mt-5">
+                        {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
+                    </div>
+                {% endif %}
+                {% if form_errors(form.confirm_password) %}
+                    <div class="relative mt-5">
+                        {{ form_widget(form.confirm_password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
+                    </div>
+                    <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
+                        Les mots de passe doivents être les mêmes
+                    </p>
+                {% else %}
+                    <div class="relative mt-5">
+                        {{ form_widget(form.confirm_password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
+                        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
+                    </div>
+                {% endif %}
+                <div id="continuer" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Suivant</div>
+
+            </div>
+
+            <div id="userdetail" class="w-96 p-6 hidden">
+                <p class="text-2xl text-zinc-500 font-semibold">C'est presque fini mais avant </p>
+                <div class="stp_containner">
+                    {% for avatar in form.avatar %}
+                        <div class="stp" >
+                            {{ form_widget(avatar, {'attr': {'class': 'radioavatar'}}) }}
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div id="continuer2" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Suivant</div>
+                <div id="retour" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Retour</div>
+
+            </div>
+            <div id="userdetail2" class="w-96 p-6">
+                <div id="previsualisationCouleurAvatar" class="rounded-xl ">
+                <div id="previsualisationAvatar" class="w-3/6 aspect-square "></div>
+                </div>
+                <div class="color_containner">
+                    {% for couleur in form.couleur %}
+                        <div class="color" >
+                            {{ form_widget(couleur, {'attr': {'class': 'radiocouleur'}}) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Inscription</button>
+                <div id="retour2" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Retour</div>
+            </div>
+            {{ form_end(form) }}
+        </div>
 
     </div>
-    <div id="userinscription">
-    <div id="userimportant">
-    {{ form_start(form) }}
-    {% if form_errors(form.confirm_password) %}
-        <div class="relative mt-5">
-            {{ form_widget(form.email, {'type':'text', 'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
-        </div>
-        <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
-            Renseignez une email valide
-        </p>
-    {% else %}
-        <div class="relative mt-5">
-            {{ form_widget(form.email, {'type':'text', 'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
-        </div>
-    {% endif %}
-
-    <div class="relative mt-5">
-        {{ form_widget(form.pseudo, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Pseudo</label>
-    </div>
-    {% if form_errors(form.confirm_password) %}
-        <div class="relative mt-5">
-            {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
-        </div>
-        <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
-            Votre mot de passe doit faire au moins 10 charactères
-        </p>
-    {% else %}
-        <div class="relative mt-5">
-            {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
-        </div>
-    {% endif %}
-    {% if form_errors(form.confirm_password) %}
-        <div class="relative mt-5">
-            {{ form_widget(form.confirm_password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
-        </div>
-        <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
-            Les mots de passe doivents être les mêmes
-        </p>
-    {% else %}
-    <div class="relative mt-5">
-        {{ form_widget(form.confirm_password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
-        <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
-    </div>
-    {% endif %}
-        <div id="continuer" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Continuer</div>
-
-    </div>
-
-    <div id="userdetail">
-    <div class="stp_containner">
-    {% for avatar in form.avatar %}
-        <div class="stp" >
-            {{ form_widget(avatar, {'attr': {'class': 'radioavatar'}}) }}
-
-        </div>
-    {% endfor %}
-    </div>
-    <div class="color_containner">
-    {% for couleur in form.couleur %}
-        <div class="color" >
-            {{ form_widget(couleur, {'attr': {'class': 'radiocouleur'}}) }}
-
-        </div>
-    {% endfor %}
 </div>
-        <button type="submit" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Inscription</button>
-        {{ form_end(form) }}
-    </div>
-    </div>
 
-</div>
-</div>
 
+    <script>
+        const continuer = document.getElementById('continuer')
+        const continuer2 = document.getElementById('continuer2')
+        const retour = document.getElementById('retour')
+        const retour2 = document.getElementById('retour2')
+        const userdetail = document.getElementById('userdetail')
+        const userinscription = document.getElementById('userinscription')
+
+        continuer.addEventListener('click', function() {
+            userinscription.style.left = '-100%';
+            userdetail.style.display = 'block';
+        });
+        continuer2.addEventListener('click', function() {
+            userinscription.style.left = '-200%';
+        });
+        retour.addEventListener('click', function() {
+            userinscription.style.left = '0%';
+            userdetail.style.display = 'none';
+        });
+        retour2.addEventListener('click', function() {
+            userinscription.style.left = '-100%';
+        });
+
+
+        const previsualisationAvatar = document.getElementById('previsualisationAvatar')
+
+        continuer2.addEventListener('click', function(event) {
+            var selectedRadio = document.querySelector('input[name="registration[avatar]"]:checked');
+            console.log(selectedRadio)
+            if (selectedRadio) {
+                var genderValue = selectedRadio.value;
+                previsualisationAvatar.style.background = 'url("' + '{{ asset('uploads/') }}' + genderValue + '")'
+            } else {
+                console.log('Aucun bouton radio sélectionné');
+            }
+        });
+
+        const colorclick = document.getElementsByClassName('radiocouleur')
+        const previsualisationCouleurAvatar = document.getElementById('previsualisationCouleurAvatar')
+
+        colorclick.addEventListener('click', function(event) {
+            var selectedRadioo = document.querySelector('input[name="registration[couleur]"]:checked');
+            if (selectedRadioo) {
+            var genderValuee = selectedRadioo.value;
+                previsualisationCouleurAvatar.style.backgroundColor = genderValuee;
+                console.log(genderValuee)
+            } else {
+                console.log('Aucun bouton radio sélectionné');
+
+            }
+        });
+
+    </script>
 <style>
+
+
+    #userinscription {
+        display: flex;
+        position: relative;
+        width: 72rem;
+    }
+    #previsualisationAvatar {
+        margin: auto !important;
+        background-size: cover !important;
+    }
+
+
+
+
+
     input#registration_avatar_0,
     input#registration_avatar_1,
     input#registration_avatar_2,
@@ -113,8 +192,8 @@
         background: transparent;
     }
     .stp,.color {
-        height: 80px;
-        width: 80px;
+        height: 90px;
+        width: 90px;
         background-size: cover;
     }
     .color {
@@ -158,7 +237,7 @@
     }
     .stp_containner, .color_containner {
         display: flex;
-        gap: 2rem;
+        gap: 1rem;
         margin-top: 1rem;
         flex-wrap: wrap;
         justify-content: center;
@@ -168,7 +247,9 @@
     }
 
 
-
+    body {
+        height: 100vh;
+    }
 </style>
 
 {% endblock %}
