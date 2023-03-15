@@ -53,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $biographie = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $couleur = null;
+
 
     public function __construct()
     {
@@ -173,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBiographie(?string $biographie): self
     {
         $this->biographie = $biographie;
+
+        return $this;
+    }
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(?string $couleur): self
+    {
+        $this->couleur = $couleur;
 
         return $this;
     }

@@ -14,9 +14,20 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options, ): void
     {
         $avatarOptions = [
-            'avatar1.jpg',
-            'avatar2.jpg',
-            'avatar3.jpg',
+            'avatar1.png',
+            'avatar2.png',
+            'avatar3.png',
+            'avatar4.png',
+            'avatar5.png',
+            'avatar6.png',
+            'avatar7.png',
+            'avatar8.png',
+            'avatar9.png',
+        ];
+        $listecouleur = [
+            '#F34B4B',
+            '#4BF352',
+            '#4B70F3',
         ];
 
         $builder
@@ -32,7 +43,13 @@ class RegistrationType extends AbstractType
                 'label' => false,
                 'choice_label' => false,
 
-            ]);
+            ])
+
+            ->add('couleur', ChoiceType::class, [
+                'choices' => $listecouleur,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

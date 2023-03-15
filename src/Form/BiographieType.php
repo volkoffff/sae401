@@ -16,6 +16,8 @@ class BiographieType extends AbstractType
             'gg' => 'gg',
             'vainqueur' => 'vainqueur',
             'roi' => 'Roi des MMIs',
+            'dev' => 'dev > crea',
+            'crea' => 'crea > dev',
         ];
 
         $builder

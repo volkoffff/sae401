@@ -14,6 +14,8 @@
         </a>
 
     </div>
+    <div id="userinscription">
+    <div id="userimportant">
     {{ form_start(form) }}
     {% if form_errors(form.confirm_password) %}
         <div class="relative mt-5">
@@ -21,7 +23,7 @@
             <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
         </div>
         <p class="mt-2 text-sm text-red-600"><span class="font-bold">Oops!</span>
-            Rensseignez une email valide
+            Renseignez une email valide
         </p>
     {% else %}
         <div class="relative mt-5">
@@ -62,6 +64,11 @@
         <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Répétez votre mot de passe</label>
     </div>
     {% endif %}
+        <div id="continuer" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Continuer</div>
+
+    </div>
+
+    <div id="userdetail">
     <div class="stp_containner">
     {% for avatar in form.avatar %}
         <div class="stp" >
@@ -70,51 +77,98 @@
         </div>
     {% endfor %}
     </div>
+    <div class="color_containner">
+    {% for couleur in form.couleur %}
+        <div class="color" >
+            {{ form_widget(couleur, {'attr': {'class': 'radiocouleur'}}) }}
 
+        </div>
+    {% endfor %}
+</div>
+        <button type="submit" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Inscription</button>
+        {{ form_end(form) }}
+    </div>
+    </div>
 
-
-    <button type="submit" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Inscription</button>
-    {{ form_end(form) }}
 </div>
 </div>
+
 <style>
-
-    input#registration_avatar_0 {
+    input#registration_avatar_0,
+    input#registration_avatar_1,
+    input#registration_avatar_2,
+    input#registration_avatar_3,
+    input#registration_avatar_4,
+    input#registration_avatar_5,
+    input#registration_avatar_6,
+    input#registration_avatar_7,
+    input#registration_avatar_8,
+    input#registration_avatar_9,
+    input#registration_couleur_0,
+    input#registration_couleur_1,
+    input#registration_couleur_2
+    {
         width: 100%;
         height: 100%;
         background: transparent;
     }
-    input#registration_avatar_1 {
-        width: 100%;
-        height: 100%;
-        background: transparent;
-    }
-    input#registration_avatar_2 {
-        width: 100%;
-        height: 100%;
-        background: transparent;
-    }
-    .stp {
-        height: 60px;
-        width: 60px;
+    .stp,.color {
+        height: 80px;
+        width: 80px;
         background-size: cover;
     }
+    .color {
+        border-radius: 15px;
+    }
     .stp_containner .stp:nth-child(1) {
-        background-image: url("{{ asset('uploads/avatar1.jpg') }}")!important;
+        background-image: url("{{ asset('uploads/avatar1.png') }}")!important;
     }
     .stp_containner .stp:nth-child(2) {
-        background-image: url("{{ asset('uploads/avatar2.jpg') }}")!important;
+        background-image: url("{{ asset('uploads/avatar2.png') }}")!important;
     }
     .stp_containner .stp:nth-child(3) {
-        background-image: url("{{ asset('uploads/avatar3.jpg') }}")!important;
+        background-image: url("{{ asset('uploads/avatar3.png') }}")!important;
     }
-    .stp_containner {
+    .stp_containner .stp:nth-child(4) {
+        background-image: url("{{ asset('uploads/avatar4.png') }}")!important;
+    }
+    .stp_containner .stp:nth-child(5) {
+        background-image: url("{{ asset('uploads/avatar5.png') }}")!important;
+    }
+    .stp_containner .stp:nth-child(6) {
+        background-image: url("{{ asset('uploads/avatar6.png') }}")!important;
+    }
+    .stp_containner .stp:nth-child(7) {
+        background-image: url("{{ asset('uploads/avatar7.png') }}")!important;
+    }
+    .stp_containner .stp:nth-child(8) {
+        background-image: url("{{ asset('uploads/avatar8.png') }}")!important;
+    }
+    .stp_containner .stp:nth-child(9) {
+        background-image: url("{{ asset('uploads/avatar9.png') }}")!important;
+    }
+    .color_containner .color:nth-child(1) {
+        background-color: #F34B4B;
+    }
+    .color_containner .color:nth-child(2) {
+        background-color: #4BF352;
+    }
+    .color_containner .color:nth-child(3) {
+        background-color: #4B70F3;
+    }
+    .stp_containner, .color_containner {
         display: flex;
-        gap: 5%;
+        gap: 2rem;
         margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    [type=radio] {
+        border-radius: 15px!important;
     }
 
 
 
 </style>
+
 {% endblock %}
