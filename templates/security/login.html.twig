@@ -1,30 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="flex justify-center items-center h-full w-full">
-    <form action="{{ path('security_login') }}" method="post" class="w-96 shadow-lg p-6 margin-auto">
-            <div class="flex">
-                <a href="{{ path('security_login') }}" class="flex-1 py-4 bg-gray-100 border-b-2 border-purple-600">
-                    <h1 class="text text-center text-purple-600">Connexion</h1>
-                </a>
-                <a href="{{ path('security_registration') }}" class="flex-1 py-4 ">
-                    <h1 class="text text-center">Inscription</h1>
-                </a>
-
-            </div>
+    <div class="flex justify-center items-center h-full w-full " style="background-image: url({{ asset("uploads/fond_1.svg") }}); background-size: cover;">
+    <form action="{{ path('security_login') }}" method="post" class="w-96 shadow-lg overflow-hidden margin-auto bg-zinc-800 rounded-2xl">
+        <div class="flex">
+            <a href="{{ path('security_login') }}" class="flex-1 py-4 bg-zinc-900/20 border-b-2 border-orange-600">
+                <h1 class="text text-center main-gradient-text">Connexion</h1>
+            </a>
+            <a href="{{ path('security_registration') }}" class="flex-1 py-4 hover:bg-zinc-900/20">
+                <h1 class="text text-center text-zinc-300">Inscription</h1>
+            </a>
+        </div>
+        <div class="px-4">
         <div class="relative mt-5">
-            <input required name="_username" type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
+            <input required name="_username" type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-zinc-100 bg-transparent rounded-lg border-1 border-zinc-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-zinc-800 px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email</label>
         </div>
         <div class="relative mt-5">
-            <input name="_password" type="password" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
+            <input name="_password" type="password" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-zinc-100 bg-transparent rounded-lg border-1 border-zinc-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+            <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-zinc-800 px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
         </div>
         <div class="flex justify-end mt-2 text-sm">
             <a href="#" class="text-blue-600 ">Mot de passe oublié ?</a>
         </div>
-        <button type="submit" class="mt-4 w-full ease-in duration-100 text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 light:focus:ring-purple-800 shadow-lg shadow-purple-500/50 light:shadow-lg light:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Connexion</button>
+        <button type="submit" class="mt-4 w-full ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center mb-4 main-gradient-b cursor-pointer mt-4">Connexion</button>
+        </div>
     </form>
 </div>
+    <style>
+        body {
+            height: 100vh;
+        }
+    </style>
 
 {% endblock %}

@@ -28,6 +28,8 @@ class RegistrationType extends AbstractType
             '#F34B4B',
             '#4BF352',
             '#4B70F3',
+            '#F3BA4B',
+            '#FF69B4',
         ];
 
         $builder
@@ -37,7 +39,6 @@ class RegistrationType extends AbstractType
             ->add('confirm_password', PasswordType::class)
             ->add('avatar', ChoiceType::class, [
                 'choices' => $avatarOptions,
-                'required' => true,
                 'expanded' => true,
                 'multiple' => false,
                 'label' => false,

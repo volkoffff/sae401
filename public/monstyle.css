@@ -20,6 +20,12 @@
 .main-gradient {
     background: linear-gradient(-55deg, #FD5F02 0%, #C932C2 100%) !important;
 }
+.main-gradient-b {
+    background: linear-gradient(-55deg, #FD5F02 0%, #C932C2 100%) !important;
+}
+.main-gradient-b:hover {
+    background: linear-gradient(-55deg, #e34f00 0%, #bb29b4 100%) !important;
+}
 .main-gradient-text {
     background: -webkit-linear-gradient(-55deg, #FD5F02 0%, #C932C2 100%) !important;
     -webkit-background-clip: text !important;
