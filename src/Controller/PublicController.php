@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Friends;
+use App\Entity\Mot;
+use App\Entity\Motpartie;
 use App\Entity\Partie;
 use App\Entity\User;
+use App\Repository\MotpartieRepository;
+use App\Repository\MotRepository;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,10 +93,10 @@ class PublicController extends AbstractController
         }
 
 
+
         return $this->render('public/index.html.twig', [
             'controller_name' => 'PublicController',
             'biographie_form' => $biographieForm->createView(),
-
 // section des profils
             'user' => $user,
             'userConnecter' => $userConnecter,
@@ -210,19 +214,78 @@ class PublicController extends AbstractController
         return $this->redirectToRoute('app_public');
 
     }
-    #[Route('/partie/create/', name: 'create_partie')]
-    public function createPartie(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/create/partie/', name: 'create_partie')]
+    public function createPartie(Request $request, MotRepository $motRepository, MotpartieRepository $motpartieRepository): Response
     {
-        $nom = $request->request->get('nom');
 
+        $nom = $request->request->get('nom');
         $partie = new Partie();
         $partie->setStatut('en attente');
         $partie->setUser1($this->getUser());
 
-        $entityManager->persist($partie);
-        $entityManager->flush();
+        $wordss = $motRepository->findAll();
+        $words = [];
+        foreach ($wordss as $word) {
+            $words[$word->getId()] = $word;
+        }
+        // Shuffle the words
+        $tCartes = [];
+        $tCartes[0][1] = 'Noir';
+        $tCartes[0][2] = 'Vert';
 
-        return $this->redirectToRoute('app_public');
+        $tCartes[1][1] = 'Noir';
+        $tCartes[1][2] = 'Noir';
+
+        $tCartes[2][1] = 'Noir';
+        $tCartes[2][2] = 'Neutre';
+
+        $tCartes[3][1] = 'Vert';
+        $tCartes[3][2] = 'Noir';
+
+        $tCartes[4][1] = 'Neutre';
+        $tCartes[4][2] = 'Noir';
+
+        $tCartes[5][1] = 'Vert';
+        $tCartes[5][2] = 'Vert';
+
+        $tCartes[6][1] = 'Vert';
+        $tCartes[6][2] = 'Vert';
+
+        $tCartes[7][1] = 'Vert';
+        $tCartes[7][2] = 'Vert';
+
+        for($i=8; $i<15; $i++) {
+            $tCartes[$i][1] = 'Neutre';
+            $tCartes[$i][2] = 'Neutre';
+        }
+
+        for($i=15; $i<20; $i++) {
+            $tCartes[$i][1] = 'Vert';
+            $tCartes[$i][2] = 'Neutre';
+        }
+
+        for($i=20; $i<25; $i++) {
+            $tCartes[$i][1] = 'Neutre';
+            $tCartes[$i][2] = 'Vert';
+        }
+        shuffle($tCartes);
+        shuffle($wordss);
+
+        for($i=0;$i<25;$i++){
+            $motpartie = new Motpartie();
+            $motpartie->setPartie($partie);
+            $motpartie->setMot(array_pop($words));
+            $motpartie->setCouleurJ1($tCartes[$i][1]);
+            $motpartie->setCouleurJ2($tCartes[$i][2]);
+            $motpartie->setEmplacement($i);
+            $motpartie->setTrouve(false);
+            $motpartieRepository->save($motpartie, true);
+
+        }
+        return $this->render('public/word.html.twig',[
+            'words' => $words,
+            'motpartie' => $motpartie,
+        ]);
 
     }
 }

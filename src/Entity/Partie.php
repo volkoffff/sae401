@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PartieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PartieRepository::class)]
+#[ApiResource()]
 class Partie
 {
     #[ORM\Id]
@@ -40,6 +42,13 @@ class Partie
         return $this;
     }
 
+    #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Motpartie::class)]
+    private Collection $motparties;
+
+    public function __construct()
+    {
+        $this->motparties = new ArrayCollection();
+    }
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user1", referencedColumnName: "id" )]
@@ -74,5 +83,14 @@ class Partie
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Motpartie>
+     */
+    public function getMotparties(): Collection
+    {
+        return $this->motparties;
+    }
+
 
 }
