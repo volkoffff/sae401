@@ -169,7 +169,7 @@
     <div class="flex w-full">
         <div class="h-screen flex-auto px-6">
             <div class="pt-28 h-full w-full border-dashed border-2 border-sky-500/20">
-                <div class="w-full h-56 grid grid-cols-9 gap-6">
+                <div class="w-full h-1/3 grid grid-cols-9 gap-6">
                     <div class="col-start-1 col-end-4 bg-red-100 h-full second-black  rounded-xl shadow-xl flex flex-col gap-2 p-4 overflow-y-scroll invisible_scroll">
                         <p class="text-xl font-semibold flex items-center justify-between text-zinc-300 ">Classement</p>
                         <div class=" overflow-y-scroll invisible_scroll ">
@@ -190,63 +190,38 @@
                     <div class="col-start-4 col-end-7 bg-red-100 h-full second-black  rounded-xl shadow-xl"></div>
                     <div class="col-start-7 col-end-10 bg-purple-100 h-full second-black  rounded-xl shadow-xl"></div>
                 </div>
-                <div class="w-full h-60 grid grid-cols-9 gap-6 mt-6">
+                <div class="w-full h-2/3 grid grid-cols-9 gap-6 py-6">
                     <div class="col-start-1 col-end-4 h-full second-black rounded-xl shadow-xl"></div>
-                    <div class="col-start-4 col-end-10 h-full border-dashed  flex flex-col gap-4">
-                        <p class="text-xl font-semibold flex items-center justify-between text-zinc-300">Vos parties en
-                            cours</p>
-                        <div
-                                class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark">
-                            <div class="flex gap-2 items-center flex-1">
-                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
-                                     style="background-image: url(https://assets-global.website-files.com/5e73a1e3ba24f2cd5dd2232a/624302d3b2e687a806268a42_Como%20criar%20um%20NFT.jpg);">
+                    <div class="col-start-4 col-end-10 h-full border-dashed flex flex-col gap-4 overflow-y-scroll invisible_scroll">
+                        <p class="text-xl font-semibold flex items-center justify-between text-zinc-300">Vos parties en cours</p>
+                        <div class="overflow-y-scroll invisible_scroll">
+                        {% for partiesDuUserr in partiesDuUser %}
+                            {% if partiesDuUserr.statut == 'en cours' %}
+                        <div class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-3">
+
+                            {% if partiesDuUserr.user1.id == user.id %}
+
+                                <div class="flex gap-2 items-center flex-1">
+                                    <div class=" w-9 h-9 rounded-xl bg-cover bg-center" style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user2.avatar) }}); background-color: {{ partiesDuUserr.user2.couleur }};"></div>
+                                    <p class="text-zinc-100">{{ partiesDuUserr.user2.pseudo }}</p>
                                 </div>
-                                <p class="text-zinc-100">Jean</p>
-                            </div>
+                            {% else %}
+                                <div class="flex gap-2 items-center flex-1">
+                                    <div class=" w-9 h-9 rounded-xl bg-cover bg-center" style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user1.avatar) }}); background-color: {{ partiesDuUserr.user1.couleur }};"></div>
+                                    <p class="text-zinc-100">{{ partiesDuUserr.user1.pseudo }}</p>
+                                </div>
+                            {% endif %}
                             <div class="flex gap-2 items-center flex-1">
                                 <p class="text-zinc-500">tour:</p>
-                                <p class="text-zinc-100">5/9</p>
+                                <p class="text-zinc-100">{{ partiesDuUserr.tour }}/9</p>
                             </div>
                             <div class="flex gap-2 items-center flex-1">
                                 <p class="text-zinc-100">A vous de jouer</p>
                             </div>
-                            <button
-                                    class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                            <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
                         </div>
-                        <div
-                                class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark">
-                            <div class="flex gap-2 items-center flex-1">
-                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
-                                     style="background-image: url(https://www.01net.com/app/uploads/2022/06/nft-marche-effondre-adoption-continue-1024x682.jpg);">
-                                </div>
-                                <p class="text-zinc-100">Nourhane</p>
-                            </div>
-                            <div class="flex gap-2 items-center flex-1">
-                                <p class="text-zinc-500">tour:</p>
-                                <p class="text-zinc-100">4/9</p>
-                            </div>
-                            <div class="flex gap-2 items-center flex-1">
-                                <p class="text-zinc-100">Tour de votre adversaire</p>
-                            </div>
-                            <button
-                                    class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
-                        </div>
-                        <div class="w-full h-16 rounded-xl flex items-center px-4 justify-between blury">
-                            <div class="flex gap-2 items-center flex-1">
-                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
-                                     style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAACIlBMVEUR57fjx6BnQiH////mnFMAAAAX5rQADDbQ0NBqRCL0/PkR6Ljoy6QAACoAABsAACwAACMAACYAABkOBzQAAB9gVdUAABQAAB0AACEAACUKADIAAC8AABbY2NgAAA7c3NxJLxpdPB4AAAvTupayjl1WOB3qV0sAqIcLAABOMhnKyspjPh4PZVA2IhGWhGoAu5UAknXQiEDNi0o1AAAAyaFKHgDhmVFVPiJmRyUqIhRFFwA/NSJ0ZVAbFgq2t7g9BwC/nW8nKypdXV2en59RLxGggFQ5MuYqI9nrJBf/MShja2tpXUqwm31LRclcTThfYOqlra0tEQDHr42di2+Bc1xSQy4Ae2M/QVp4eoowM0tVW2rt7vJEWD1XLAgldFo3STZ2Vi+XXCq7djlmLAAkAACXTxGBUiW2fEJ1NQAyc1glNCKrZiCDSxUAWkhXJwDIfTgvVj+GTRRoOAMSQjOncDqKYDNAQCg/Ig+aaTojIQ+qajM+LxYzMCQuIQYeGAA5KQlyZUJHQTqIioyvr6aBgXlnaGRlYUIJBGsQCooeGKcoI6IGAK9KQrRfIiDDAADNKRy4NC9sREA4N3QzLdBNRNnuRzv7aF6CS0lMS3FXPjzrPTF+NTKIJB4AAMCvAABRUev1b291dv9AQe59Ih6qLSIrI5IVF2YALy92hGkpMzoTGxVFcWN8opqRl6JAU2IlPjoAHSBoaYqwsMQbIC8pFzVaTlewyyraAAAZPElEQVR4nO2djV8a+Z3HgTjRyQyPUkARZBwJIvIQQ0TCQ1yBNSuERQQBKQlJu7GNcfNgcsaCibJJt9m9pttL2uvtNXe9a3u5uMe2q+b/u+9vZkB8TEDTOOrntS95NOB7v9/v7/P7zu83IxA0rJON/+qH1Yf44sewDvhn7ouOYdWhY1h16BhWHTqGVYeOYdWhY1h16BhWHTqGVYeOYdWhY1h16BhWHTqGVYeOYdWhY1h16FDAIoj9/he3F79hEay4O/v2z+4k/sJi+ThNE30/zuV+fNnhFLx3YDyFxXByXL6Sv3rtTBPStZ/89MqPL5veb0byERYiZeor/OSzW02s+q8H81MDCNn9y06CqCbnfot/sACDfaLws8+mz3CopvD7U9zdplvTP5sxmRw///mEQ7D/vPgGCwA4bvxknVRT//17lbtNZ6anb1quXrt11XLmzLVcn32/k5JfsCCoZj7/7FaVFII10LQeVjcpllw/1Q85eT04Yydqf3mv6PgEiyBMt6/WgtqgW3dzQes17sGAeaBpoP/e9bMOovrLAsjMD/PFP8BnEs7ZX+xEqqnfQkGJ7zdcrTym2NvrbGwRhHPip469ln3+wCKcwZ1RifL97D3zHS4tr7Ngz/QxI6Oz78KYHW4czr3Q4hGsme05oai6Xy1cA+bPuPsGlJJnbt11CuyO2fO523b75RuzE6a90OINLEKQ347V1L3++4aBmif656a5V4JXoYoFrbPuCznc3HNl7tyc9Z9u2I9EZBGC+zVI7nHO6sGDqesD/dcrYcU8dXe6qf8ePoaBlt0GSoTjIqsBflIiau7Gnmo8j2C5OCKApOKt7j2YQggtbMHqf4BePjN314qxpFyDAApkpJgbkQXP9R0JWALiNgdooOkBx2rqwTWcqeJzzEMKrOjNXE8XYCp4XEBKtEX4hb3kIY9gOViLdR/mN1x5un7NyN67ieLr/k18ft6TdA1CPOH4NqSY4FreQyLyCJaJMQP995qCnDHN3wpyhuFMrr9pqqeA0m4HSNXQys0cCVh2xnDe+8W9O1xx/0XuQaWyf4b3z7veCgqHzMTPOxqmxSNYAguLSMR2Zvrx4NRgZXS8lXNvV6I2oBIV5osFoHW24bLFH1gCog9Zg6nrd1lY+N2ppnucnThz1VMNKxzftmThj4rjtND2CGi5GzWm/IEF0+ix/oEzt6x3GFhTd0WosuMAcODWHZ+oQod6tDA/77YumI2Mw6qgcs3bhKRQSC6hsnX5sMMi7LPnXfO56WnLnWkUYXgOFfeBO+apM9M33YMcE3MxPB6nQZFxb9gzX6DYQKMWwjSgAlgJl0iUa7Rq8QQWQTjmLBAoBXfw5tz09JmmazkDW9qn784VPINc+PgSNEmyVNAtHQm7fQuFwsNohHkSnh43ivDPGy1afIE1cQ7HjVarwVBwY0GgZblOcbCCHi4F8YUozTGpCAGLh8cTZOV5MhIU4XNOonoUrS5s/IBFmM7jlNVMWa0ej9Xqs96ZxgauT6E+8h23q1KYHrJMyM2y0V72DgsLx68gUugYWt+EqS6LygtYhOAGThlEc8lQNyjk8WG+mwPXcChWc8vIOjGjn3scaNB0PAIatyW83mg0mYxGo16P122zoWehmAkjj3DLZYKw3z7/eS4YPHfObaqDFj9gTeRwo8W62M1psce6MH0r2IMtw9yGooyPHi0sYJhnaWlpeHh4tFQqBQKBWMzv7+31s4rBE/D04yfwejFnEsxcsJgNZqPRbJg7W4eP4AMsQuCGgoXZhkAcLWvh0TkMWy4CntGPhoEOkGlp0XVWpUNqAelqnkTKlnrss0GDgbIYg1DszcE6pj+8gDWBuncJrvDEES2PFRsFPAyRpVIngwXi6IsvmBB6/PjxkydPhkstjJ6MgkqsYr0tgeX5OQM1504uLv4SM+P19CF4AItwjuFmq6c6wgkhvEI+bLSTZdGyNIxYpb788ldPnz79+quvv/pn0KUfXXr6pJd5/dcXn4F+880335w+/duYLtAzZzB4mOrXHbKKRJZ3Dy0+wHLkcGoOyjdJgtuE2CKBVhTDAmyecbD+5WOkkecvRn7E6jkHS/fbi88uXrz4u9OnT//+9/8a0AVgSGVRDdHCBAyO7949PfiwCME8DHhFNOx7EzZbwga8hrpDGPZotBRDqTj8BMH6A8Nq5NLIcw7WyNNhPwPr3xArFtbv/n1UF8MWESea8Ri0lcLH3rnE8wCW43NcFISKlYiwf58tISS7F30Y5Xr0qOAuLi0/QUwmRxCrjy+NXGJZvRj5einAwBpGsL5FsE5/ArACi90hmzccDYfB7gs9Vvz84YFFEDcgsMbiZCJembLQCa8tFEXFmZF7mEEyAqxGXjyvZuHIcw7WaCWwTn/zyZ8hslxRW1xIemkyHo6QUYD1zhX+4MMC8y7Ce8h4pDplsdkgxMA+cLOc4hJyDU9GkH408qKShdvA+t3FP0JkMUafjCeg+NGk93DBmrXAiBUlbdVpn5fBRndXYHkYWI8Rq/Xy/mJk5OUbFlYJ0vBbxOr0b56xsJh/JsyAD1vxC4cmDQnnBWAS9AqrfQMvm47kUIFryyywsL4eefkSEF1i9fLly5EUwOr160r/wRqHb05/WwOLZGAJk1bcfWhGQzCkwCNoq7qs8fEKtaiFgzWMYAWevhz5+NOR//z000svnn719OXLjz9OgbkYXu4tPXv27e9Pf3P6T6efXfzjsC7mrYFF+8z4jUPjs4g+QGIOjleTMLpeuoJsaBUYixB4OvLy+fOR/0L69NP/Rj4iUyoNF4vDo88+gSz8E2L1yZ8BVk1kkTYrdYhMKYJlsVZhrQcW021hYS0hWF88/XjkxcjzS5c+RYL69fLpa9v4eALc659REv7lL3+BdPz142rNYgLMbcHPv3vf4cDDugyRZQ1WyjsZpqsJGZ/jYH0UQ7B+BSbr5Vdf/fWvf/3yyy//J5Npzi9GXbYITcdtxVelGCvAGmD+LTIONyQy8HUcdT3wsBw5EW4N/m8V1novlB6rwEKR5U/9kC49LpUCX3zh74Ui9iSfzIdCi4vRxYQt4cX+BnNophOhi7GwvGDh4w9FeD0N+QMPyw42yxCsMvLWNI7d1cjStTANCB3Tm2npjcVKw2OYZymcGI/E4wnf/VDIBqZ9aXR0dHj4Nes8kM0qQtT21NErPfCwBIDEaL6xTWQJ3WyBd0Ea9jIdvlJpdLi4FGYY0dX+sjccGmLv0ZFigo6zBkTIJuHZQ9UpJWZQ0eqpFKrEes2yLbHeQbRcLLofMquMfOMVRutISW8iT6OGM3pJGGbiihyPkGRkDK/zEOLBh2U6B3k4xnlSMlKd9dA2L8UaLcrAqFBYAhwRb3RxEUx+FRc5nrgPPxfz+ahXSAqLzJNxkoxbwb/NHq4DFoQA6rhlbkvRIhNCLxdZIiNLyxcn6Wi+uzu0GM2HaFJY/ZUQKVz0uN3JUFTIzsfRK0ULHnxV3/qjAw8L8nBQJKLcdDWgqoaLiyx0zB7hMkchXLpRp4vJyGiUs/2RJB33Mc+583EyAaEZh5l4Mojn6osrXsCyg5/Cg7+sNmhoJh1RgytYs0QGhMx9d8iNVRSNMHTHozTHL98Nk6SEFzXGwkH8XF+969oOPiymxONmX6S2aEcSjKXcuE5mAVWqxXyBAVP0en1MysZttqg3Ms4OkHSYPe4BrC5M1L2DgA+w7KjxYLTGq7ToBJr0kFc2whINuqEgkbSQjsfpeMRGC8PM28Lj4aFuWxi1pKNuMzO3BFZnHfXvtuABLJgfos4DPlaZFtIRpnqHMWojLJGlgPnCXuQ/fdgg8lNJ9BtLCZqkh0IuDCsYcZEHcDbIih+wkDEVPZrHovH1JTLxZM8WWCKzubDMVPLBIaYdOo6q+ZKNZA+gLbopEe6mbT4Kv9AIK17AYlrL7kBnwGcNR2g2tsJWi28rLIvBbPZgnvwQaxvI+DgYr6U4W+eEQwiWFZvD8bONrdDiBSwBMXFhNNB7YtRiCY6hhTRjQQtOYT2bWYGHMBgWQghVJWMhupLsfaj+NjOOG4x4bqyeOc6evvje1QAsYmK4FPDHgtx6UQtlNpgx31ZYImphnAFlI+nKrCjKrfmDAeIhWtxwYeaQryklnG+GHwd8n+dyOUsuF8ydO3e+aCputz6ZjSPaS0YrLqPSW00AMCNOzdob3nTIE1gCwvHRm2WTyTEBcjgcJruTPZSxSXiBMxjj5CAXWnSyYmfhvhu3NL4MnjewYEi0V5c2skKdri1ZWO13rTegkzVm1lvITRwBWFv2gxOmc1sDqzqFRNadu3WtP0fGsXM/PwqwNouYsGxh9chWMyeqAMrXTJTIsGcPm+h4DGtmaxZ6trISkqFEDawIdvsIwmJt/cbAWohvB2soWjsFL84eRVhO1BTcobpvhJWsfRR5dRRh2c+BHd8Aq7a614gejNc+vNL4uR34C8uRE4kM5vVUxM3bVHdG+URtHtoanOvs1xf/EJ/JHNc31IZWcXtUUOGjGx43XrT4C2sWgspiranukR0Cixwa3NBltR2FzZkbBIOhhRKJrNU0pMI7sEJ56N3wsOFd0ryF5ZwzW2pg4TtUdzYP87WegvQe8q7DFsFkx4AbqUr7b1vvXqUTz28wFfFDv5N1k2AwBFjGSmANLu3MChQK1boHMtzguR14C6svaF6HhT8a3w0WOdRt2w/3wFtYs3NWgFVJQ/ducQW+NBSqLWl0g5NpnsIiBMWxHpwycz7Lldg1C4XkYmioNrSijeUhb2GN3cAoi9UgonacQdfCiru6ax82aLX4Cst51oQZRAYDxZiHncz7Op5kqJZnvLF2KW9h+QTLPbjVTPneYkg5WJHBxdr3NOZL+QrL3kf0YUaz0YgZcbyw61hYDa2aR8WGWg98heUwESbMB6NhjxXfeVpYg2c8X0OUNDRU4fkKa8JJ2DHMYMR9PSJ8fuepzrqStd1lY0MzHr7CcsJ/WI8V5oSYGX/4DrBI72B18aBQaD5KsCCLCGdPj9uIWzHfW50DAyviqiziTdDCwlFKQwHjHnwGK8DCKOsus+iqaBf7LppepIfefSfY/n/xD/GZhPO81eAWGTDMWnC9AyxhlGk9kLaIjQ411nfgNSxmAbwPSpePnczQQuEujZqEh90vQAu7843NpHkMy35eZDC6DdYeyMQQW5ZswnFyJ16kzcescybp7u7ikZobCtgtUEaLwW21+txuTzcbPJF4Ir5DASMj2DhaGY7ON9Lg4hB+w6JERrfbbIVcXGQSkUx0M8m4WRFmvz02HgmF8q5kONngsiN+w4J5ocHHbEbBmMWRG1MQnYmFFYQUPWTDCp6wLYL2Ox2troOA2wGF9u1YjGaDwe0LdcdpZiEzswOMVTw+NDQUCi26XIVk2BanuR1jdIOHLHgMy8HAEhksFooZFNG5yEKDyaQHKZlMFgqupCca9iZs6JxsHCZ0lskrWIOHd3gMC53EAIUWJcKNBjP4LXcymeCiR8iGV/UMgOg2bot+hGHz+e7uxmaGhwEWhZbSmA0U2rLjWQp7bZFIfH0fK1u7EKkivJxnzwVFHVlYrMwWI9DyJfNRZleY211ciqL8i6NTJtrCSdfgIguqe2go3+ghaR7Duly7OstC4UZmK0qyAiUEyuddLlc+H+KeAlC0MBKeaPSU8DyGNbNpTSlOFdg9mJ5kPp+/fz+/mEfAqpyYrWLhWYfz0K+D3yri1ZYFuJSZ25k5a7ebQA60bL6v7/aVpaV/unKlb2LCYXfu5TpFPIa1vM0GC6owj2D1bVwxj/Dsx4X8eAuLEPx027PlUy431rP5iPM+Xb2Pv7DsZ7e/tAAuogx7umDMzuIvLM7AbyfLMayN2jIY1sLaw1r33cRXWITAt8sFPvZycZ1dxFtYpp2zUFTHeVrrEk9hEcxJJneEdW4Pmwp3EV9h2bfZmfneixZfYe1S3lFo1XNK/HcXL2ERhGnXwBKJ9rJfdWfxERZw2Dov3BRa76XE8xAW4dTrg2+7MFhwZr+vuC3gJ6wZtfUtrIDW3KuZxs9JsIN4B4tAi9jehgrRcmtU+z3r4RksArHqeNvV+Vg97OhqfGvhtuIVLEgr0wzWLC9UNlbsdqFMnOpobvSY135/8X/4Z0JQnXTc9sckzc3yBYoyIpnNZvhJUZRl6+g4uCxtFvftVytrD1/8H/+Z8Cfb+0q9nSspgNUsXvZZDQYDy4lBs+HgBeJY6JI2N7dhXTOo575PwHgBC10HbeK7/+stp2QKrb4ZqWPZJdoxB3F80K1A7+qStreqsdkJ+/7gOviwEClHX6lczqg02tZWrQbTtwMHqczHXNwX38wJH3QVfBIxeguGtckBV7sSezWxpyMVDX3x/VE9n4lIfVcqf7+mlAEpsVqTSbf4VyVMdIklyx6za7BGlMvlcetlUvSqFlvyr5TTqWa1QtzeqsT+ZtqzTT3YsADV5cfwB8ukra3tcoX4+3LnCVC2hMkYXM1aaZtSscyoS69XKDRiKfuCGHvtP8Eoq1tJSyXSVql+uf6TbTb6xfdP7/yZBOHoSv1BC9knVmPtaX/2REXZx13i5p0l10/2nqhRNpbCNNK/x/Zwwe26vvg+6l0/kxDMdrRrpVqtTDIZ66z501dQeqlUmh14afQdmR9+SJfLK73ZKt/Ocqor7d9bM+IAwyKcWJtMoZGuvk6vk+pcSWfUKrVaDhVM06FXqGW1xMQypUSvksEwIJfDXbUKa89MlgO9LLJseW1vLvXgwiKc3wVWV/wt2VPrEZXOSPSo0CNBzMmVHdhGdakkMrmYkZR9n1YqU3SJU+kyIoap9pSIBxYWIZjJnij11oJSStoQgHaxrKNDoWhNTUKmlZnLeKDrDMRiZaQ0o0lQRq6SSBQqlUysRVyVmsnyWjm9l9A6uLAcMWA0jDi1rJRTSj0CBZwkXWKABAF34q3KZnW9QDE9+npN1iXTtoux7ImWvRzKOKiwCEGPIlPubHkz2YxhKo0UlSFVBxQgf+fbKW3DDeq7SgmwTuwlDw8srIm2Vq1SlemStUNASdtUskx6ZSsnCB4dc43aLKvdgHWWX3d2llUnD92SI8K5JutQSlvbW/VitWQ1ld4UUNnOXn85PZlag1qkVmpksjaZpk3cvLa2lkmlUlCwoG6V/f5exJG5dAqTtv41tUbf8DmODi6s2Wy2BZyRSiZ5o9sQL1mdvzSZgdKl0sjF2vb21oraGWlBUqlULJbLNSp9F6bv6OgCb6/HlGBT/V3t7apDd1JXYoIdBrP+dAqrssq2BNIpeYcChrd2Fo9W3KZRS9RqiUStVKIAk8nlcuQagOI6RvRWGBtUmWGVJJM+bKfeJJyv16NJ95gpOIBNioEXRSVMK5aDe2gTr6YmS2XuIuQryDeUSoxtSKVer65KxRqJQiFRqZBx1colaqkWK+tggD1ssBxqzXqZCqCZNJhNxmNJ5ZIOaYY1D7u7h2y2k71KOdQtKP262KT4I/R8qXGndRBhEYK/Q4bJFDJwCqgwLymZtJPKJMo1CKV3sVjb4xtFP/2H6wSJhAnDlHKpFtJNqRenymU9ZBQm+X7zkFi3Sid0sfRa45PpAwmrD5IGhjyxXiOHsU0mUaW38aJgz1cCUKEya2saGRr/xFrZaibz5s3k5A/pciDmX1lhillvr7+Ty9gnCkwt1jZuSw8gLMJZ4nD0lkdTqzKJHPNvoNTLOCyZXqKWMAHIiDUPjHOA8q9UKyQgtYSRStaamfwhkB1GPUQp1vCywIMIy6GrRdPpL2U+qmCKpSfXJPqOinlAI6MWBZWYsQxgGkBarXajb2BbFOIOZYdYoW+bfNNwhT+IsF5NlnUbpy6dp1BzOCNTS8CIcg5LplB0dGkgZCZZw862GkDfpzJrrWIN1qXS61UqVYdCoUbxB7+lT8dgdGi8wh88WIRTJVWq5M1rq5l0qdJJ1ilUHazHAhuqUkhX30ymA8g9nDqxrU6dAtqdSDqY7QTSw6/FahX2hCXfsIc/gLBMGm7yopXLVJh8kgFW0rRqxeou2evJUqylsxHzkNUFuFrYsIc/gLBm2BiqVBuxWjYJBV4ty4wGGrZYbEjF0JSpnKrzqobv+sXfj3b9TOLkm3I6I++ACZ+amSojXh1r5ZJuyx+fRb2HWJmrV6PpisrIOCDP0IKuaLte/AKB8mSzQiNVHB5YJuQTsp0t/pVA+YfJVDOmkgMvjTq2DqllpVyaTK3K1V1deoWsTc513dlBUS6XgXOA4t4FwvQKpXw1g+aQvZ2jmEwK7LUNH7X4ELB2/VBwpJvix5+Wy9pbpa8RJbAOr+UavYSLuU29GfD87VXXtdE3yJQdig4xuCylMjXc6HB40GARgtFtanNaIm9Xw3RaX2nPoL9frlEqOpQysKCrq6uvK4L7GhmEWJtMqVCoJGqlpk0uljLOS66E8hfrPNHJo7Or7CrCnm7RbS3j2ckuuZ5rO6hVCpk8A9aqHPP3wsiYPbXJPzANZuQZYKaDjvlAQcuswTRTv8o5ke/ezz6o96WTO/1fIhx6CIw11IPZaBB6U5hcoWxjXtG9pTuzjU7BYBBb4mCONrDmgfiAcXVyBwlmuRUfYo28OZNKr0DccCqN+ls6URSdalAnhtHPznSz/uSOn7+L9vDX/j/VbIWBotkevQAAAABJRU5ErkJggg==);">
-                                </div>
-                                <p class="text-zinc-100">Louis</p>
-                            </div>
-                            <div class="flex gap-2 items-center flex-1">
-                                <p class="text-zinc-500">tour:</p>
-                                <p class="text-zinc-100">8/9</p>
-                            </div>
-                            <div class="flex gap-2 items-center flex-1">
-                                <p class="text-zinc-100">Tour de votre adversaire</p>
-                            </div>
-                            <button
-                                    class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                            {% endif %}
+                        {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -411,6 +386,7 @@
     {% endfor %}
     <p class="text-xl font-bold">partie dans lequel est le joueur</p>
     {% for partiesDuUserr in partiesDuUser %}
+    {% if partiesDuUserr.statut == 'en cours' %}
         {{ partiesDuUserr.id }}
     {% if partiesDuUserr.user1.id == user.id %}
         {{ partiesDuUserr.user2.pseudo }}
@@ -419,6 +395,22 @@
     {% endif %}
         {{ partiesDuUserr.statut }}
         <br>
+        {% endif %}
+    {% endfor %}
+    <p class="text-xl font-bold">partie dans lequel était le joueur</p>
+    {% for partiesDuUserr in partiesDuUser %}
+        {% if partiesDuUserr.statut == 'terminé' %}
+            {{ partiesDuUserr.id }}
+            {% if partiesDuUserr.user1.id == user.id %}
+                {{ partiesDuUserr.user2.pseudo }}
+            {% else %}
+                {{ partiesDuUserr.user1.pseudo }}
+            {% endif %}
+            {{ partiesDuUserr.statut }}
+            <a href="#">voir la partie</a>
+            <br>
+
+        {% endif %}
     {% endfor %}
 
 
@@ -438,6 +430,7 @@
         <input type="text" >
         <button type="submit">créer une partie</button>
     </form>
+
 
 
 

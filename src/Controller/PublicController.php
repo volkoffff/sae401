@@ -40,10 +40,8 @@ class PublicController extends AbstractController
         $partiesDuUser = 0;
         if (!empty($parties)) {
         $partiesDuUser = $entityManager->getRepository(Partie::class)->createQueryBuilder('p')
-            ->where('p.statut = :statut')
-            ->andWhere('(p.user1 = :user_id OR p.user2 = :user_id)')
+         ->Where('(p.user1 = :user_id OR p.user2 = :user_id)')
             ->setParameters([
-                'statut' => 'en cours',
                 'user_id' => $this->getUser()->getId(),
             ])
             ->getQuery()
@@ -221,6 +219,7 @@ class PublicController extends AbstractController
         $nom = $request->request->get('nom');
         $partie = new Partie();
         $partie->setStatut('en attente');
+        $partie->setTour('1');
         $partie->setUser1($this->getUser());
 
         $wordss = $motRepository->findAll();

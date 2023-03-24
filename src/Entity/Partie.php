@@ -20,6 +20,9 @@ class Partie
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
+    #[ORM\Column]
+    private ?int $tour = 1;
+
     #[ORM\ManyToMany(targetEntity: User::class)]
     private Collection $users;
 
@@ -72,6 +75,7 @@ class Partie
     private $user2;
 
 
+
     public function getUser2(): ?User
     {
         return $this->user2;
@@ -80,6 +84,18 @@ class Partie
     public function setUser2(?User $user2): self
     {
         $this->user2 = $user2;
+
+        return $this;
+    }
+
+    public function getTour(): ?int
+    {
+        return $this->tour;
+    }
+
+    public function setTour(int $tour): self
+    {
+        $this->tour = $tour;
 
         return $this;
     }
