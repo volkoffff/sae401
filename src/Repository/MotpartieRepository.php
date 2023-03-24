@@ -16,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MotpartieRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Motpartie::class);

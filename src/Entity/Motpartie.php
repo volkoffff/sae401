@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Motpartie
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
