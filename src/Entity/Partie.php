@@ -27,7 +27,6 @@ class Partie
     private Collection $users;
 
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +73,12 @@ class Partie
     #[ORM\JoinColumn(name: "user2", referencedColumnName: "id" )]
     private $user2;
 
+    #[ORM\Column]
+    private ?string $resultat = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $trophe = null;
+
 
 
     public function getUser2(): ?User
@@ -106,6 +111,30 @@ class Partie
     public function getMotparties(): Collection
     {
         return $this->motparties;
+    }
+
+    public function getResultat(): ?string
+    {
+        return $this->resultat;
+    }
+
+    public function setResultat(string $resultat): self
+    {
+        $this->resultat = $resultat;
+
+        return $this;
+    }
+
+    public function getTrophe(): ?int
+    {
+        return $this->trophe;
+    }
+
+    public function setTrophe(?int $trophe): self
+    {
+        $this->trophe = $trophe;
+
+        return $this;
     }
 
 

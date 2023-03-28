@@ -185,33 +185,6 @@ class PublicController extends AbstractController
         return $this->redirectToRoute('app_public');
     }
 
-
-
-    #[Route('/partie/join/{partieId}', name: 'join_partie')]
-    public function joinPartie( $partieId, EntityManagerInterface $entityManager): Response
-    {
-
-        $partie = $entityManager->getRepository(Partie::class)->findOneBy([
-            'id' => $partieId
-        ]);
-
-        if (!$partie) {
-            throw $this->createNotFoundException('aucune partie a rejoindre');
-        };
-        if ($partie->getUser1() === $this->getUser()) {
-            $this->addFlash('danger', 'Vous êtes déjà dans cette partie');
-            // Rediriger l'utilisateur vers la page d'accueil
-            return $this->redirectToRoute('app_public');
-        }
-
-        $partie->setUser2($this->getUser());
-        $partie->setStatut('en cours');
-        $entityManager->persist($partie);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_public');
-
-    }
     #[Route('/create/partie/', name: 'create_partie')]
     public function createPartie(Request $request, MotRepository $motRepository, MotpartieRepository $motpartieRepository): Response
     {
@@ -287,5 +260,13 @@ class PublicController extends AbstractController
         ]);
 
     }
+    #[Route('/user/{userId}', name: 'user_inspect')]
+    public function userInspect($userId , EntityManagerInterface $entityManager): Response
+    {
+
+
+        return $this->redirectToRoute('app_public');
+    }
+
 }
 

@@ -67,3 +67,60 @@ for (i = 0; i < acc.length; i++) {
 
 
 
+// partie profil la tabs
+const tabs = document.querySelector(".wrapper");
+const tabButton = document.querySelectorAll(".tab-button");
+const contents = document.querySelectorAll(".content");
+
+tabs.onclick = e => {
+    console.log('help');
+    const id = e.target.dataset.id;
+    if (id) {
+        tabButton.forEach(btn => {
+            btn.classList.remove("active");
+        });
+        e.target.classList.add("active");
+
+        contents.forEach(content => {
+            content.classList.remove("active");
+        });
+        const element = document.getElementById(id);
+        element.classList.add("active");
+    }
+}
+
+const partieTermine = document.getElementById("partieTermine");
+const home = document.querySelector('[data-id="home"]');
+
+const partieCours = document.getElementById("partieCours");
+const about = document.querySelector('[data-id="about"]');
+
+const partieAttente = document.getElementById("partieAttente");
+const contact = document.querySelector('[data-id="contact"]');
+
+partieAttente.style.display = "none";
+partieCours.style.display = "none";
+// home est cliquer faire dispairer partieAttente
+home.addEventListener('click', () => {
+    partieAttente.style.display = "none";
+    partieCours.style.display = "none";
+    partieTermine.style.display = "block";
+})
+about.addEventListener('click', () => {
+    partieAttente.style.display = "none";
+    partieCours.style.display = "block";
+    partieTermine.style.display = "none";
+})
+contact.addEventListener('click', () => {
+    partieAttente.style.display = "block";
+    partieCours.style.display = "none";
+    partieTermine.style.display = "none";
+})
+
+
+const victoire = document.getElementById("victoire");
+const defaite = document.getElementById("defaite");
+const ratio = document.getElementById("ratio");
+
+ratio.innerHTML = Math.round((victoire.innerHTML /  defaite.innerHTML) * 100) / 100;
+console.log('suceur');

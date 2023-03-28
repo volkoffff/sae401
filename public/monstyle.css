@@ -85,3 +85,30 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+
+
+button.active {
+    border-bottom: 2px solid #FD5F02;
+    color: #FD5F02;
+}
+button.active:hover {
+    border-bottom: 2px solid #FD5F02;
+    color: #FD5F02;
+}
+.content {
+    display: none;
+    padding: 10px 20px;
+}
+.content.active {
+    display: block;
+
+}
+
+.content {
+    display: none;
+}
+
+.content.active {
+    display: block;
+}

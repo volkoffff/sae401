@@ -117,7 +117,7 @@
                         {% for user in users %}
                             {% if user.id == userConnecter.id %}
                             {% else %}
-                            <div class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
+                            <a href="{{ path('user_inspect', {'userId': user.id}) }}" class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
                                 <div class="flex items-center">
                                     <div class="mr-3 sm:h-9 w-9 h-9 rounded-xl bg-cover bg-center" style="background-image: url({{ asset('uploads/' ~ user.avatar) }}); background-color: {{ user.couleur }}">
                                     </div>
@@ -143,7 +143,7 @@
                                     Envoyer une demande d'ami
                                     <div class="tooltip-arrow" data-popper-arrow></div>
                                 </div>
-                            </div>
+                            </a>
                                 {% endif %}
                         {% endfor %}
                     </div>
@@ -216,9 +216,17 @@
                                 <p class="text-zinc-100">{{ partiesDuUserr.tour }}/9</p>
                             </div>
                             <div class="flex gap-2 items-center flex-1">
-                                <p class="text-zinc-100">A vous de jouer</p>
+                                {% if partiesDuUserr.tour is odd %}
+                                    <p class="text-zinc-100">A vous de jouer</p>
+                                {% else %}
+                                    <p class="text-zinc-100">Au tour de l'adversaire</p>
+                                {% endif %}
                             </div>
+                            {% if partiesDuUserr.tour is odd %}
                             <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                            {% else %}
+                            <button class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">jouer</button>
+                            {% endif %}
                         </div>
                             {% endif %}
                         {% endfor %}
@@ -274,13 +282,11 @@
 {#            <div id="terminer">#}
 {#            {{ partie.id }}#}
 {#            {{ partie.statut }}#}
-{#            {{ partie.resultat }}#}
 {#            </div>#}
 {#        {% else %}#}
 {#            <div id="enCours">#}
 {#                {{ partie.id }}#}
 {#                {{ partie.statut }}#}
-{#                {{ partie.resultat }}#}
 {#            </div>#}
 {#        {% endif %}#}
 {#    {% endfor %}#}
@@ -371,19 +377,7 @@
             </div>
         {% endif %}
     {% endfor %}
-    <p class="text-xl font-bold">toute les parties en attente d'un joeur</p>
-    {% for partie in parties %}
-        {% if partie.statut == 'en attente' %}
-            <div id="enAttente">
-                {{ partie.id }}
-                {{ partie.statut }}
-                <form action="{{ path('join_partie' , {'partieId': partie.id}) }}" type="post">
-                    <button type="submit">rejoindre la partie</button>
-                </form>
 
-            </div>
-        {% endif %}
-    {% endfor %}
     <p class="text-xl font-bold">partie dans lequel est le joueur</p>
     {% for partiesDuUserr in partiesDuUser %}
     {% if partiesDuUserr.statut == 'en cours' %}
@@ -414,16 +408,7 @@
     {% endfor %}
 
 
-    <p class="text-xl font-bold">partie des amis en attente d'un joueur</p>
-    {% if partiesAmis|length > 0 %}
-        {% for partiesAmi in partiesAmis %}
-            {{ partiesAmi.id }} - {{ partiesAmi.user1.pseudo }} - {{ partiesAmi.statut }}
-            <form action="{{ path('join_partie' , {'partieId': partiesAmi.id}) }}" type="post">
-                <button type="submit">rejoindre la partie</button>
-            </form>
-            <br>
-        {% endfor %}
-    {% endif %}
+
 
     <h2>boutton créer une partie</h2>
     <form action="{{ path('create_partie') }}" type="post">
