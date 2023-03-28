@@ -88,11 +88,11 @@
 
 
 
-button.active {
+.tab-button.active {
     border-bottom: 2px solid #FD5F02;
     color: #FD5F02;
 }
-button.active:hover {
+.tab-button.active:hover {
     border-bottom: 2px solid #FD5F02;
     color: #FD5F02;
 }

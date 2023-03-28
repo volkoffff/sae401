@@ -98,7 +98,7 @@ const about = document.querySelector('[data-id="about"]');
 const partieAttente = document.getElementById("partieAttente");
 const contact = document.querySelector('[data-id="contact"]');
 
-partieAttente.style.display = "none";
+partieTermine.style.display = "none";
 partieCours.style.display = "none";
 // home est cliquer faire dispairer partieAttente
 home.addEventListener('click', () => {
