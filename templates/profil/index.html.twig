@@ -1,0 +1,277 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+
+    <div class="flex w-full">
+        <div class="h-screen flex-auto px-6">
+            <div class="pt-28 pb-6 h-full w-full border-dashed border-2 border-sky-500/20">
+                <div
+                        class="h-full second-black  rounded-xl shadow-xl flex flex-col gap-2 p-4 overflow-y-scroll invisible_scroll ">
+                    <div class="px-3 py-3 flex justify-between items-center">
+                        <div class="second-black flex items-center rounded-l-xl bg-gray-200 justify-between w-96">
+                            <div class="flex items-center">
+                                <div class="mr-3 w-20 h-20 rounded-xl bg-cover bg-center shadow-lg shadow-orange-600/10 "
+                                     style="background-image: url({{ asset('uploads/' ~ user.avatar) }}); background-color: {{ user.couleur }}">
+                                </div>
+                                <div>
+                                    <p class="self-center text-3xl font-semibold whitespace-nowrap leading-none">
+                                        {{ user.pseudo }}</p>
+                                    <p class=" leading-none mt-1 text-xl text-zinc-500">{{ user.biographie }}</p>
+                                </div>
+                            </div>
+                            <p
+                                    class="text-4xl font-semibold flex items-center gap-2 text-gray-500 main-gradient-text leading-none">
+                                {{ user.trophee }}
+                                <i class="fa-sharp fa-solid fa-trophy fa-xs"></i>
+                            </p>
+                        </div>
+                        <div class="flex gap-8">
+                            <div class="">
+                                <p
+                                        class="text-3xl text-center" id="victoire">
+                                    {{ user.victoire }}</p>
+                                <p class="text-xl text-zinc-500 text-center">Victoire</p>
+                            </div>
+                            <div class="">
+                                <p
+                                        class="text-3xl text-center" id="defaite">
+                                    {{ user.defaite }}</p>
+                                <p class="text-xl text-zinc-500 text-center">Défaite</p>
+                            </div>
+                            <div class="">
+                                <p
+                                        class="text-3xl text-center" id="ratio">
+                                    1,00</p>
+                                <p class="text-xl text-zinc-500 text-center">Ratio</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="pt-4 px-3">
+                        <form action="" method="POST" class="flex gap-6 ">
+                            <div class="">
+                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Email</label>
+                                <input disabled type="text" class="cursor-no-drop bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.email }}" required>
+                            </div>
+                            <div class="">
+                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Pseudo</label>
+                                <input disabled type="text" id="disabled-input-2" class="cursor-no-drop bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.pseudo }}" required>
+                            </div>
+                        </form>
+                        <div class="mt-2">
+                            <a href="" class=" text-blue-600 hover:underline">modifier</a>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <div class="pt-3">
+                        <div class="wrapper">
+                            <div
+                                    class="buttonWrapper flex flex-wrap -mb-px text-m font-medium text-center text-zinc-500 border-b border-gray-200 dark:text-zinc-400 dark:border-gray-700">
+                                <button
+                                        class="tab-button active inline-block p-4 border-b-2 rounded-t-lg border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        style="border-top-right-radius: 10px;" data-id="contact">Parties en attentes</button>
+                                <button
+                                        class="tab-button inline-block p-4 border-b-2 rounded-t-lg border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        style="border-top-left-radius: 10px;" data-id="home">Partie terminées</button>
+                                <button
+                                        class="tab-button inline-block p-4 border-b-2 rounded-t-lg border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                        data-id="about">Parties en cours</button>
+
+                            </div>
+                        </div> <div class=" overflow-y-scroll invisible_scroll mt-4" id="partieAttente">
+                            {% set partieEnAttenteTrouvee = false %}
+                            {% for partiesDuUserr in partiesDuUser %}
+                                {% if partiesDuUserr.statut == 'en attente' %}
+                                    {% set partieEnAttenteTrouvee = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if not partieEnAttenteTrouvee %}
+                                <div class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-3">
+                                    <p class="text-zinc-500">Vous n'avez aucune partie en attente d'un joueur...</p>
+                                </div>
+                            {% endif %}
+                            {% for partiesDuUserr in partiesDuUser %}
+                                {% if partiesDuUserr.statut == 'en attente' %}
+                                    <div
+                                            class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-4">
+                                        <div class="flex gap-2 items-center flex-1">
+                                            <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                                 style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user1.avatar) }}); background-color: {{ partiesDuUserr.user1.couleur }}">
+                                            </div>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.user1.pseudo }}</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">nom:</p>
+                                            <p class="text-zinc-100">Viens on va gagner</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">tour:</p>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.tour }}/9</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">statut:</p>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.statut }}</p>
+                                        </div>
+                                        <button
+                                                class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">Inviter</button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
+                        <div class=" overflow-y-scroll invisible_scroll mt-4" id="partieTermine">
+                            {% set partieEnAttenteTrouvee = false %}
+                            {% for partiesDuUserr in partiesDuUser %}
+                                {% if partiesDuUserr.statut == 'terminé' %}
+                                    {% set partieEnAttenteTrouvee = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if not partieEnAttenteTrouvee %}
+                                <div class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-3">
+                                    <p class="text-zinc-500">Vous n'avez terminé aucune partie...</p>
+                                </div>
+                            {% endif %}
+                            {% for partiesDuUserr in partiesDuUser %}
+                                {% if partiesDuUserr.statut == 'terminé' %}
+                                    <div
+                                            class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-4">
+                                        <div class="flex gap-2 items-center flex-1">
+                                            {% if partiesDuUserr.user1.id == user.id %}
+
+                                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                                     style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user2.avatar) }}); background-color: {{ partiesDuUserr.user2.couleur }}">
+                                                </div>
+                                                <p class="text-zinc-100">{{ partiesDuUserr.user2.pseudo }}</p>
+                                                <div class="flex gap-1 items-center text-xl main-gradient-text ml-2 text-zinc-500">
+                                                    {% if partiesDuUserr.resultat == 'victoire' %}
+                                                        <p class="">+{{ partiesDuUserr.trophe }}</p>
+                                                    {% else %}
+                                                        <p class="">-{{ partiesDuUserr.trophe }}</p>
+                                                    {% endif %}
+                                                    <i class="fa-sharp fa-solid fa-trophy fa-xs mt-1"></i>
+                                                </div>
+                                            {% else %}
+
+                                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                                     style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user1.avatar) }}); background-color: {{ partiesDuUserr.user1.couleur }}">
+                                                </div>
+                                                <p class="text-zinc-100">{{ partiesDuUserr.user1.pseudo }}</p>
+                                                <div class="flex gap-1 items-center text-xl main-gradient-text ml-2 text-zinc-500">
+                                                    {% if partiesDuUserr.resultat == 'victoire' %}
+                                                        <p class="">+{{ partiesDuUserr.trophe }}</p>
+                                                    {% else %}
+                                                        <p class="">-{{ partiesDuUserr.trophe }}</p>
+                                                    {% endif %}
+                                                    <i class="fa-sharp fa-solid fa-trophy fa-xs mt-1"></i>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">nom:</p>
+                                            <p class="text-zinc-100">Viens on va gagner</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">statut:</p>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.statut }}</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">résultat:</p>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.resultat }}</p>
+                                        </div>
+                                        {% if partiesDuUserr.resultat == 'victoire' %}
+                                        <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">Statistiques</button>
+                                        {% else %}
+                                        <button class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">Statistiques</button>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class=" overflow-y-scroll invisible_scroll mt-4" id="partieCours">
+                            {% set partieEnAttenteTrouvee = false %}
+                            {% for partiesDuUserr in partiesDuUser %}
+                                {% if partiesDuUserr.statut == 'terminé' %}
+                                    {% set partieEnAttenteTrouvee = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if not partieEnAttenteTrouvee %}
+                                <div class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-3">
+                                    <p class="text-zinc-500">Vous n'êtes actuellement dans aucune partie...</p>
+                                </div>
+                            {% endif %}
+                            {% for partiesDuUserr in partiesDuUser %}
+                                {% if partiesDuUserr.statut == 'en cours' %}
+                                    <div
+                                            class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-4">
+                                        <div class="flex gap-2 items-center flex-1">
+                                            {% if partiesDuUserr.user1.id == user.id %}
+
+                                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                                     style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user2.avatar) }}); background-color: {{ partiesDuUserr.user2.couleur }}">
+                                                </div>
+                                                <p class="text-zinc-100">{{ partiesDuUserr.user2.pseudo }}</p>
+                                            {% else %}
+
+                                                <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                                     style="background-image: url({{ asset('uploads/' ~ partiesDuUserr.user1.avatar) }}); background-color: {{ partiesDuUserr.user1.couleur }}">
+                                                </div>
+                                                <p class="text-zinc-100">{{ partiesDuUserr.user1.pseudo }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">statut:</p>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.statut }}</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            <p class="text-zinc-500">tour:</p>
+                                            <p class="text-zinc-100">{{ partiesDuUserr.tour }}/9</p>
+                                        </div>
+                                        <div class="flex gap-2 items-center flex-1 justify-center">
+                                            {% if partiesDuUserr.tour is odd %}
+                                            <p class="text-zinc-100">A vous de jouer</p>
+                                            {% else %}
+                                            <p class="text-zinc-100">Au tour de l'adversaire</p>
+                                            {% endif %}
+                                        </div>
+                                        {% if partiesDuUserr.tour is odd %}
+                                            <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                                        {% else %}
+                                            <button class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">jouer</button>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h-screen w-80"></div>
+    </div>
+    <style>
+        body {
+            background-image: url({{ asset('uploads/fond_1.svg') }});
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+{% endblock %}

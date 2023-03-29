@@ -7,7 +7,7 @@ use App\Entity\Motpartie;
 use App\Entity\Partie;
 use App\Entity\User;
 use App\Form\BiographieType;
-use App\Repository\MotpartieRepository;
+use App\Repository\MotPartieRepository;
 use App\Repository\MotRepository;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;

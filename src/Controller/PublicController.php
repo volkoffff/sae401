@@ -7,7 +7,7 @@ use App\Entity\Mot;
 use App\Entity\Motpartie;
 use App\Entity\Partie;
 use App\Entity\User;
-use App\Repository\MotpartieRepository;
+use App\Repository\MotPartieRepository;
 use App\Repository\MotRepository;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
@@ -186,7 +186,7 @@ class PublicController extends AbstractController
     }
 
     #[Route('/create/partie/', name: 'create_partie')]
-    public function createPartie(Request $request, MotRepository $motRepository, MotpartieRepository $motpartieRepository): Response
+    public function createPartie(Request $request, MotRepository $motRepository, MotPartieRepository $motpartieRepository): Response
     {
 
         $nom = $request->request->get('nom');
