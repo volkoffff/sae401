@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}WOOCOP{% endblock %}</title>
+        <title>{% block title %}Woocop{% endblock %}</title>
         <link rel="icon" href="{{ asset('uploads/logo1.svg') }}">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
@@ -28,7 +28,21 @@
 
     <body>
 {#        <nav>#}
+    {% if not app.user %}
+        <nav class="main-black border-gray-200 sm:pl-6 white:bg-gray-900 fixed w-full z-50 py-6">
+            <div class=" flex flex-wrap items-center justify-between mx-auto">
+                <a href="{{ path('app_public') }}" class="flex items-center">
+                    <img src="{{ asset('uploads/logo1.svg') }}" class="h-6 mr-3 sm:h-6" alt="woocop Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap white:text-white">WOOCOP</span>
+                </a>
+                <div class="mr-6">
+                    <a class="mt-2 w-full ease-in duration-100 text-white  font-medium rounded-lg text-sm px-5 py-3 text-center cursor-pointer text-zinc-300 bg-zinc-900/20 hover:bg-zinc-900/40 mr-4" href="{{ path('security_login') }}">Connexion</a>
+                    <a class="mt-4 w-full ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center mb-2 main-gradient-b cursor-pointer" href="{{ path('security_registration') }}">Inscription</a>
+                </div>
+            </div>
+        </nav>
 
+    {% else %}
             <nav class="main-black border-gray-200 sm:pl-6 white:bg-gray-900 fixed w-full z-50">
                 <div class=" flex flex-wrap items-center justify-between mx-auto">
                     <a href="{{ path('app_public') }}" class="flex items-center">
@@ -47,10 +61,6 @@
                                   clip-rule="evenodd"></path>
                         </svg>
                     </button>
-                    {% if not app.user %}
-                        <a href="{{ path('security_login') }}">Connexion</a>
-                        <a href="{{ path('security_registration') }}">Inscription</a>
-                    {% else %}
                     <div class="flex items-center gap-6">
                         <div class="flex gap-4">
                             <div data-tooltip-target="notif" class="cursor-pointer bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg text-2xl text-zinc-500 "><svg
@@ -104,18 +114,175 @@
                             </p>
                         </a>
                     </div>
-                    {% endif %}
                 </div>
             </nav>
+        <aside class="fixed z-40 w-80 h-screen transition-transform -translate-x-full left-full overflow-hidden" style="left:100%" aria-label="Sidebar">
+            <div class="flex flex-col h-full overflow-y-auto overflow-hidden">
+                <div class="h-full rounded-l-xl bg-gray-200 px-3 py-3 mt-28 blury pr-6 overflow-hidden">
+                    <div class="pb-3 border-b-2 border-zinc-500/10">
+                        <div class="text-xl font-semibold text-purple-900 flex items-center justify-between text-zinc-300">
+                            <p>
+                                Social
 
-{#            <a href="{{ path('app_public') }}">public</a>#}
-{#            {% if not app.user %}#}
-{#            <a href="{{ path('security_login') }}">Connexion</a>#}
-{#            {% else %}#}
-{#            <a href="{{ path('security_logout') }}">Déconnexion</a>#}
-{#            {% endif %}#}
+                            </p>
+                            <div class="flex gap-2 text-zinc-500">
+                                <a href="#" id="toggle_search_friend_button" class="bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"></path></svg>
+                                </a>
+                                <a href="" class="bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M433 288.8c-7.7 0-14.3 5.9-14.9 13.6-6.9 83.1-76.8 147.9-161.8 147.9-89.5 0-162.4-72.4-162.4-161.4 0-87.6 70.6-159.2 158.2-161.4 2.3-.1 4.1 1.7 4.1 4v50.3c0 12.6 13.9 20.2 24.6 13.5L377 128c10-6.3 10-20.8 0-27.1l-96.1-66.4c-10.7-6.7-24.6.9-24.6 13.5v45.7c0 2.2-1.7 4-3.9 4C148 99.8 64 184.6 64 288.9 64 394.5 150.1 480 256.3 480c100.8 0 183.4-76.7 191.6-175.1.8-8.7-6.2-16.1-14.9-16.1z"></path></svg>
+                                </a>
+                            </div>
 
-{#        </nav>#}
+                        </div>
+                        <form id="search_friend" class="flex items-center w-full mt-1" style="display: none;">
+                            <div class=" relative z-0 w-full">
+                                <input type="text" id="search_ami"
+                                       class="block py-1 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-l-2 pl-2 border-zinc-500 appearance-none focus:outline-none focus:ring-0 focus:border-orange-500 peer text-zinc-300"
+                                       placeholder="chercher un joueur" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class=" overflow-y-scroll h-full invisible_scroll pb-16">
+                        <button class="accordion text-zinc-400">Amis</button>
+                        <div class="panel ">
+                            {% for friend in friends %}
+                                {% if friend.user.id == user.id %}
+                                    <a href="#"
+                                       class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
+                                        <div class="flex items-center">
+                                            <div class="mr-3 sm:h-9 w-9 h-9 rounded-xl bg-cover bg-center"
+                                                 style="background-image: url({{ asset('uploads/' ~ friend.friend.avatar) }}); background-color: {{ friend.friend.couleur }};">
+                                            </div>
+                                            <div>
+                                                <p class="self-center text-l font-semibold whitespace-nowrap leading-none text-zinc-300">
+                                                    {{ friend.friend.pseudo }}
+                                                </p>
+                                                <p class=" text-base leading-none mt-1 text-zinc-500">{{ friend.friend.biographie }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-xl flex items-center gap-1 text-zinc-500">{{ friend.friend.trophee }}<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M868 160h-92v-40c0-4.4-3.6-8-8-8H256c-4.4 0-8 3.6-8 8v40h-92a44 44 0 0 0-44 44v148c0 81.7 60 149.6 138.2 162C265.7 630.2 359 721.7 476 734.5v105.2H280c-17.7 0-32 14.3-32 32V904c0 4.4 3.6 8 8 8h512c4.4 0 8-3.6 8-8v-32.3c0-17.7-14.3-32-32-32H548V734.5C665 721.7 758.3 630.2 773.8 514 852 501.6 912 433.7 912 352V204a44 44 0 0 0-44-44zM184 352V232h64v207.6a91.99 91.99 0 0 1-64-87.6zm520 128c0 49.1-19.1 95.4-53.9 130.1-34.8 34.8-81 53.9-130.1 53.9h-16c-49.1 0-95.4-19.1-130.1-53.9-34.8-34.8-53.9-81-53.9-130.1V184h384v296zm136-128c0 41-26.9 75.8-64 87.6V232h64v120z"></path></svg>
+                                        </p>
+                                    </a>
+                                {% else %}
+                                    <a href="#"
+                                       class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
+                                        <div class="flex items-center">
+                                            <div class="mr-3 sm:h-9 w-9 h-9 rounded-xl bg-cover bg-center"
+                                                 style="background-image: url({{ asset('uploads/' ~ friend.user.avatar) }}); background-color: {{ friend.user.couleur }};">
+                                            </div>
+                                            <div>
+                                                <p class="self-center text-l font-semibold whitespace-nowrap leading-none text-zinc-300">
+                                                    {{ friend.user.pseudo }}
+                                                </p>
+                                                <p class=" text-base leading-none mt-1 text-zinc-500">{{ friend.user.pseudo }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-xl flex items-center gap-1 text-zinc-500">{{ friend.user.trophee }}<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M868 160h-92v-40c0-4.4-3.6-8-8-8H256c-4.4 0-8 3.6-8 8v40h-92a44 44 0 0 0-44 44v148c0 81.7 60 149.6 138.2 162C265.7 630.2 359 721.7 476 734.5v105.2H280c-17.7 0-32 14.3-32 32V904c0 4.4 3.6 8 8 8h512c4.4 0 8-3.6 8-8v-32.3c0-17.7-14.3-32-32-32H548V734.5C665 721.7 758.3 630.2 773.8 514 852 501.6 912 433.7 912 352V204a44 44 0 0 0-44-44zM184 352V232h64v207.6a91.99 91.99 0 0 1-64-87.6zm520 128c0 49.1-19.1 95.4-53.9 130.1-34.8 34.8-81 53.9-130.1 53.9h-16c-49.1 0-95.4-19.1-130.1-53.9-34.8-34.8-53.9-81-53.9-130.1V184h384v296zm136-128c0 41-26.9 75.8-64 87.6V232h64v120z"></path></svg>
+                                        </p>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="accordion  text-zinc-400 flex gap-2">Demandes en attente
+                            <p id="afficheur_compteur_ami" class="rounded w-5 h-5 flex items-center justify-center main-orange mt-0.5 text-zinc-300 text-sm">
+                            </p>
+                        </button>
+                        <div class="panel" id="compteur_ami">
+                            {% for friend in friendsR %}
+                                <div class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
+                                    <div class="flex items-center">
+                                        <div class="mr-3 sm:h-9 w-9 h-9 rounded-xl bg-cover bg-center"
+                                             style="background-image: url({{ asset('uploads/' ~ friend.user.avatar) }}); background-color: {{ friend.user.couleur }};">
+                                        </div>
+                                        <div>
+                                            <p class="self-center text-l font-semibold whitespace-nowrap leading-none text-zinc-300">
+                                                {{ friend.user.pseudo }}
+                                            </p>
+                                            <p class=" text-base leading-none mt-1 text-zinc-500">{{ friend.user.biographie }}</p>
+                                        </div>
+                                    </div>
+                                    {% if friend.status == 'pending' %}
+                                        <p class="text-xl flex items-center gap-2 text-gray-500">
+                                        <form action="{{ path('accept_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">
+                                            <button type="submit" onclick="countAndDisplayElements()" class=" bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg text-green-500" data-tooltip-target="accept_ami"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"></path></svg></button>
+                                            <input type="hidden" name="_method" value="PUT">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('accept' ~ friend.user.id) }}">
+                                        </form>
+                                        <form action="{{ path('decline_friend_request', {'friendId': friend.user.id}) }}" method="POST" style="display: inline">
+                                            <button onclick="countAndDisplayElements()" type="submit" class=" bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg text-red-500" data-tooltip-target="refuse_ami"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg></button>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('decline' ~ friend.user.id) }}">
+                                        </form>
+                                        <div id="accept_ami" role="tooltip"
+                                             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip bg-zinc-900">
+                                            Accepter
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <div id="refuse_ami" role="tooltip"
+                                             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip bg-zinc-900">
+                                            Refuser
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="accordion  text-zinc-400">Joueurs</button>
+                        <div class="panel">
+                            {% for user in users %}
+                                {% if user.id == userConnecter.id %}
+                                {% else %}
+                                    <a href="{{ path('profil_inspect', {'userId': user.id}) }}" class=" ami flex items-center rounded-xl px-3 py-5 justify-between w-full bg-zinc-600/10 hover:bg-zinc-600/30">
+                                        <div class="flex items-center">
+                                            <div class="mr-3 sm:h-9 w-9 h-9 rounded-xl bg-cover bg-center" style="background-image: url({{ asset('uploads/' ~ user.avatar) }}); background-color: {{ user.couleur }}">
+                                            </div>
+                                            <div>
+                                                <p class="self-center text-l font-semibold whitespace-nowrap leading-none text-zinc-300">
+                                                    {{ user.pseudo }}
+                                                </p>
+                                                <p class=" text-base leading-none mt-1 text-zinc-500">{{ user.biographie }}</p>
+                                            </div>
+                                        </div>
+                                        <form class="text-xl flex items-center gap-2 text-gray-500" action="{{ path('send_friend_request', {'friendId': user.id}) }}" method="post" style="display: inline;">
+                                            <button type="submit" class="bg-zinc-600/10 hover:bg-zinc-600/30 p-2 rounded-lg text-green-500"
+                                                    data-tooltip-target="add_ami"><svg stroke="currentColor" fill="none"
+                                                                                       stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em"
+                                                                                       xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z">
+                                                    </path>
+                                                </svg></button>
+                                        </form>
+                                        <div id="add_ami" role="tooltip"
+                                             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip bg-zinc-900">
+                                            Envoyer une demande d'ami
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        {% for type, messages in app.flashes() %}
+            {% for message in messages %}
+                <div id="toast-danger" class="alert alert-{{ type }} flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 rounded-lg shadow blury fixed z-50 bottom-2 left-6 border-2 border-red-700/20" role="alert">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8  rounded-lg bg-red-700/20">
+                        <svg aria-hidden="true" class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only ">Warning icon</span>
+                    </div>
+                    <div class="ml-3 text-sm font-normal">{{ message }}</div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 text-zinc-500 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex h-8 w-8 bg-zinc-600/10 hover:bg-zinc-600/30" data-dismiss-target="#toast-danger" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+
         {% block body %}{% endblock %}
 
     </body>

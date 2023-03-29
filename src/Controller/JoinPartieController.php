@@ -214,6 +214,11 @@ class JoinPartieController extends AbstractController
             // Rediriger l'utilisateur vers la page d'accueil
             return $this->redirectToRoute('app_join_partie');
         }
+        if (!empty($partie->getUser2())) {
+            $this->addFlash('danger', 'Deux joueurs sont déjà dans cette partie');
+            // Rediriger l'utilisateur vers la page d'accueil
+            return $this->redirectToRoute('app_join_partie');
+        }
 
         $partie->setUser2($this->getUser());
         $partie->setStatut('en cours');

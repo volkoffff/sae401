@@ -112,8 +112,8 @@ class PublicController extends AbstractController
             'partiesAmis' => $partiesAmis
 
         ]);
-    }
 
+    }
     #[Route('/friend/send/{friendId}', name: 'send_friend_request')]
     public function sendFriendRequest(User $friendId, EntityManagerInterface $entityManager): Response
     {
@@ -260,12 +260,18 @@ class PublicController extends AbstractController
         ]);
 
     }
-    #[Route('/user/{userId}', name: 'user_inspect')]
-    public function userInspect($userId , EntityManagerInterface $entityManager): Response
+    #[Route('/profil/user/{userId}', name: 'profil_inspect')]
+    public function userInspect($userId , EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
 
+        $userInfo = $userRepository->findBy([
+            'id' => $userId
+        ]);
 
-        return $this->redirectToRoute('app_public');
+
+        return $this->render('profil/user/index.html.twig',[
+            'userInfo' => $userInfo
+        ]);
     }
 
 }
