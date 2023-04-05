@@ -7,25 +7,36 @@ use App\Repository\PartieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartieRepository::class)]
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: [
+        'groups' => ['treasure:read'],
+    ],
+    denormalizationContext: [
+        'groups' => ['treasure:write'],
+    ]
+)]
 class Partie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?string $statut = null;
 
     #[ORM\Column]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?int $tour = 1;
 
     #[ORM\ManyToMany(targetEntity: User::class)]
     private Collection $users;
-
 
     public function getId(): ?int
     {
@@ -44,16 +55,53 @@ class Partie
         return $this;
     }
 
+    #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Indice::class)]
+    #[Groups(['treasure:read', 'treasure:write'])]
+    private Collection $indices;
+
+    // Getters and setters
+
+    public function getIndices()
+    {
+        return $this->indices;
+    }
+
+    public function addIndice(Indice $indice)
+    {
+        if (!$this->indices->contains($indice)) {
+            $this->indices[] = $indice;
+            $indice->setPartie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIndice(Indice $indice)
+    {
+        if ($this->indices->contains($indice)) {
+            $this->indices->removeElement($indice);
+            // set the owning side to null (unless already changed)
+            if ($indice->getPartie() === $this) {
+                $indice->setPartie(null);
+            }
+        }
+
+        return $this;
+    }
+
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Motpartie::class)]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private Collection $motparties;
 
-    public function __construct()
+     public function __construct()
     {
+        $this->indices = new ArrayCollection();
         $this->motparties = new ArrayCollection();
     }
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user1", referencedColumnName: "id" )]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private $user1;
 
 
@@ -71,6 +119,7 @@ class Partie
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user2", referencedColumnName: "id" )]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private $user2;
 
     #[ORM\Column]
@@ -78,6 +127,9 @@ class Partie
 
     #[ORM\Column(nullable: true)]
     private ?int $trophe = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
 
 
@@ -133,6 +185,18 @@ class Partie
     public function setTrophe(?int $trophe): self
     {
         $this->trophe = $trophe;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

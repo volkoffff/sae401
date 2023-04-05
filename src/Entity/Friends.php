@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FriendsRepository::class)]
 class Friends
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
