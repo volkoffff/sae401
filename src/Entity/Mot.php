@@ -7,6 +7,7 @@ use App\Repository\MotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MotRepository::class)]
 #[ApiResource()]
@@ -15,12 +16,15 @@ class Mot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?string $fr = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?string $eng = null;
 
     #[ORM\OneToMany(mappedBy: 'mot', targetEntity: Motpartie::class)]
@@ -33,24 +37,20 @@ class Mot
     {
         return $this->id;
     }
-
     public function getFr(): ?string
     {
         return $this->fr;
     }
-
     public function setFr(string $fr): self
     {
         $this->fr = $fr;
 
         return $this;
     }
-
     public function getEng(): ?string
     {
         return $this->eng;
     }
-
     public function setEng(string $eng): self
     {
         $this->eng = $eng;
