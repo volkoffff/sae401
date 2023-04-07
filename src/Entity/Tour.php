@@ -21,6 +21,9 @@ class Tour
     #[ORM\Column]
     private ?int $joueur = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tours')]
+    private ?Partie $partie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,18 @@ class Tour
     public function setJoueur(int $joueur): self
     {
         $this->joueur = $joueur;
+
+        return $this;
+    }
+
+    public function getPartie(): ?Partie
+    {
+        return $this->partie;
+    }
+
+    public function setPartie(?Partie $partie): self
+    {
+        $this->partie = $partie;
 
         return $this;
     }

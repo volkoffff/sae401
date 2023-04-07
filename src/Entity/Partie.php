@@ -97,6 +97,7 @@ class Partie
     {
         $this->indices = new ArrayCollection();
         $this->motparties = new ArrayCollection();
+        $this->tours = new ArrayCollection();
     }
 
     #[ORM\ManyToOne(targetEntity: User::class)]
@@ -130,6 +131,9 @@ class Partie
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
+
+    #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Tour::class)]
+    private Collection $tours;
 
 
 
@@ -197,6 +201,36 @@ class Partie
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tour>
+     */
+    public function getTours(): Collection
+    {
+        return $this->tours;
+    }
+
+    public function addTour(Tour $tour): self
+    {
+        if (!$this->tours->contains($tour)) {
+            $this->tours->add($tour);
+            $tour->setPartie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTour(Tour $tour): self
+    {
+        if ($this->tours->removeElement($tour)) {
+            // set the owning side to null (unless already changed)
+            if ($tour->getPartie() === $this) {
+                $tour->setPartie(null);
+            }
+        }
 
         return $this;
     }

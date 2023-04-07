@@ -193,7 +193,9 @@ class PublicController extends AbstractController
         $partie = new Partie();
         $partie->setStatut('en attente');
         $partie->setTour('1');
+        $partie->setResultat('en attente');
         $partie->setUser1($this->getUser());
+        $partie->setNom('partie de');
 
         $wordss = $motRepository->findAll();
         $words = [];
@@ -250,7 +252,7 @@ class PublicController extends AbstractController
             $motpartie->setCouleurJ1($tCartes[$i][1]);
             $motpartie->setCouleurJ2($tCartes[$i][2]);
             $motpartie->setEmplacement($i);
-            $motpartie->setTrouve(false);
+            $motpartie->setEtat('libre');
             $motpartieRepository->save($motpartie, true);
 
         }

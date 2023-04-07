@@ -40,7 +40,7 @@ class Motpartie
 
     #[ORM\Column]
     #[Groups(['treasure:read', 'treasure:write'])]
-    private ?bool $trouve = null;
+    private ?string $etat = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -96,13 +96,13 @@ class Motpartie
 
         return $this;
     }
-    public function isTrouve(): ?bool
+    public function isEtat(): ?string
     {
-        return $this->trouve;
+        return $this->etat;
     }
-    public function setTrouve(bool $trouve): self
+    public function setEtat(string $etat): self
     {
-        $this->trouve = $trouve;
+        $this->etat = $etat;
 
         return $this;
     }
