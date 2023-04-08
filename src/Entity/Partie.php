@@ -52,7 +52,6 @@ class Partie
     }
 
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Indice::class)]
-    #[Groups(['get', 'put'])]
     private Collection $indices;
 
     public function getIndices()

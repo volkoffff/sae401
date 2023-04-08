@@ -58,7 +58,6 @@ class Indice
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user", referencedColumnName: "id" )]
-    #[Groups('get')]
     private $user;
 
 
@@ -74,7 +73,6 @@ class Indice
         return $this;
     }
     #[ORM\ManyToOne(inversedBy: 'partie', cascade:['persist'])]
-    #[Groups('get')]
     private ?Partie $partie = null;
 
     public function getPartie(): ?Partie
