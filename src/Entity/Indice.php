@@ -74,6 +74,7 @@ class Indice
         return $this;
     }
     #[ORM\ManyToOne(inversedBy: 'partie', cascade:['persist'])]
+    #[Groups(['treasure:read', 'treasure:write'])]
     private ?Partie $partie = null;
 
     public function getPartie(): ?Partie

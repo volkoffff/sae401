@@ -196,12 +196,14 @@ class PublicController extends AbstractController
         $partie->setResultat('en attente');
         $partie->setUser1($this->getUser());
         $partie->setNom('partie de');
+        $partie->setQuijoue('1');
 
         $wordss = $motRepository->findAll();
         $words = [];
         foreach ($wordss as $word) {
             $words[$word->getId()] = $word;
         }
+
         // Shuffle the words
         $tCartes = [];
         $tCartes[0][1] = 'Noir';
@@ -242,8 +244,8 @@ class PublicController extends AbstractController
             $tCartes[$i][1] = 'Neutre';
             $tCartes[$i][2] = 'Vert';
         }
+        shuffle($words);
         shuffle($tCartes);
-        shuffle($wordss);
 
         for($i=0;$i<25;$i++){
             $motpartie = new Motpartie();

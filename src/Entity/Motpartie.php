@@ -41,6 +41,7 @@ class Motpartie
     #[ORM\Column]
     #[Groups(['treasure:read', 'treasure:write'])]
     private ?string $etat = null;
+
     public function getId(): ?int
     {
         return $this->id;
