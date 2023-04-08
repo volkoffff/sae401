@@ -16,30 +16,30 @@ class Motpartie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'motparties')]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?Mot $mot = null;
 
     #[ORM\ManyToOne(inversedBy: 'motparties', cascade:['persist'])]
     private ?Partie $partie = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $couleurJ1 = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $couleurJ2 = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $emplacement = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $etat = null;
 
     public function getId(): ?int

@@ -16,15 +16,15 @@ class Mot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $fr = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $eng = null;
 
     #[ORM\OneToMany(mappedBy: 'mot', targetEntity: Motpartie::class)]

@@ -11,28 +11,24 @@ use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartieRepository::class)]
-#[ApiResource(
-    normalizationContext: [
-        'groups' => ['treasure:read'],
-    ],
-    denormalizationContext: [
-        'groups' => ['treasure:write'],
-    ]
-)]
+#[ApiResource(normalizationContext: ['groups' => ['get']])]
+#[Get]
+#[Put(normalizationContext: ['groups' => ['put']])]
+
 class Partie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $statut = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $tour = 1;
 
     #[ORM\ManyToMany(targetEntity: User::class)]
@@ -56,10 +52,8 @@ class Partie
     }
 
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Indice::class)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private Collection $indices;
-
-    // Getters and setters
 
     public function getIndices()
     {
@@ -90,7 +84,7 @@ class Partie
     }
 
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Motpartie::class)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private Collection $motparties;
 
      public function __construct()
@@ -101,7 +95,7 @@ class Partie
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user1", referencedColumnName: "id" )]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private $user1;
 
 
@@ -119,7 +113,7 @@ class Partie
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user2", referencedColumnName: "id" )]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private $user2;
 
     #[ORM\Column]
@@ -132,7 +126,7 @@ class Partie
     private ?string $nom = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $quijoue = null;
 
 
