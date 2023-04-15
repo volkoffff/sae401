@@ -25,7 +25,7 @@
                     {{ form_widget(form.pseudo, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-zinc-100 bg-transparent rounded-lg border-1 border-zinc-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
                     <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-zinc-800 px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Pseudo</label>
                 </div>
-                {% if form_errors(form.confirm_password) %}
+                {% if form_errors(form.password) %}
                     <div class="relative mt-5">
                         {{ form_widget(form.password, {'attr': {'placeholder': '', 'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-zinc-100 bg-transparent rounded-lg border-2 border-red-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer' }}) }}
                         <label for="floating_outlined" class="select-none pointer-events-none absolute text-sm text-gray-500 light:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-zinc-800 px-2 peer-focus:px-2 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Mot de passe</label>
@@ -288,5 +288,52 @@
         height: 100vh;
     }
 </style>
+    {% if form_errors(form.password) %}
+        <style>
+            #userinscription {
+                height: 413px;
+            }
+        </style>
+    {% endif %}
+    {% if form_errors(form.password) %}
+        <script>
+            retour.addEventListener('click', function() {
+                userinscription.style.left = '0%';
+                userinscription.style.height = '413px';
 
+            });
+        </script>
+    {% endif %}
+{% if form_errors(form.confirm_password) %}
+<style>
+    #userinscription {
+        height: 395px;
+    }
+</style>
+{% endif %}
+    {% if form_errors(form.confirm_password) %}
+        <script>
+            retour.addEventListener('click', function() {
+                userinscription.style.left = '0%';
+                userinscription.style.height = '395px';
+
+            });
+        </script>
+    {% endif %}
+    {% if form_errors(form.confirm_password) and form_errors(form.password) %}
+        <style>
+            #userinscription {
+                height: 444px;
+            }
+        </style>
+    {% endif %}
+    {% if form_errors(form.confirm_password) and form_errors(form.password) %}
+        <script>
+            retour.addEventListener('click', function() {
+                userinscription.style.left = '0%';
+                userinscription.style.height = '444px';
+
+            });
+        </script>
+    {% endif %}
 {% endblock %}

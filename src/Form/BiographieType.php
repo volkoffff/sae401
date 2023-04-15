@@ -13,9 +13,9 @@ class BiographieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $listemot = [
-            'gg' => 'gg',
-            'vainqueur' => 'vainqueur',
-            'roi' => 'Roi des MMIs',
+            'GG' => 'GG',
+            'Vainqueur' => 'Vainqueur',
+            'Roi des MMIs' => 'Roi des MMIs',
             'dev' => 'dev > crea',
             'crea' => 'crea > dev',
         ];
@@ -24,6 +24,7 @@ class BiographieType extends AbstractType
             ->add('biographie', ChoiceType::class, [
                 'choices' => $listemot,
                 'required' => true,
+                'label' => false,
                 'expanded' => true,
                 'multiple' => false,]);
     }

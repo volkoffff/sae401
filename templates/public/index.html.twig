@@ -24,11 +24,29 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="col-start-4 col-end-7 bg-red-100 h-full second-black  rounded-xl shadow-xl"></div>
-                    <div class="col-start-7 col-end-10 bg-purple-100 h-full second-black  rounded-xl shadow-xl"></div>
+                    <div class="col-start-4 col-end-8 bg-red-100 h-full second-black  rounded-xl shadow-xl p-4">
+                        <form action="{{ path('create_partie') }}">
+                        <button type="submit" class="mt-4 w-full ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center mb-4 main-gradient-b cursor-pointer mt-4">Créer une partie</button>
+                        </form>
+                    </div>
+                    <div data-modal-target="regle" data-modal-toggle="regle" class="col-start-8 col-end-10 bg-purple-100 h-full second-black  rounded-xl shadow-xl blury ">
+                        <div class="card h-full rounded-xl text-4xl text-zinc-300">
+                            <div class="card-content p-4">
+                                <div class="border-2 border-orange-600 w-fit rounded-xl p-2">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6,22h15v-2H6.012C5.55,19.988,5,19.805,5,19s0.55-0.988,1.012-1H19h1h1v-1v-2V4c0-1.103-0.897-2-2-2H6 C4.794,2,3,2.799,3,5v3v6v3v2C3,21.201,4.794,22,6,22z M5,8V5c0-0.805,0.55-0.988,1-1h13v11v1H5v-2V8z"></path><path d="M8 6H17V8H8z"></path></svg>
+                                </div>
+                                <p class="text-xl font-semibold flex items-center justify-between mt-2">Carnet de règles</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="w-full h-2/3 grid grid-cols-9 gap-6 py-6">
-                    <div class="col-start-1 col-end-4 h-full second-black rounded-xl shadow-xl"></div>
+                    <div class="col-start-1 col-end-4 h-full second-black rounded-xl shadow-xl p-4 flex flex-col justify- gap-4">
+                        <div class="h-full w-full rounded-md bg-cover bg-center bg-no-repeat shadow-xl" style="background-image: url({{ asset('uploads/partie.png') }}); background-size: 120%; opacity: 0.8"></div>
+                        <form action="{{ path('app_join_partie') }}">
+                            <button type="submit" class=" w-full ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center main-gradient-b cursor-pointer">Rejoindre des Parties</button>
+                        </form>
+                    </div>
                     <div class="col-start-4 col-end-10 h-full border-dashed flex flex-col gap-4 overflow-y-scroll invisible_scroll">
                         <p class="text-xl font-semibold flex items-center justify-between text-zinc-300">Vos parties en cours</p>
                         <div class="overflow-y-scroll invisible_scroll">
@@ -66,9 +84,25 @@
                                 {% endif %}
                             </div>
                             {% if partiesDuUserr.tour is odd %}
-                            <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                                {% if partiesDuUserr.user1.id == user.id %}
+                                <form action="/{{ partiesDuUserr.id }}/1">
+                                    <button type="submit" class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                                </form>
+                                {% else %}
+                                    <form action="/{{ partiesDuUserr.id }}/2">
+                                        <button type="submit" class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">jouer</button>
+                                    </form>
+                                {% endif %}
                             {% else %}
-                            <button class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">jouer</button>
+                                {% if partiesDuUserr.user1.id == user.id %}
+                                    <form action="/{{ partiesDuUserr.id }}/1">
+                                        <button type="submit" class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">jouer</button>
+                                    </form>
+                                {% else %}
+                                    <form action="/{{ partiesDuUserr.id }}/2/">
+                                        <button type="submit" class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">jouer</button>
+                                    </form>
+                                {% endif %}
                             {% endif %}
                         </div>
                             {% endif %}
@@ -81,6 +115,111 @@
         <div class="h-screen w-80">
         </div>
     </div>
+    <div id="regle" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+        <div class="relative w-full h-full max-w-2xl md:h-auto ">
+            <!-- Modal content -->
+            <div class="relative rounded-lg shadow second-black border-2 border-zinc-500/30">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t border-zinc-700">
+
+                    <p class="text-l font-medium px-6 py-1 bg-zinc-400/10 text-zinc-400 rounded">Règles</p>
+
+                    <button type="button" class="text-zinc-500 bg-zinc-600/10 hover:bg-zinc-600/30 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="regle">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 space-y-6">
+                    <div class=" py-3 flex justify-between items-center">
+                        <div class=" rounded-l-xl">
+                            <h3 class="text-xl text-zinc-400 font-bold mb-2">Codenames Duo</h3>
+                            <p>
+                            Est un jeu coopératif pour 2 joueurs (ou plus) dans lequel vous devez retrouver tous vos Noms de Code avant la fin du temps imparti. Pour cela, vous devez, tour à tour, deviner ou faire deviner vos Noms de Code en donnant le meilleur indice possible. Prenez garde à ne pas tomber sur les redoutables Assassins qui rôdent !
+                            </p>
+                            <h3 class="text-lg text-zinc-400 font-semibold mb-2 mt-4">Principe du jeu:</h3>
+                            <p>
+                            Face à vous se trouve une carte clé recto verso. Chacun a alors devant soi 9 mots à faire deviner à son coéquipier dont 3 en commun. Parmi les trois assassins qui se trouvent devant vous, l’un d’entre eux appartient aussi au deux camps ! Chaque joueur connaît donc une partie des Noms de Code à trouver. Il va donc falloir coopérer pour trouver  l’ensemble des Noms de Code avant la fin des 9 tours. Pour cela, chacun à votre tour, vous donnez un indice pouvant désigner plusieurs Noms de Code sur la table. Votre partenaire, quant à lui, tente de deviner ces Noms de Code tout en évitant de rencontrer l’un des terribles Assassins qui vous font perdre la partie. Trouvez l’ensemble des 15 Noms de Code avant la fin des 9 tours pour remporter la victoire.
+                            </p>
+
+                            <h3 class="text-lg text-zinc-400 font-semibold mb-2 mt-4">Comment jouer:</h3>
+                            <ul>
+                                <li>- Donnez des indices sur les mots à trouver et à ne pas trouver.</li>
+                                <li>- Séléctionnez les mots selon les indices de votre partenaire.</li>
+                                <li>- Tentez de retrouver tout les mots avant le tour 9.</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if user.biographie is null %}
+        <div id="biographie" tabindex="-1" aria-hidden="true" role="dialog" aria-modal="true" class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full justify-center items-center flex bg-gray-900/50">
+            <div class="relative w-full h-full max-w-2xl md:h-auto ">
+                <!-- Modal content -->
+                <div class="relative rounded-lg shadow second-black border-2 border-zinc-500/30">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-4 border-b rounded-t border-zinc-700">
+
+                        <p class="text-l font-medium px-6 py-1 bg-zinc-400/10 text-zinc-400 rounded">Biographie</p>
+
+
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 space-y-6">
+                        <div class=" py-3 flex justify-between items-center">
+                            <div class=" rounded-l-xl">
+                                {{ form_start(biographie_form) }}
+                                {{ form_widget(biographie_form) }}
+                                <style>
+                                    #biographie_biographie {
+                                        display: flex;
+                                        gap: 8px;
+                                    }
+                                    #biographie_biographie_0,
+                                    #biographie_biographie_1,
+                                    #biographie_biographie_2,
+                                    #biographie_biographie_3,
+                                    #biographie_biographie_4,
+                                    #biographie_biographie_5
+                                    {
+                                        display: none !important;
+                                    }
+                                    #biographie_biographie_0 + label,
+                                    #biographie_biographie_1 + label,
+                                    #biographie_biographie_2 + label,
+                                    #biographie_biographie_3 + label,
+                                    #biographie_biographie_4 + label,
+                                    #biographie_biographie_5 + label
+                                    {
+                                        color: rgba(128, 128, 128, 0.43);
+                                        padding: 4px 10px;
+                                        border-radius: 4px;
+                                        border: 1px solid rgba(128, 128, 128, 0.43);
+                                    }
+                                    #biographie_biographie_0:checked + label,
+                                    #biographie_biographie_1:checked + label,
+                                    #biographie_biographie_2:checked + label,
+                                    #biographie_biographie_3:checked + label,
+                                    #biographie_biographie_4:checked + label,
+                                    #biographie_biographie_5:checked + label
+                                    {
+                                        color: white;
+                                        border: 1px solid white;
+                                    }
+                                </style>
+                                <button type="submit" class="mt-4 ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center main-gradient-b cursor-pointer mt-4">Sauvegarder</button>
+                                {{ form_end(biographie_form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 
 
@@ -97,10 +236,6 @@
 
 
 
-    {{ form_start(biographie_form) }}
-    {{ form_widget(biographie_form) }}
-    <button type="submit">Save</button>
-    {{ form_end(biographie_form) }}
 
 
     <h1>Mon profil</h1>

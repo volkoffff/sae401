@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\BiographieType;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
  * @method getDoctrine()
@@ -31,7 +32,7 @@ class PublicController extends AbstractController
         $user = $this->getUser();
         $userConnecter = $this->getUser();
         $users = $entityManager->getRepository(User::class)->findAll();
-        $leaders = $UserRepository->findBy([], ['victoire' => 'DESC']);
+        $leaders = $UserRepository->findBy([], ['trophee' => 'DESC']);
 
 
 
@@ -189,9 +190,13 @@ class PublicController extends AbstractController
     public function createPartie(Request $request, MotRepository $motRepository, MotPartieRepository $motpartieRepository): Response
     {
 
+        $randomString = bin2hex(random_bytes(2));
+
         $nom = $request->request->get('nom');
         $partie = new Partie();
         $partie->setStatut('en attente');
+        $partie->setNom('partie numéro - ' . $randomString);
+        $partie->setResultat('en attente de résultat');
         $partie->setTour('1');
         $partie->setUser1($this->getUser());
 
@@ -243,6 +248,7 @@ class PublicController extends AbstractController
         shuffle($tCartes);
         shuffle($wordss);
 
+
         for($i=0;$i<25;$i++){
             $motpartie = new Motpartie();
             $motpartie->setPartie($partie);
@@ -254,25 +260,14 @@ class PublicController extends AbstractController
             $motpartieRepository->save($motpartie, true);
 
         }
-        return $this->render('public/word.html.twig',[
+
+        return $this->redirectToRoute('app_profil',[
             'words' => $words,
             'motpartie' => $motpartie,
         ]);
 
     }
-    #[Route('/profil/user/{userId}', name: 'profil_inspect')]
-    public function userInspect($userId , EntityManagerInterface $entityManager, UserRepository $userRepository): Response
-    {
 
-        $userInfo = $userRepository->findBy([
-            'id' => $userId
-        ]);
-
-
-        return $this->render('profil/user/index.html.twig',[
-            'userInfo' => $userInfo
-        ]);
-    }
 
 }
 
