@@ -16,15 +16,15 @@ class Indice
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $mot = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $nbmots = null;
 
     public function getId(): ?int
@@ -58,7 +58,7 @@ class Indice
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user", referencedColumnName: "id" )]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private $user;
 
 
@@ -76,6 +76,9 @@ class Indice
     #[ORM\ManyToOne(inversedBy: 'partie', cascade:['persist'])]
     private ?Partie $partie = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Action = null;
+
     public function getPartie(): ?Partie
     {
         return $this->partie;
@@ -83,6 +86,18 @@ class Indice
     public function setPartie(?Partie $partie): self
     {
         $this->partie = $partie;
+
+        return $this;
+    }
+
+    public function getAction(): ?string
+    {
+        return $this->Action;
+    }
+
+    public function setAction(string $Action): self
+    {
+        $this->Action = $Action;
 
         return $this;
     }

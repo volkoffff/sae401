@@ -192,13 +192,19 @@ class PublicController extends AbstractController
 
         $randomString = bin2hex(random_bytes(2));
 
-        $nom = $request->request->get('nom');
         $partie = new Partie();
-        $partie->setStatut('en attente');
         $partie->setNom('partie numéro - ' . $randomString);
-        $partie->setResultat('en attente de résultat');
-        $partie->setTour('1');
+        $partie->setStatut('en attente');
+        $partie->setTour('0');
+        $partie->setQuidonne('1');
+        $partie->setResultat('en attente');
         $partie->setUser1($this->getUser());
+        $partie->setNom('partie de');
+        $partie->setQuijoue('0');
+        $partie->setCartej1('15');
+        $partie->setCartej2('15');
+        $partie->setCartetotal('15');
+        $partie->setJeton('9');
 
         $wordss = $motRepository->findAll();
         $words = [];
@@ -256,7 +262,7 @@ class PublicController extends AbstractController
             $motpartie->setCouleurJ1($tCartes[$i][1]);
             $motpartie->setCouleurJ2($tCartes[$i][2]);
             $motpartie->setEmplacement($i);
-            $motpartie->setTrouve(false);
+            $motpartie->setEtat('libre');
             $motpartieRepository->save($motpartie, true);
 
         }

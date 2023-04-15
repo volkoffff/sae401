@@ -11,28 +11,24 @@ use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartieRepository::class)]
-#[ApiResource(
-    normalizationContext: [
-        'groups' => ['treasure:read'],
-    ],
-    denormalizationContext: [
-        'groups' => ['treasure:write'],
-    ]
-)]
+#[ApiResource(normalizationContext: ['groups' => ['get']])]
+#[Get]
+#[Put(normalizationContext: ['groups' => ['put']])]
+
 class Partie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $statut = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $tour = 1;
 
     #[ORM\ManyToMany(targetEntity: User::class)]
@@ -56,10 +52,8 @@ class Partie
     }
 
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Indice::class)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private Collection $indices;
-
-    // Getters and setters
 
     public function getIndices()
     {
@@ -90,10 +84,10 @@ class Partie
     }
 
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Motpartie::class)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private Collection $motparties;
 
-     public function __construct()
+    public function __construct()
     {
         $this->indices = new ArrayCollection();
         $this->motparties = new ArrayCollection();
@@ -101,7 +95,7 @@ class Partie
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user1", referencedColumnName: "id" )]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private $user1;
 
 
@@ -119,17 +113,42 @@ class Partie
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: "user2", referencedColumnName: "id" )]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private $user2;
 
     #[ORM\Column]
     private ?string $resultat = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['get', 'put'])]
     private ?int $trophe = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $quijoue = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $quidonne = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $cartej1 = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $cartej2 = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $cartetotal = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $jeton = null;
 
 
 
@@ -197,6 +216,78 @@ class Partie
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getQuijoue(): ?int
+    {
+        return $this->quijoue;
+    }
+
+    public function setQuijoue(int $quijoue): self
+    {
+        $this->quijoue = $quijoue;
+
+        return $this;
+    }
+
+    public function getQuidonne(): ?int
+    {
+        return $this->quidonne;
+    }
+
+    public function setQuidonne(int $quidonne): self
+    {
+        $this->quidonne = $quidonne;
+
+        return $this;
+    }
+
+    public function getCartej1(): ?int
+    {
+        return $this->cartej1;
+    }
+
+    public function setCartej1(int $cartej1): self
+    {
+        $this->cartej1 = $cartej1;
+
+        return $this;
+    }
+
+    public function getCartej2(): ?int
+    {
+        return $this->cartej2;
+    }
+
+    public function setCartej2(int $cartej2): self
+    {
+        $this->cartej2 = $cartej2;
+
+        return $this;
+    }
+
+    public function getCartetotal(): ?int
+    {
+        return $this->cartetotal;
+    }
+
+    public function setCartetotal(int $cartetotal): self
+    {
+        $this->cartetotal = $cartetotal;
+
+        return $this;
+    }
+
+    public function getJeton(): ?int
+    {
+        return $this->jeton;
+    }
+
+    public function setJeton(int $jeton): self
+    {
+        $this->jeton = $jeton;
 
         return $this;
     }

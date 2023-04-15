@@ -16,31 +16,32 @@ class Motpartie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'motparties')]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?Mot $mot = null;
 
     #[ORM\ManyToOne(inversedBy: 'motparties', cascade:['persist'])]
     private ?Partie $partie = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $couleurJ1 = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?string $couleurJ2 = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
+    #[Groups(['get', 'put'])]
     private ?int $emplacement = null;
 
     #[ORM\Column]
-    #[Groups(['treasure:read', 'treasure:write'])]
-    private ?bool $trouve = null;
+    #[Groups(['get', 'put'])]
+    private ?string $etat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,13 +97,13 @@ class Motpartie
 
         return $this;
     }
-    public function isTrouve(): ?bool
+    public function isEtat(): ?string
     {
-        return $this->trouve;
+        return $this->etat;
     }
-    public function setTrouve(bool $trouve): self
+    public function setEtat(string $etat): self
     {
-        $this->trouve = $trouve;
+        $this->etat = $etat;
 
         return $this;
     }
