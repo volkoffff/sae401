@@ -192,11 +192,15 @@ class PublicController extends AbstractController
         $nom = $request->request->get('nom');
         $partie = new Partie();
         $partie->setStatut('en attente');
-        $partie->setTour('1');
+        $partie->setTour('0');
+        $partie->setQuidonne('1');
         $partie->setResultat('en attente');
         $partie->setUser1($this->getUser());
         $partie->setNom('partie de');
-        $partie->setQuijoue('1');
+        $partie->setQuijoue('0');
+        $partie->setCartej1('15');
+        $partie->setCartej2('15');
+        $partie->setCartetotal('15');
 
         $wordss = $motRepository->findAll();
         $words = [];

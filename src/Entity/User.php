@@ -44,16 +44,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public $confirm_password;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['get', 'put'])]
     private ?int $victoire = 0;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['get', 'put'])]
     private ?int $defaite = 0;
 
     #[ORM\Column]
+    #[Groups(['get', 'put'])]
     private ?int $trophee = 0;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Avatar = null;
+    #[Groups(['get', 'put'])]
+    private ?string $avatar = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $biographie = null;
@@ -163,12 +167,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatar(): ?string
     {
-        return $this->Avatar;
+        return $this->avatar;
     }
 
-    public function setAvatar(?string $Avatar): self
+    public function setAvatar(?string $avatar): self
     {
-        $this->Avatar = $Avatar;
+        $this->avatar = $avatar;
 
         return $this;
     }

@@ -52,6 +52,7 @@ class Partie
     }
 
     #[ORM\OneToMany(mappedBy: 'partie', targetEntity: Indice::class)]
+    #[Groups(['get', 'put'])]
     private Collection $indices;
 
     public function getIndices()
@@ -119,6 +120,7 @@ class Partie
     private ?string $resultat = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['get', 'put'])]
     private ?int $trophe = null;
 
     #[ORM\Column(length: 255)]
@@ -127,6 +129,22 @@ class Partie
     #[ORM\Column]
     #[Groups(['get', 'put'])]
     private ?int $quijoue = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $quidonne = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $cartej1 = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $cartej2 = null;
+
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $cartetotal = null;
 
 
 
@@ -206,6 +224,54 @@ class Partie
     public function setQuijoue(int $quijoue): self
     {
         $this->quijoue = $quijoue;
+
+        return $this;
+    }
+
+    public function getQuidonne(): ?int
+    {
+        return $this->quidonne;
+    }
+
+    public function setQuidonne(int $quidonne): self
+    {
+        $this->quidonne = $quidonne;
+
+        return $this;
+    }
+
+    public function getCartej1(): ?int
+    {
+        return $this->cartej1;
+    }
+
+    public function setCartej1(int $cartej1): self
+    {
+        $this->cartej1 = $cartej1;
+
+        return $this;
+    }
+
+    public function getCartej2(): ?int
+    {
+        return $this->cartej2;
+    }
+
+    public function setCartej2(int $cartej2): self
+    {
+        $this->cartej2 = $cartej2;
+
+        return $this;
+    }
+
+    public function getCartetotal(): ?int
+    {
+        return $this->cartetotal;
+    }
+
+    public function setCartetotal(int $cartetotal): self
+    {
+        $this->cartetotal = $cartetotal;
 
         return $this;
     }
