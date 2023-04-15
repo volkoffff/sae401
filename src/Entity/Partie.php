@@ -146,6 +146,10 @@ class Partie
     #[Groups(['get', 'put'])]
     private ?int $cartetotal = null;
 
+    #[ORM\Column]
+    #[Groups(['get', 'put'])]
+    private ?int $jeton = null;
+
 
 
     public function getUser2(): ?User
@@ -272,6 +276,18 @@ class Partie
     public function setCartetotal(int $cartetotal): self
     {
         $this->cartetotal = $cartetotal;
+
+        return $this;
+    }
+
+    public function getJeton(): ?int
+    {
+        return $this->jeton;
+    }
+
+    public function setJeton(int $jeton): self
+    {
+        $this->jeton = $jeton;
 
         return $this;
     }

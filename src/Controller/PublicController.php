@@ -201,6 +201,7 @@ class PublicController extends AbstractController
         $partie->setCartej1('15');
         $partie->setCartej2('15');
         $partie->setCartetotal('15');
+        $partie->setJeton('9');
 
         $wordss = $motRepository->findAll();
         $words = [];
