@@ -87,7 +87,7 @@ class Partie
     #[Groups(['get', 'put'])]
     private Collection $motparties;
 
-    public function __construct()
+     public function __construct()
     {
         $this->indices = new ArrayCollection();
         $this->motparties = new ArrayCollection();
