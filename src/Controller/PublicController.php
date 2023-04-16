@@ -25,14 +25,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PublicController extends AbstractController
 {
-    #[Route('/{_locale}/', name: 'app_public', requirements: [
-        '_locale' => 'en|fr|de',
-    ],)]
+    #[Route('/', name: 'app_public')]
     public function index( TranslatorInterface $translator, UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
-        $translated = $translator->trans('Symfony is great');
-        $locale = $request->getLocale();
-        $request->setLocale('fr');
 // section des profils
         $user = $this->getUser();
         $userConnecter = $this->getUser();
