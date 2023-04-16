@@ -18,16 +18,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\BiographieType;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method getDoctrine()
  */
 class PublicController extends AbstractController
 {
-    #[Route('/', name: 'app_public')]
-    public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
+    #[Route('/{_locale}/', name: 'app_public', requirements: [
+        '_locale' => 'en|fr|de',
+    ],)]
+    public function index( TranslatorInterface $translator, UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
-
+        $translated = $translator->trans('Symfony is great');
+        $locale = $request->getLocale();
+        $request->setLocale('fr');
 // section des profils
         $user = $this->getUser();
         $userConnecter = $this->getUser();
@@ -94,6 +99,7 @@ class PublicController extends AbstractController
 
 
         return $this->render('public/index.html.twig', [
+            'translated' => $translated,
             'controller_name' => 'PublicController',
             'biographie_form' => $biographieForm->createView(),
 // section des profils
@@ -252,7 +258,7 @@ class PublicController extends AbstractController
             $tCartes[$i][2] = 'Vert';
         }
         shuffle($tCartes);
-        shuffle($wordss);
+        shuffle($words);
 
 
         for($i=0;$i<25;$i++){

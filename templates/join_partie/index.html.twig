@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="flex w-full">
+    <div class="h-screen flex-auto px-6">
+        <div class="pt-28 h-full w-full border-dashed border-2 border-sky-500/20">
+            <div>
+                <p class="text-xl font-semibold flex items-center justify-between text-zinc-300">Les parties de vos amis en attente d'un joueur</p>
+                <div class=" overflow-y-scroll invisible_scroll mt-2">
+                    {% if partiesAmis|length > 0 %}
+                        {% for partiesAmi in partiesAmis %}
+                            <div
+                                    class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-4">
+                                <div class="flex gap-2 items-center flex-1">
+                                    <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                         style="background-image: url({{ asset('uploads/' ~ partiesAmi.user1.avatar) }}); background-color: {{ partiesAmi.user1.couleur }}">
+                                    </div>
+                                    <p class="text-zinc-100">{{ partiesAmi.user1.pseudo }}</p>
+                                    <div class="flex gap-1 items-center text-xl main-gradient-text ml-2 text-zinc-500">
+                                        <p class="">{{ partiesAmi.user1.trophee }}</p>
+                                        <i class="fa-sharp fa-solid fa-trophy fa-xs mt-1"></i>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 items-center flex-1">
+                                    <p class="text-zinc-500">nom:</p>
+                                    <p class="text-zinc-100">{{ partiesAmi.nom }}</p>
+                                </div>
+                                <div class="flex gap-2 items-center flex-1">
+                                    <p class="text-zinc-500">statut:</p>
+                                    <p class="text-zinc-100">en attente d'un joueur</p>
+                                </div>
+                            <form action="{{ path('join_partie' , {'partieId': partiesAmi.id}) }}" type="post">
+                                <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">Rejoindre</button>
+                            </form>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>zdz</p>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="pt-4">
+                <p class="text-xl font-semibold flex items-center justify-between text-zinc-300">Les parties en attente d'un joueur</p>
+                <div class=" overflow-y-scroll invisible_scroll mt-2">
+                    {% for partie in partiesSansAmis %}
+                                <div
+                                        class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-4">
+                                    <div class="flex gap-2 items-center flex-1">
+                                        <div class=" w-9 h-9 rounded-xl bg-cover bg-center"
+                                             style="background-image: url({{ asset('uploads/' ~ partie.user1.avatar) }}); background-color: {{ partie.user1.couleur }}">
+                                        </div>
+                                        <p class="text-zinc-100">{{ partie.user1.pseudo }}</p>
+                                        <div class="flex gap-1 items-center text-xl main-gradient-text ml-2 text-zinc-500">
+                                            <p class="">{{ partie.user1.trophee }}</p>
+                                            <i class="fa-sharp fa-solid fa-trophy fa-xs mt-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2 items-center flex-1">
+                                        <p class="text-zinc-500">nom:</p>
+                                        <p class="text-zinc-100">{{ partie.nom }}</p>
+                                    </div>
+                                    <div class="flex gap-2 items-center flex-1">
+                                        <p class="text-zinc-500">statut:</p>
+                                        <p class="text-zinc-100">en attente d'un joueur</p>
+                                    </div>
+                                <form action="{{ path('join_partie' , {'partieId': partie.id}) }}" type="post">
+                                    <button class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">Rejoindre</button>
+                                </form>
+                                </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="h-screen w-80">
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+        body {
+            background-image: url({{ asset('uploads/fond_1.svg') }});
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+{% endblock %}

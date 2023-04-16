@@ -60,9 +60,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $avatar = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['get', 'put'])]
     private ?string $biographie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['get', 'put'])]
     private ?string $couleur = null;
 
 
