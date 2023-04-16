@@ -124,10 +124,8 @@ const ratio = document.getElementById("ratio");
 
 ratio.innerHTML = Math.round((victoire.innerHTML /  defaite.innerHTML) * 100) / 100;
 
-console.log('suceur');
-console.log(victoire);
-console.log(ratio);
-console.log(ratiopls);
+
+
 
 
 
