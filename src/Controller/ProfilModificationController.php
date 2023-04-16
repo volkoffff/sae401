@@ -6,6 +6,7 @@ use App\Entity\Friends;
 use App\Entity\Partie;
 use App\Entity\User;
 use App\Form\BiographieType;
+use App\Form\ProfilModificationType;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,9 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilModificationController extends AbstractController
 {
-    #[Route('/profil/modification', name: 'app_profil_modification')]
+    #[Route('/profil/modification', name: 'app_profil_modification', methods: ['GET', 'HEAD'])]
     public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
+
 
 // section des profils
         $user = $this->getUser();
@@ -26,6 +28,7 @@ class ProfilModificationController extends AbstractController
         $users = $entityManager->getRepository(User::class)->findAll();
         $leaders = $UserRepository->findBy([], ['victoire' => 'DESC']);
 
+        $form = $this->createForm(ProfilModificationType::class, $user);
 
 
 // section des parties
@@ -103,6 +106,7 @@ class ProfilModificationController extends AbstractController
 
 
         return $this->render('profil/modification.html.twig', [
+            'form' => $form->createView(),
             'controller_name' => 'PublicController',
             'biographie_form' => $biographieForm->createView(),
 // section des profils
@@ -123,6 +127,23 @@ class ProfilModificationController extends AbstractController
             'partiesAmis' => $partiesAmis
 
         ]);
+    }
+    #[Route('/profil/modification', name: 'app_profil_modification_action', methods: ['POST'])]
+    public function changeProfil(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
+    {
+
+        $user = $this->getUser();
+        $email = $request->request->get('email');
+        if ($email !== null && $email !== '') {
+            $user->setEmail($email);
+        }
+
+        $pseudo = $request->request->get('pseudo');
+        if ($pseudo !== null && $pseudo !== '') {
+            $user->setPseudo($pseudo);
+        }
+
+        return $this->redirectToRoute('app_profil');
     }
 
     #[Route('/friend/send/{friendId}', name: 'send_friend_request')]

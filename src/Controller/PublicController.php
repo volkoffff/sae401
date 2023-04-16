@@ -251,7 +251,7 @@ class PublicController extends AbstractController
             $tCartes[$i][2] = 'Vert';
         }
         shuffle($tCartes);
-        shuffle($wordss);
+        shuffle($words);
 
 
         for($i=0;$i<25;$i++){

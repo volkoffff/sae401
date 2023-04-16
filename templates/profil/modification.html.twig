@@ -56,25 +56,30 @@
 
 
                     <div class="pt-4 px-3">
-                        <form action="" method="POST" class="flex gap-4 ">
-                            <div class="">
-                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Email</label>
-                                <input  type="text" class=" bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.email }}" value="{{ user.email }}" required>
-                            </div>
-                            <div class="">
-                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Pseudo</label>
-                                <input type="text" id="disabled-input-2" class=" bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.pseudo }}" value="{{ user.pseudo }}" required>
-                            </div>
-                            <div class="mt-6">
-                                <a href="{{ path('app_profil') }}" class=" text-blue-600 hover:underline">Retour</a>
-                                <a href="" class="ml-2 ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center main-gradient-b cursor-pointer">Sauvegarder</a>
-                            </div>
+{#                        <form action="{{ path('app_profil_modification_action') }}" method="POST" class="flex gap-4 ">#}
+{#                            <div class="">#}
+{#                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Email</label>#}
+{#                                <input name="email"  type="text" class=" bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.email }}" value="{{ user.email }}" required>#}
+{#                            </div>#}
+{#                            <div class="">#}
+{#                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Pseudo</label>#}
+{#                                <input name="pseudo" type="text" id="disabled-input-2" class=" bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.pseudo }}" value="{{ user.pseudo }}" required>#}
+{#                            </div>#}
+{#                            <div class="mt-6">#}
+{#                                <button href="{{ path('app_profil') }}" class=" text-blue-600 hover:underline">Retour</button>#}
+{#                                <button type="submit" class="ml-2 ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center main-gradient-b cursor-pointer">Sauvegarder</button>#}
+{#                            </div>#}
+{#                        </form>#}
+
+                        <form method="POST" action="{{ path('app_profil_modification_action') }}">
+                            {{ form_start(form) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.pseudo) }}
+                            {{ form_end(form) }}
+                            <button type="submit">Modifier</button>
                         </form>
 
                     </div>
-
-
-
 
 
 
