@@ -218,6 +218,7 @@ class ProfilController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_public');
-
     }
+
+
 }

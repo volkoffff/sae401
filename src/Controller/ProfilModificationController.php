@@ -3,28 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Friends;
-use App\Entity\Mot;
-use App\Entity\Motpartie;
 use App\Entity\Partie;
 use App\Entity\User;
-use App\Repository\MotPartieRepository;
-use App\Repository\MotRepository;
+use App\Form\BiographieType;
 use App\Repository\PartieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\BiographieType;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 
-/**
- * @method getDoctrine()
- */
-class PublicController extends AbstractController
+class ProfilModificationController extends AbstractController
 {
-    #[Route('/', name: 'app_public')]
+    #[Route('/profil/modification', name: 'app_profil_modification')]
     public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
 
@@ -32,7 +24,7 @@ class PublicController extends AbstractController
         $user = $this->getUser();
         $userConnecter = $this->getUser();
         $users = $entityManager->getRepository(User::class)->findAll();
-        $leaders = $UserRepository->findBy([], ['trophee' => 'DESC']);
+        $leaders = $UserRepository->findBy([], ['victoire' => 'DESC']);
 
 
 
@@ -40,13 +32,13 @@ class PublicController extends AbstractController
         $parties = $PartieRepository->findAll();
         $partiesDuUser = 0;
         if (!empty($parties)) {
-        $partiesDuUser = $entityManager->getRepository(Partie::class)->createQueryBuilder('p')
-         ->Where('(p.user1 = :user_id OR p.user2 = :user_id)')
-            ->setParameters([
-                'user_id' => $this->getUser()->getId(),
-            ])
-            ->getQuery()
-            ->getResult();
+            $partiesDuUser = $entityManager->getRepository(Partie::class)->createQueryBuilder('p')
+                ->Where('(p.user1 = :user_id OR p.user2 = :user_id)')
+                ->setParameters([
+                    'user_id' => $this->getUser()->getId(),
+                ])
+                ->getQuery()
+                ->getResult();
         }
 
 
@@ -83,6 +75,23 @@ class PublicController extends AbstractController
                 ->getQuery()
                 ->getResult();
         }
+        // section des parties
+        $partiesSansAmis = 0;
+        if (!empty($friends)) {
+            foreach ($friends as $friendship) {
+                $friendsIds[] = $friendship->getUser() === $user ? $friendship->getFriend() : $friendship->getUser();
+            }
+            $partiesSansAmis = $PartieRepository->createQueryBuilder('p')
+                ->where('p.statut = :statut')
+                ->andWhere('p.user1 NOT IN (:friendsIds) OR p.user2 NOT IN (:friendsIds)')
+                ->setParameters([
+                    'statut' => 'en attente',
+                    'friendsIds' => $friendsIds,
+                ])
+                ->getQuery()
+                ->getResult();
+        }
+
         $biographieForm = $this->createForm(BiographieType::class, $user);
         $biographieForm->handleRequest($request);
 
@@ -93,7 +102,7 @@ class PublicController extends AbstractController
 
 
 
-        return $this->render('public/index.html.twig', [
+        return $this->render('profil/modification.html.twig', [
             'controller_name' => 'PublicController',
             'biographie_form' => $biographieForm->createView(),
 // section des profils
@@ -105,6 +114,7 @@ class PublicController extends AbstractController
 // section des parties
             'parties' => $parties,
             'partiesDuUser' => $partiesDuUser,
+            'partiesSansAmis' => $partiesSansAmis,
 
 
 // section amis
@@ -113,8 +123,8 @@ class PublicController extends AbstractController
             'partiesAmis' => $partiesAmis
 
         ]);
-
     }
+
     #[Route('/friend/send/{friendId}', name: 'send_friend_request')]
     public function sendFriendRequest(User $friendId, EntityManagerInterface $entityManager): Response
     {
@@ -135,11 +145,11 @@ class PublicController extends AbstractController
             $friend->setStatus('pending');
             $entityManager->persist($friend);
             $entityManager->flush();
-            return $this->redirectToRoute('app_public');
+            return $this->redirectToRoute('app_join_partie');
         }
         $this->addFlash('danger', 'Vous êtes déjà ami avec ce joueur');
         // Rediriger l'utilisateur vers la page d'accueil
-        return $this->redirectToRoute('app_public');
+        return $this->redirectToRoute('app_join_partie');
 
 
     }
@@ -161,10 +171,7 @@ class PublicController extends AbstractController
         $entityManager->persist($friend);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_public');
-
-
-
+        return $this->redirectToRoute('app_join_partie');
     }
 
     #[Route('friend/decline/{friendId}', name: 'decline_friend_request')]
@@ -183,96 +190,35 @@ class PublicController extends AbstractController
         $entityManager->remove($friend);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_public');
+        return $this->redirectToRoute('app_join_partie');
     }
 
-    #[Route('/create/partie/', name: 'create_partie')]
-    public function createPartie(Request $request, MotRepository $motRepository, MotPartieRepository $motpartieRepository): Response
+
+
+    #[Route('/partie/join/{partieId}', name: 'join_partie')]
+    public function joinPartie( $partieId, EntityManagerInterface $entityManager): Response
     {
-        $slugger = new AsciiSlugger();
-        $randomString = bin2hex(random_bytes(2));
 
-        $partie = new Partie();
-        $partie->setNom('partie numéro - ' . $randomString);
-        $partie->setStatut('en attente');
-        $partie->setTour('0');
-        $partie->setQuidonne('1');
-        $partie->setResultat('en attente');
-        $partie->setUser1($this->getUser());
-        $partie->setQuijoue('0');
-        $partie->setCartej1('15');
-        $partie->setCartej2('15');
-        $partie->setCartetotal('15');
-        $partie->setJeton('9');
-
-        $wordss = $motRepository->findAll();
-        $words = [];
-        foreach ($wordss as $word) {
-            $words[$word->getId()] = $word;
-        }
-        // Shuffle the words
-        $tCartes = [];
-        $tCartes[0][1] = 'Noir';
-        $tCartes[0][2] = 'Vert';
-
-        $tCartes[1][1] = 'Noir';
-        $tCartes[1][2] = 'Noir';
-
-        $tCartes[2][1] = 'Noir';
-        $tCartes[2][2] = 'Neutre';
-
-        $tCartes[3][1] = 'Vert';
-        $tCartes[3][2] = 'Noir';
-
-        $tCartes[4][1] = 'Neutre';
-        $tCartes[4][2] = 'Noir';
-
-        $tCartes[5][1] = 'Vert';
-        $tCartes[5][2] = 'Vert';
-
-        $tCartes[6][1] = 'Vert';
-        $tCartes[6][2] = 'Vert';
-
-        $tCartes[7][1] = 'Vert';
-        $tCartes[7][2] = 'Vert';
-
-        for($i=8; $i<15; $i++) {
-            $tCartes[$i][1] = 'Neutre';
-            $tCartes[$i][2] = 'Neutre';
-        }
-
-        for($i=15; $i<20; $i++) {
-            $tCartes[$i][1] = 'Vert';
-            $tCartes[$i][2] = 'Neutre';
-        }
-
-        for($i=20; $i<25; $i++) {
-            $tCartes[$i][1] = 'Neutre';
-            $tCartes[$i][2] = 'Vert';
-        }
-        shuffle($tCartes);
-        shuffle($wordss);
-
-
-        for($i=0;$i<25;$i++){
-            $motpartie = new Motpartie();
-            $motpartie->setPartie($partie);
-            $motpartie->setMot(array_pop($words));
-            $motpartie->setCouleurJ1($tCartes[$i][1]);
-            $motpartie->setCouleurJ2($tCartes[$i][2]);
-            $motpartie->setEmplacement($i);
-            $motpartie->setEtat('libre');
-            $motpartieRepository->save($motpartie, true);
-
-        }
-
-        return $this->redirectToRoute('app_profil',[
-            'words' => $words,
-            'motpartie' => $motpartie,
+        $partie = $entityManager->getRepository(Partie::class)->findOneBy([
+            'id' => $partieId
         ]);
 
+        if (!$partie) {
+            throw $this->createNotFoundException('aucune partie a rejoindre');
+        };
+        if ($partie->getUser1() === $this->getUser()) {
+            $this->addFlash('danger', 'Vous êtes le créateur de cette partie');
+            // Rediriger l'utilisateur vers la page d'accueil
+            return $this->redirectToRoute('app_join_partie');
+        }
+
+        $partie->setUser2($this->getUser());
+        $partie->setStatut('en cours');
+        $entityManager->persist($partie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_public');
     }
 
 
 }
-
