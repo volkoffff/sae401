@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilModificationController extends AbstractController
 {
-    #[Route('/profil/modification', name: 'app_profil_modification', methods: ['GET', 'HEAD'])]
+    #[Route('/profil/modification', name: 'app_profil_modification')]
     public function index(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
 
@@ -105,6 +105,17 @@ class ProfilModificationController extends AbstractController
 
 
 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistre les modifications dans la base de données
+//            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // Redirige l'utilisateur vers la page de profil
+            return $this->redirectToRoute('app_profil');
+        }
+
         return $this->render('profil/modification.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PublicController',
@@ -128,23 +139,23 @@ class ProfilModificationController extends AbstractController
 
         ]);
     }
-    #[Route('/profil/modification', name: 'app_profil_modification_action', methods: ['POST'])]
-    public function changeProfil(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
-    {
-
-        $user = $this->getUser();
-        $email = $request->request->get('email');
-        if ($email !== null && $email !== '') {
-            $user->setEmail($email);
-        }
-
-        $pseudo = $request->request->get('pseudo');
-        if ($pseudo !== null && $pseudo !== '') {
-            $user->setPseudo($pseudo);
-        }
-
-        return $this->redirectToRoute('app_profil');
-    }
+//    #[Route('/profil/modification', name: 'app_profil_modification_action', methods: ['POST'])]
+//    public function changeProfil(UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
+//    {
+//
+//        $user = $this->getUser();
+//        $email = $request->request->get('email');
+//        if ($email !== null && $email !== '') {
+//            $user->setEmail($email);
+//        }
+//
+//        $pseudo = $request->request->get('pseudo');
+//        if ($pseudo !== null && $pseudo !== '') {
+//            $user->setPseudo($pseudo);
+//        }
+//
+//        return $this->redirectToRoute('app_profil');
+//    }
 
     #[Route('/friend/send/{friendId}', name: 'send_friend_request')]
     public function sendFriendRequest(User $friendId, EntityManagerInterface $entityManager): Response
