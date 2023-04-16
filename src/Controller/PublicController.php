@@ -201,7 +201,7 @@ class PublicController extends AbstractController
         $partie = new Partie();
         $partie->setNom('partie numéro - ' . $randomString);
         $partie->setStatut('en attente');
-        $partie->setTour('0');
+        $partie->setTour('1');
         $partie->setQuidonne('1');
         $partie->setResultat('en attente');
         $partie->setUser1($this->getUser());
