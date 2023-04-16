@@ -36,7 +36,9 @@
                             </div>
                         {% endfor %}
                     {% else %}
-                        <p>zdz</p>
+                        <div class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-3">
+                            <p class="text-zinc-500">Vos amis n'ont pas crée de parties...</p>
+                        </div>
                     {% endif %}
 
                 </div>
@@ -44,6 +46,7 @@
             <div class="pt-4">
                 <p class="text-xl font-semibold flex items-center justify-between text-zinc-300">Les parties en attente d'un joueur</p>
                 <div class=" overflow-y-scroll invisible_scroll mt-2">
+                    {% if partiesSansAmis|length > 0 %}
                     {% for partie in partiesSansAmis %}
                                 <div
                                         class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-4">
@@ -70,6 +73,11 @@
                                 </form>
                                 </div>
                     {% endfor %}
+                    {% else %}
+                        <div class="w-full h-16 blury rounded-xl flex items-center px-4 justify-between main-gradient-dark mb-3">
+                            <p class="text-zinc-500">Aucune parties publiques sont en attentes...</p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
