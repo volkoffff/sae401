@@ -56,23 +56,17 @@
 
 
                     <div class="pt-4 px-3">
-                        <form action="" method="POST" class="flex gap-4 ">
-                            <div class="">
-                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Email</label>
-                                <input disabled type="text" class="cursor-no-drop bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.email }}" required>
-                            </div>
-                            <div class="">
-                                <label for="last_name" class="block mb-2 text-sm font-medium text-zinc-200">Pseudo</label>
-                                <input disabled type="text" id="disabled-input-2" class="cursor-no-drop bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.pseudo }}" required>
-                            </div>
-                        </form>
-                        <div class="mt-2">
-                            <a href="{{ path('app_profil_modification') }}" class=" text-blue-600 hover:underline">modifier</a>
+
+                        {{ form_start(form) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.pseudo) }}
+                        <div class="flex gap-4 mt-4 items-center">
+                            <a href="{{ path('app_profil') }}" class=" text-blue-600 hover:underline">retour</a>
+                            <button type="submit" class="ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center main-gradient-b cursor-pointer">Enregistrer les modifications</button>
                         </div>
+                        {{ form_end(form) }}
+
                     </div>
-
-
-
 
 
 
@@ -197,9 +191,9 @@
                                             <p class="text-zinc-100">{{ partiesDuUserr.resultat }}</p>
                                         </div>
                                         {% if partiesDuUserr.resultat == 'victoire' %}
-                                        <button data-modal-target="{{ partiesDuUserr.id }}" data-modal-toggle="{{ partiesDuUserr.id }}" class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">Statistiques</button>
+                                            <button data-modal-target="{{ partiesDuUserr.id }}" data-modal-toggle="{{ partiesDuUserr.id }}" class="bg-green-400/5 hover:bg-green-400/10 rounded-lg text-green-500 px-4 h-9 rounded-xl">Statistiques</button>
                                         {% else %}
-                                        <button data-modal-target="{{ partiesDuUserr.id }}" data-modal-toggle="{{ partiesDuUserr.id }}" class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">Statistiques</button>
+                                            <button data-modal-target="{{ partiesDuUserr.id }}" data-modal-toggle="{{ partiesDuUserr.id }}" class="bg-red-400/5 hover:bg-red-400/10 rounded-lg text-red-500 px-4 h-9 rounded-xl">Statistiques</button>
                                         {% endif %}
                                     </div>
                                     <!-- Main modal -->
@@ -210,9 +204,9 @@
                                                 <!-- Modal header -->
                                                 <div class="flex items-start justify-between p-4 border-b rounded-t border-zinc-700">
                                                     {% if partiesDuUserr.resultat == 'victoire' %}
-                                                    <p class="text-l font-medium px-6 py-1 bg-green-400/10 text-green-500 rounded">{{ partiesDuUserr.resultat }}</p>
+                                                        <p class="text-l font-medium px-6 py-1 bg-green-400/10 text-green-500 rounded">{{ partiesDuUserr.resultat }}</p>
                                                     {% else %}
-                                                    <p class="text-l font-medium px-6 py-1 bg-red-400/10 text-red-500 rounded">{{ partiesDuUserr.resultat }}</p>
+                                                        <p class="text-l font-medium px-6 py-1 bg-red-400/10 text-red-500 rounded">{{ partiesDuUserr.resultat }}</p>
                                                     {% endif %}
                                                     <button type="button" class="text-zinc-500 bg-zinc-600/10 hover:bg-zinc-600/30 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-hide="{{ partiesDuUserr.id }}">
                                                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -315,9 +309,9 @@
                                         </div>
                                         <div class="flex gap-2 items-center flex-1 justify-center">
                                             {% if partiesDuUserr.tour is odd %}
-                                            <p class="text-zinc-100">A vous de jouer</p>
+                                                <p class="text-zinc-100">A vous de jouer</p>
                                             {% else %}
-                                            <p class="text-zinc-100">Au tour de l'adversaire</p>
+                                                <p class="text-zinc-100">Au tour de l'adversaire</p>
                                             {% endif %}
                                         </div>
                                         {% if partiesDuUserr.tour is odd %}

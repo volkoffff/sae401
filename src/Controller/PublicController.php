@@ -195,7 +195,7 @@ class PublicController extends AbstractController
     #[Route('/create/partie/', name: 'create_partie')]
     public function createPartie(Request $request, MotRepository $motRepository, MotPartieRepository $motpartieRepository): Response
     {
-
+        $slugger = new AsciiSlugger();
         $randomString = bin2hex(random_bytes(2));
 
         $partie = new Partie();
@@ -205,7 +205,6 @@ class PublicController extends AbstractController
         $partie->setQuidonne('1');
         $partie->setResultat('en attente');
         $partie->setUser1($this->getUser());
-        $partie->setNom('partie de');
         $partie->setQuijoue('0');
         $partie->setCartej1('15');
         $partie->setCartej2('15');
