@@ -922,9 +922,11 @@
             loader.style.opacity = 1;
 
 
+            setTimeout(() => {
                 loader.style.opacity = 0;
                 loader.style.display = 'none';
                 body.style.overflow = 'auto';
+            }, 2000);
 
         }
     }
