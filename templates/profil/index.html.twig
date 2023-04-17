@@ -66,8 +66,9 @@
                                 <input disabled type="text" id="disabled-input-2" class="cursor-no-drop bg-gray-50 border border-zinc-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 second-black dark:focus:border-blue-500" placeholder="{{ user.pseudo }}" required>
                             </div>
                         </form>
-                        <div class="mt-2">
+                        <div class="mt-2 flex gap-8">
                             <a href="{{ path('app_profil_modification') }}" class=" text-blue-600 hover:underline">modifier</a>
+                            <a href="{{ path('security_logout') }}" class=" text-blue-600 hover:underline">déconnexion</a>
                         </div>
                     </div>
 
