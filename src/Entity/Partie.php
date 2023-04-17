@@ -125,6 +125,7 @@ class Partie
     private ?int $trophe = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['get', 'put'])]
     private ?string $nom = null;
 
     #[ORM\Column]
