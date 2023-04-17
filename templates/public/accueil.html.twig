@@ -1,0 +1,227 @@
+<link rel="stylesheet" media="screen" href="{{ asset('monstyle.css') }}">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://kit.fontawesome.com/b24ca366d4.js" crossorigin="anonymous"></script>
+
+{% block body %}
+    <nav class="main-black border-gray-200 sm:pl-6 white:bg-gray-900 fixed w-full z-50 py-6">
+        <div  class=" flex flex-wrap items-center justify-between mx-auto">
+            <a href="{{ path('app_public') }}" class="flex items-center">
+                <img src="{{ asset('uploads/logo1.svg') }}" class="h-6 mr-3 sm:h-6" alt="woocop Logo"/>
+                <span class="self-center text-xl font-semibold whitespace-nowrap white:text-white">WOOCOP</span>
+            </a>
+            <div class="mr-6">
+                <a class="mt-2 w-full ease-in duration-100 text-white  font-medium rounded-lg text-sm px-5 py-3 text-center cursor-pointer text-zinc-300 bg-zinc-900/20 hover:bg-zinc-900/40 mr-4"
+                   href="{{ path('security_login') }}">Connexion</a>
+                <a class="mt-4 w-full ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-5 py-3 text-center mb-2 main-gradient-b cursor-pointer"
+                   href="{{ path('security_registration') }}">Inscription</a>
+            </div>
+        </div>
+    </nav>
+    <a href="#top"
+       class="w-12 h-12 fixed right-6 bottom-6 bg-orange-500 hover:bg-orange-600 rounded-full shadow-lg flex items-center justify-center text-white"><svg
+                stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em"
+                xmlns="http://www.w3.org/2000/svg">
+            <path
+                    d="M868 545.5L536.1 163a31.96 31.96 0 0 0-48.3 0L156 545.5a7.97 7.97 0 0 0 6 13.2h81c4.6 0 9-2 12.1-5.5L474 300.9V864c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V300.9l218.9 252.3c3 3.5 7.4 5.5 12.1 5.5h81c6.8 0 10.5-8 6-13.2z">
+            </path>
+        </svg></a>
+    <!-- img hero -->
+
+
+    <section class="text-black relative" id="top">
+        <div class=" mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center flex gap-16">
+            <div class="heroText flex-2 text-center" >
+                <h1
+                        class="bg-gradient-to-r to-purple-500 from-orange-500 bg-clip-text text-6xl font-extrabold text-transparent sm:text-7xl text-left">
+                    WOOCOP
+                </h1>
+                <p class=" mx-auto mt-4 max-w-5xl sm:text-xl sm:leading-relaxed text-zinc-300 text-left">
+                    Prêt à devenir un maître espion ? Découvrez le jeu de stratégie Woocop et gagnez avec votre coéquipier !
+                </p>
+                <div class="mt-8 flex flex-wrap gap-2">
+                    <a href="#personalisationSction"
+                       class=" ease-in duration-100 text-white focus:ring-4 shadow-lg shadow-orange-600/20 font-medium rounded-lg text-sm px-8 py-3 text-center main-gradient-b cursor-pointer">Voir
+                        plus</a>
+                    <button type="submit"
+                            class=" ease-in duration-100 text-white  font-medium text-sm px-5 py-3 text-center cursor-pointer rounded-lg hover:bg-zinc-800">Jouer</button>
+                </div>
+            </div>
+            <div class="flex-3 ml-4 scrollSkew rounded-2xl overflow-hidden h-fit shadow-2xl  bg-contain bg-no-repeat">
+                <img src="{{ asset('uploads/accueil.png') }}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <div class="h-fit pb-60 pt-20" id="personalisationSction">
+        <div class=" mx-auto max-w-screen-xl px-4  lg:flex flex gap-16">
+            <div class="heroText flex-1 text-center">
+                <h1
+                        class="bg-gradient-to-r to-purple-500 from-orange-500 bg-clip-text text-3xl font-bold text-transparent sm:text-5xl text-left">
+                    Personalisation
+                </h1>
+                <p class=" mx-auto mt-4 max-w-5xl sm:text-xl sm:leading-relaxed text-zinc-300 text-left">
+                    La personnalisation de votre avatar est une étape cruciale pour exprimer votre style et votre personnalité.
+                    Avec Woocop, vous pouvez personnaliser votre avatar à votre guise, que ce soit avec des tenues ou des
+                    couleurs, ou même en votre titre. Que vous souhaitiez incarner un espion discret ou un agent plus flamboyant,
+                    vous pouvez personnaliser votre personnage pour qu'il vous ressemble. Alors, créez le personnage qui vous
+                    représente le mieux et entrez dans l'univers captivant de Woocop !
+                </p>
+            </div>
+            <div class="flex-1">
+                <div class="w-full second-black flex items-center rounded-l-xl bg-gray-200 px-3 py-3 justify-between w-80 pr-6">
+                    <div class="flex items-center">
+                        <div class="mr-3 w-14 h-14 rounded-xl bg-cover bg-center shadow-lg shadow-orange-600/10 "
+                             style=" background-image: url({{ asset('uploads/avatar1.png') }}); background-color: rgb(222, 41, 41)">
+                        </div>
+                        <div>
+                            <p class="self-center text-xl font-semibold whitespace-nowrap leading-none">JimmyTwig</p>
+                            <p class=" leading-none mt-1 text-zinc-500">J'ai fini la sae</p>
+                        </div>
+                    </div>
+                    <p class="text-3xl font-semibold flex items-center gap-2 text-gray-500 main-gradient-text leading-none">
+                        145
+                        <i class="fa-sharp fa-solid fa-trophy fa-xs"></i>
+                    </p>
+                </div>
+                <div class="flex gap-2 p-4">
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar1.png') }}); background-color: #e3db28;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar2.png') }}); background-color: #68efef;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar6.png') }}); background-color: #e74385;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar4.png') }}); background-color: #66ec47;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar3.png') }}); background-color: #9e64f1;">
+                    </div>
+                </div>
+                <div class="w-full second-black flex items-center rounded-l-xl bg-gray-200 px-3 py-3 justify-between w-80 pr-6">
+                    <div class="flex items-center">
+                        <div class="mr-3 w-14 h-14 rounded-xl bg-cover bg-center shadow-lg shadow-orange-600/10 "
+                             style=" background-image: url({{ asset('uploads/avatar5.png') }}); background-color: rgb(144, 228, 70)">
+                        </div>
+                        <div>
+                            <p class="self-center text-xl font-semibold whitespace-nowrap leading-none">CarlaK47</p>
+                            <p class=" leading-none mt-1 text-zinc-500">J'espère avoir la moyenne</p>
+                        </div>
+                    </div>
+                    <p class="text-3xl font-semibold flex items-center gap-2 text-gray-500 main-gradient-text leading-none">
+                        250
+                        <i class="fa-sharp fa-solid fa-trophy fa-xs"></i>
+                    </p>
+                </div>
+                <div class="flex gap-2 p-4">
+
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar1.png') }}); background-color: #1475b2;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar2.png') }}); background-color: #b62fec;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar6.png') }}); background-color: #6be13d;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar4.png') }}); background-color: #e0d028;">
+                    </div>
+                    <div class="mr-3 w-16 h-16 rounded-xl bg-cover bg-center"
+                         style="background-image: url({{ asset('uploads/avatar3.png') }}); background-color: #f12121;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" pb-40">
+        <div class=" mx-auto max-w-screen-xl px-4  lg:flex  flex gap-16">
+            <div class="heroText flex-1 text-center">
+                <h1
+                        class="bg-gradient-to-r to-purple-500 from-orange-500 bg-clip-text text-3xl font-bold text-transparent sm:text-5xl text-left">
+                    Jouabilité
+                </h1>
+                <p class=" mx-auto mt-4 max-w-5xl sm:text-xl sm:leading-relaxed text-zinc-300 text-left">
+                    Le jeu Woocop est bien plus qu'un simple jeu de stratégie en ligne. Il s'agit d'un univers captivant où l'espionnage et la ruse sont les clés de la réussite. Dans ce jeu palpitant, vous devrez faire preuve de tactique et de finesse pour déjouer les plans de l'équipe adverse et mener votre équipe vers la victoire. Avec des missions captivantes, des défis tactiques et des rebondissements imprévisibles, Woocop est un jeu qui ne manquera pas de vous surprendre à chaque instant. Alors, si vous êtes prêt à relever le défi et à mettre vos compétences à l'épreuve, rejoignez le monde passionnant de Woocop dès maintenant !
+                </p>
+            </div>
+            <div class="flex-1 scrollSkew rounded-2xl overflow-hidden h-fit shadow-2xl  bg-contain bg-no-repeat">
+                <img src="{{ asset('uploads/partie2.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- footer -->
+    <footer class="p-4 bg-white md:px-6 md:py-8 main-black mt-6">
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="#" target="_blank" class="flex items-center mb-4 sm:mb-0">
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Woocop</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 sm:mb-0">
+                <li>
+                    <a href="#top" class="mr-4 text-sm text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Accueil</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"><a href="https://nourhane-boudaoud.fr/"
+                                                                                       target="_blank" class="hover:underline">Nourhane Boudaoud</a>©  | <a href="https://robin-lanfranchi.fr"
+                                                                                                                                                            target="_blank" class="hover:underline">Robin Lanfranchi</a>© 2022 . All Rights Reserved.
+    </span>
+    </footer>
+
+
+
+
+
+    </body>
+    <style>
+        body {
+            background-image: url({{ asset('uploads/fond_1.svg') }});
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+    </style>
+    <script>
+        // Récupération de l'élément à animer
+
+        // Fonction de mise à jour de l'animation
+
+        if (window.innerWidth > 700) {
+        function updateAnimation() {
+        const element2 = document.querySelector('.scrollSkew');
+        // Récupération de la position actuelle du scroll
+        const scrollPosition = window.scrollY;
+
+        // Calcul de la nouvelle taille de l'élément en fonction de la position du scroll
+        const newSize3 = scrollPosition / 70 + 4;
+
+
+
+
+        element2.style.transform = 'rotateX(10deg) rotateY(-10deg) rotateZ(' + newSize3 + 'deg)';
+
+
+
+
+        // Demande de mise à jour de l'animation lors du prochain rafraîchissement de l'écran
+        window.requestAnimationFrame(updateAnimation);
+        }
+        window.requestAnimationFrame(updateAnimation);
+        }
+
+        // Démarrage de l'animation
+
+    </script>
+    </html>
+{% endblock %}

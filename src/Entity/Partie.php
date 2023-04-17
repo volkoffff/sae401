@@ -117,6 +117,7 @@ class Partie
     private $user2;
 
     #[ORM\Column]
+    #[Groups(['get', 'put'])]
     private ?string $resultat = null;
 
     #[ORM\Column(nullable: true)]

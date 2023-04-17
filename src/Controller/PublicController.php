@@ -25,7 +25,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PublicController extends AbstractController
 {
-    #[Route('/', name: 'app_public')]
+    #[Route('/', name: 'app_accueil')]
+    public function accueil( ): Response
+    {
+        return $this->render('public/accueil.html.twig', [
+
+        ]);
+    }
+    #[Route('/public', name: 'app_public')]
     public function index( TranslatorInterface $translator, UserRepository $UserRepository, EntityManagerInterface $entityManager, PartieRepository $PartieRepository, Request $request): Response
     {
 // section des profils
@@ -94,7 +101,7 @@ class PublicController extends AbstractController
 
 
         return $this->render('public/index.html.twig', [
-            'translated' => $translated,
+//            'translated' => $translated,
             'controller_name' => 'PublicController',
             'biographie_form' => $biographieForm->createView(),
 // section des profils
